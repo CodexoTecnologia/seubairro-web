@@ -1,0 +1,38 @@
+.logoLink {
+    display: inline-flex;
+    text-decoration: none;
+    transition: opacity var(--transition-base);
+}
+
+.logoLink:hover {
+    opacity: 0.8;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.logoText {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-title);
+}
+
+.logoText .accent {
+    color: var(--color-primary);
+}
+
+/* === TAMANHOS === */
+
+.sm .logoText {
+    font-size: var(--font-size-lg);
+}
+
+.md .logoText {
+    font-size: var(--font-size-xl);
+}
+
+.lg .logoText {
+    font-size: var(--font-size-2xl);
+}

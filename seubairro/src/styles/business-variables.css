@@ -1,0 +1,16 @@
+/* === BUSINESS THEME VARIABLES === */
+:root {
+    --business-primary: var(--color-primary);
+    --business-accent: var(--color-accent);
+    --business-bg-page: #F1F5F9;
+    /* Slate 100 */
+    --business-sidebar-bg: #FFFFFF;
+    --business-header-bg: #FFFFFF;
+    --business-border: #E2E8F0;
+    --business-text-title: var(--color-text-title);
+    --business-text-body: var(--color-text-body);
+    --business-success: #16A34A;
+    /* Green 600 */
+    --business-success-bg: #DCFCE7;
+    /* Green 100 */
+}

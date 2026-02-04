@@ -1,0 +1,12 @@
+/* === CLIENT THEME VARIABLES === */
+:root {
+    --client-primary: var(--color-primary);
+    --client-accent: var(--color-primary);
+    --client-bg-page: #F8FAFC;
+    /* Slate 50 */
+    --client-card-bg: #FFFFFF;
+    --client-border: #E2E8F0;
+    --client-text-title: var(--color-text-title);
+    --client-text-body: var(--color-text-body);
+    --client-whatsapp: #25D366;
+}
