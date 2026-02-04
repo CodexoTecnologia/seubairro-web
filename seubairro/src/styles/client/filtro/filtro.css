@@ -1,103 +1,74 @@
-/* Filtro CSS */
-:root {
-    --primary-color: #2563eb;
-    --text-dark: #1e293b;
-    --text-medium: #64748b;
-    --bg-color: #f8fafc;
-    --card-bg: #ffffff;
-    --border-color: #e2e8f0;
-    --radius-md: 12px;
-    --radius-sm: 8px;
-}
-
 .filtros-container {
     padding: 24px 16px;
     background-color: white;
     min-height: 100vh;
 }
-
 .filters-header {
     margin-bottom: 24px;
 }
-
 .filters-header h1 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--text-dark);
+    color: var(--client-text-title);
 }
-
 .filter-section {
     margin-bottom: 24px;
     padding-bottom: 24px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--client-border);
 }
-
 .filter-section:last-child {
     border-bottom: none;
 }
-
 .fs-title {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--text-dark);
+    color: var(--client-text-title);
     margin-bottom: 12px;
     display: block;
 }
-
-/* Chips/Pills */
 .chips-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
-
 .filter-chip {
     padding: 8px 16px;
     border-radius: 20px;
     background-color: #f1f5f9;
-    color: var(--text-medium);
+    color: var(--client-text-body);
     font-size: 0.9rem;
     border: none;
     cursor: pointer;
     transition: all 0.2s;
 }
-
 .filter-chip.active {
-    background-color: var(--primary-color);
+    background-color: var(--client-primary);
     color: white;
 }
-
-/* Checkboxes */
 .checkbox-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
-
 .checkbox-item {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
 }
-
 .checkbox-item input {
     width: 18px;
     height: 18px;
-    accent-color: var(--primary-color);
+    accent-color: var(--client-primary);
 }
-
 .checkbox-item span {
-    color: var(--text-dark);
+    color: var(--client-text-title);
     font-size: 0.95rem;
 }
-
-/* View Options */
 .view-options {
     display: flex;
     gap: 12px;
 }
-
 .view-option-btn {
     flex: 1;
     display: flex;
@@ -106,38 +77,34 @@
     justify-content: center;
     gap: 8px;
     padding: 16px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--client-border);
     border-radius: var(--radius-md);
     background: white;
     cursor: pointer;
     transition: all 0.2s;
-    color: var(--text-medium);
+    color: var(--client-text-body);
 }
-
 .view-option-btn.active {
-    border-color: var(--primary-color);
+    border-color: var(--client-primary);
     background-color: #eff6ff;
-    color: var(--primary-color);
+    color: var(--client-primary);
 }
-
 .view-option-btn i {
     font-size: 1.5rem;
 }
-
 .bottom-actions {
     position: sticky;
     bottom: 0;
     padding: 16px;
     background: white;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--client-border);
     display: flex;
     gap: 12px;
     margin: 0 -16px;
 }
-
 .btn-apply {
     flex: 1;
-    background-color: var(--primary-color);
+    background-color: var(--client-primary);
     color: white;
     padding: 14px;
     border-radius: var(--radius-sm);
@@ -146,12 +113,12 @@
     font-size: 1rem;
     cursor: pointer;
 }
-
 .btn-clear {
     padding: 14px;
     background: transparent;
-    color: var(--text-medium);
+    color: var(--client-text-body);
     border: none;
     font-weight: 600;
     cursor: pointer;
 }
+

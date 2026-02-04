@@ -1,35 +1,27 @@
 'use client'
-
 import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-
 import Link from 'next/link'
 import '@/styles/auth/login/LoginForm.css'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-
 export default function LoginForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-
     const router = useRouter()
-
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setIsLoading(true)
-
         setTimeout(() => {
             setIsLoading(false)
             router.push('/pages/dashboad')
         }, 1500)
     }
-
     const togglePassword = () => {
         setShowPassword(!showPassword)
     }
-
     return (
         <div className="form-wrapper">
             <div className="auth-header">
@@ -48,7 +40,6 @@ export default function LoginForm() {
                 <h1>Bem-vindo de volta!</h1>
                 <p>Acesse sua conta para conectar-se à vizinhança.</p>
             </div>
-
             <form onSubmit={handleSubmit}>
                 <Input
                     id="email"
@@ -60,7 +51,6 @@ export default function LoginForm() {
                     required
                     icon={<i className="ri-mail-line"></i>}
                 />
-
                 <div className="input-group">
                     <Input
                         id="password"
@@ -86,7 +76,6 @@ export default function LoginForm() {
                         <Link href="/pages/recuperar-senha">Esqueceu a senha?</Link>
                     </div>
                 </div>
-
                 <Button
                     type="submit"
                     fullWidth
@@ -95,15 +84,13 @@ export default function LoginForm() {
                 >
                     Entrar na Plataforma
                 </Button>
-
                 <div className="divider">
                     <span>ou continue com</span>
                 </div>
-
                 <div className="social-login">
                     <button type="button" className="btn-social">
                         <img
-                            src="https://www.svgrepo.com/show/475656/google-color.svg"
+                            src="https:
                             alt="Google"
                             width={20}
                             height={20}
@@ -112,7 +99,6 @@ export default function LoginForm() {
                     </button>
                 </div>
             </form>
-
             <div className="auth-footer">
                 <p>
                     Não tem uma conta? {' '}
@@ -122,3 +108,4 @@ export default function LoginForm() {
         </div>
     )
 }
+

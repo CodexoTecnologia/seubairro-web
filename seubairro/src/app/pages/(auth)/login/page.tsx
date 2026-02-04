@@ -1,19 +1,15 @@
 'use client'
-
 import LoginForm from './components/login-form'
 import '@/styles/auth/login/login.css'
-
 export default function LoginPage() {
     return (
         <main className="login-container">
             <div className="login-form-side">
                 <LoginForm />
             </div>
-
             <div className="login-visual-side">
                 <div className="rich-gradient-bg"></div>
                 <div className="grid-pattern-overlay"></div>
-
                 <div className="ui-showcase-container">
                     <div className="ui-card">
                         <div className="card-header-img">
@@ -44,7 +40,6 @@ export default function LoginPage() {
                             <div className="card-action-btn">Ver Produtos</div>
                         </div>
                     </div>
-
                     <div className="ui-floating-pill message-pill">
                         <div className="pill-icon">
                             <i className="ri-chat-smile-2-fill"></i>
@@ -54,7 +49,6 @@ export default function LoginPage() {
                             <span>Seu pedido já foi separado!</span>
                         </div>
                     </div>
-
                     <div className="ui-floating-pill location-pill">
                         <div className="pill-icon map">
                             <i className="ri-map-2-fill"></i>
@@ -65,7 +59,6 @@ export default function LoginPage() {
                         </div>
                     </div>
                 </div>
-
                 <div className="visual-text-overlay">
                     <h2>Conecte-se ao que importa.</h2>
                     <p>O comércio do seu bairro na palma da sua mão.</p>
@@ -74,3 +67,4 @@ export default function LoginPage() {
         </main>
     )
 }
+

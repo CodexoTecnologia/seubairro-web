@@ -1,26 +1,21 @@
 'use client'
-
 import React, { useState, FormEvent } from 'react'
 import Link from 'next/link'
 import '@/styles/auth/recuperar-senha/recuperar-senha.css'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-
 export default function PasswordRecoveryForm() {
     const [email, setEmail] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
-
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
         setIsLoading(true)
-
         setTimeout(() => {
             setIsLoading(false)
             setIsSuccess(true)
         }, 1500)
     }
-
     const handleResend = () => {
         setIsSuccess(false)
         setIsLoading(true)
@@ -29,14 +24,12 @@ export default function PasswordRecoveryForm() {
             setIsSuccess(true)
         }, 1500)
     }
-
     return (
         <div className="form-wrapper">
             <div className="auth-header">
                 <Link href="/" className="logo-link">
                     <span className="logo-text">Seu<span>Bairro</span></span>
                 </Link>
-
                 {!isSuccess ? (
                     <div>
                         <h1>Esqueceu a senha?</h1>
@@ -49,7 +42,6 @@ export default function PasswordRecoveryForm() {
                     </div>
                 )}
             </div>
-
             {!isSuccess ? (
                 <form onSubmit={handleSubmit}>
                     <Input
@@ -62,7 +54,6 @@ export default function PasswordRecoveryForm() {
                         onChange={(e) => setEmail(e.target.value)}
                         icon={<i className="ri-mail-lock-line"></i>}
                     />
-
                     <Button
                         type="submit"
                         fullWidth
@@ -88,10 +79,10 @@ export default function PasswordRecoveryForm() {
                     </Button>
                 </div>
             )}
-
             <div className="auth-footer">
                 <p>Lembrou a senha? <Link href="/" className="back-link"><i className="ri-arrow-left-line"></i> Voltar para Login</Link></p>
             </div>
         </div>
     )
 }
+

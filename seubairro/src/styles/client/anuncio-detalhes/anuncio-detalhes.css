@@ -1,14 +1,12 @@
 body {
     background-color: var(--client-bg-page);
 }
-
 .ad-page-container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 20px 40px;
     padding-bottom: 80px;
 }
-
 .breadcrumbs-container {
     font-size: 0.85rem;
     color: var(--text-muted);
@@ -17,12 +15,10 @@ body {
     align-items: center;
     gap: 8px;
 }
-
 .breadcrumbs-container a {
     text-decoration: none;
     color: var(--text-muted);
 }
-
 .breadcrumbs-container span {
     color: var(--client-text-title);
     font-weight: var(--font-weight-semibold);
@@ -30,14 +26,12 @@ body {
     padding: 2px 8px;
     border-radius: 4px;
 }
-
 .ad-layout-grid {
     display: grid;
     grid-template-columns: 1fr 340px;
     gap: 30px;
     align-items: start;
 }
-
 .gallery-wrapper {
     display: flex;
     gap: 15px;
@@ -47,7 +41,6 @@ body {
     border: 1px solid var(--client-border);
     height: 400px;
 }
-
 .main-image-container {
     flex: 1;
     height: 100%;
@@ -56,13 +49,11 @@ body {
     position: relative;
     background: var(--client-bg-page);
 }
-
 .main-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .btn-share {
     position: absolute;
     top: 10px;
@@ -79,7 +70,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     color: var(--client-text-body);
 }
-
 .thumbs-sidebar {
     display: flex;
     flex-direction: column;
@@ -87,7 +77,6 @@ body {
     width: 90px;
     overflow-y: auto;
 }
-
 .thumb {
     width: 100%;
     height: 60px;
@@ -98,13 +87,11 @@ body {
     border: 2px solid transparent;
     transition: 0.2s;
 }
-
 .thumb:hover,
 .thumb.active {
     opacity: 1;
     border-color: var(--client-primary);
 }
-
 .ad-header-compact {
     margin-top: 15px;
     background: var(--client-card-bg);
@@ -115,13 +102,11 @@ body {
     flex-direction: column;
     gap: 15px;
 }
-
 .header-top {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
-
 .header-top h1 {
     font-size: 1.4rem;
     color: var(--client-text-title);
@@ -129,42 +114,35 @@ body {
     line-height: 1.2;
     margin: 0;
 }
-
 .posted-time {
     font-size: 0.8rem;
     color: var(--text-muted);
     white-space: nowrap;
     margin-left: 15px;
 }
-
 .price-action-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
 .price-tag-compact {
     color: var(--client-primary);
     display: flex;
     align-items: baseline;
     gap: 2px;
 }
-
 .price-tag-compact .symbol {
     font-size: 1.1rem;
     font-weight: var(--font-weight-semibold);
 }
-
 .price-tag-compact .amount {
     font-size: 2rem;
     font-weight: 800;
 }
-
 .action-buttons-compact {
     display: flex;
     gap: 10px;
 }
-
 .btn-whatsapp-compact {
     background: var(--client-whatsapp);
     color: white;
@@ -179,11 +157,9 @@ body {
     gap: 6px;
     transition: 0.2s;
 }
-
 .btn-whatsapp-compact:hover {
     filter: brightness(0.9);
 }
-
 .btn-fav-compact {
     width: 40px;
     height: 40px;
@@ -197,12 +173,10 @@ body {
     align-items: center;
     justify-content: center;
 }
-
 .btn-fav-compact:hover {
     border-color: var(--color-error);
     color: var(--color-error);
 }
-
 .description-section {
     margin-top: 15px;
     background: var(--client-card-bg);
@@ -210,7 +184,6 @@ body {
     border-radius: 12px;
     border: 1px solid var(--client-border);
 }
-
 .description-section h3 {
     font-size: 1.1rem;
     margin-bottom: 10px;
@@ -218,20 +191,17 @@ body {
     border-bottom: 1px solid var(--client-border);
     padding-bottom: 5px;
 }
-
 .description-section p {
     font-size: 0.95rem;
     line-height: 1.5;
     color: var(--client-text-body);
     margin-bottom: 15px;
 }
-
 .features-compact {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
 }
-
 .features-compact span {
     font-size: 0.85rem;
     font-weight: var(--font-weight-medium);
@@ -243,11 +213,9 @@ body {
     padding: 5px 10px;
     border-radius: 6px;
 }
-
 .features-compact i {
     color: var(--client-primary);
 }
-
 .right-sidebar {
     display: flex;
     flex-direction: column;
@@ -255,7 +223,6 @@ body {
     position: sticky;
     top: 80px;
 }
-
 .seller-widget,
 .location-widget,
 .sidebar-related,
@@ -265,33 +232,28 @@ body {
     border-radius: 12px;
     border: 1px solid var(--client-border);
 }
-
 .seller-header {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
 }
-
 .seller-img {
     width: 45px;
     height: 45px;
     border-radius: 50%;
     object-fit: cover;
 }
-
 .seller-info h4 {
     font-size: 0.95rem;
     margin: 0;
     color: var(--client-text-title);
 }
-
 .rating-badge {
     font-size: 0.8rem;
     color: var(--color-warning);
     font-weight: var(--font-weight-bold);
 }
-
 .btn-view-profile {
     display: block;
     text-align: center;
@@ -303,7 +265,6 @@ body {
     border-radius: 6px;
     text-decoration: none;
 }
-
 .loc-head {
     font-size: 0.9rem;
     font-weight: var(--font-weight-semibold);
@@ -313,20 +274,18 @@ body {
     gap: 5px;
     color: var(--client-text-title);
 }
-
 .mini-map-static {
     height: 180px;
     background-color: var(--client-border);
     border-radius: 8px;
     margin-bottom: 10px;
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+    background-image: url('https:
     background-size: cover;
     background-position: center;
     filter: grayscale(1) opacity(0.6);
     position: relative;
     border: 1px solid var(--client-border);
 }
-
 .static-pin {
     position: absolute;
     top: 50%;
@@ -337,26 +296,21 @@ body {
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
     animation: bounce 2s infinite;
 }
-
 @keyframes bounce {
-
     0%,
     100% {
         transform: translate(-50%, -100%);
     }
-
     50% {
         transform: translate(-50%, -120%);
     }
 }
-
 .distance-text {
     font-size: 0.85rem;
     text-align: center;
     color: var(--text-muted);
     font-weight: var(--font-weight-medium);
 }
-
 .safety-tip {
     display: flex;
     gap: 8px;
@@ -365,20 +319,17 @@ body {
     font-size: 0.8rem;
     color: #92400E;
 }
-
 .sidebar-related h3 {
     font-size: 0.8rem;
     text-transform: uppercase;
     color: var(--text-muted);
     margin-bottom: 10px;
 }
-
 .related-vertical-list {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-
 .mini-card-horizontal {
     display: flex;
     gap: 10px;
@@ -387,66 +338,55 @@ body {
     text-decoration: none;
     border: 1px solid transparent;
 }
-
 .mini-card-horizontal:hover {
     background: var(--client-bg-page);
     border-color: var(--client-border);
 }
-
 .mini-card-horizontal img {
     width: 50px;
     height: 50px;
     border-radius: 6px;
     object-fit: cover;
 }
-
 .mc-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-
 .mc-title {
     font-size: 0.85rem;
     color: var(--client-text-title);
 }
-
 .mc-price {
     font-size: 0.9rem;
     font-weight: var(--font-weight-bold);
     color: var(--client-primary);
 }
-
 @media (max-width: 900px) {
     .ad-page-container {
         padding: 15px;
     }
-
     .ad-layout-grid {
         grid-template-columns: 1fr;
     }
-
     .gallery-wrapper {
         flex-direction: column;
         height: auto;
     }
-
     .thumbs-sidebar {
         flex-direction: row;
         width: 100%;
         height: auto;
     }
-
     .thumb {
         width: 70px;
         height: 70px;
     }
-
     .main-image-container {
         height: 300px;
     }
-
     .right-sidebar {
         position: static;
     }
 }
+

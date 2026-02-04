@@ -3,13 +3,11 @@ import { Inter } from 'next/font/google'
 import '@/styles/business-variables.css'
 import '@/styles/client-variables.css'
 import './global.css'
-
 const inter = Inter({
     subsets: ['latin'],
     weight: ['400', '500', '600', '700'],
     display: 'swap',
 })
-
 export const metadata: Metadata = {
     title: 'SeuBairro - Conecte-se ao comércio local',
     description: 'O comércio do seu bairro na palma da sua mão. Encontre lojas, serviços e produtos próximos a você.',
@@ -22,7 +20,6 @@ export const metadata: Metadata = {
         locale: 'pt_BR',
     },
 }
-
 export default function RootLayout({
     children,
 }: {
@@ -32,7 +29,7 @@ export default function RootLayout({
         <html lang="pt-BR">
             <head>
                 <link
-                    href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+                    href="https:
                     rel="stylesheet"
                 />
             </head>
@@ -40,3 +37,4 @@ export default function RootLayout({
         </html>
     )
 }
+

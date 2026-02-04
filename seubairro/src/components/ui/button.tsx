@@ -1,6 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react'
 import '@/styles/ui/button.css'
-
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
     size?: 'sm' | 'md' | 'lg'
@@ -8,7 +7,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     isLoading?: boolean
     children: ReactNode
 }
-
 export function Button({
     variant = 'primary',
     size = 'md',
@@ -27,7 +25,6 @@ export function Button({
         isLoading && 'loading',
         className
     ].filter(Boolean).join(' ')
-
     return (
         <button
             className={classes}
@@ -38,3 +35,4 @@ export function Button({
         </button>
     )
 }
+

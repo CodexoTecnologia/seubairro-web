@@ -1,7 +1,6 @@
 import { apiClient } from './Client/apiClientInstance';
 import { BaseService } from './BaseService';
 import type { CreateListingRequest, UpdateListingRequest } from '../dtos/Request/index';
-
 export interface ListingResponse {
     id: string;
     categoryId: string;
@@ -15,7 +14,6 @@ export interface ListingResponse {
     createdAt?: string;
     updatedAt?: string;
 }
-
 class ListingServiceImpl extends BaseService<
     ListingResponse,
     CreateListingRequest,
@@ -29,14 +27,12 @@ class ListingServiceImpl extends BaseService<
             usePathId: false,
         });
     }
-
     async activate(id: string): Promise<ListingResponse> {
         return apiClient.patch<ListingResponse>('/api/Listing/active', undefined, {
             params: { id },
             requiresAuth: true,
         });
     }
-
     async deactivate(id: string): Promise<ListingResponse> {
         return apiClient.patch<ListingResponse>('/api/Listing/deactive', undefined, {
             params: { id },
@@ -44,5 +40,5 @@ class ListingServiceImpl extends BaseService<
         });
     }
 }
-
 export const ListingService = new ListingServiceImpl();
+

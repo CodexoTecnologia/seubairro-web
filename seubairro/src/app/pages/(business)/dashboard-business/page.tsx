@@ -1,8 +1,6 @@
 'use client'
-
 import React from 'react'
 import '@/styles/business/dashboard/dashboard.css'
-
 export default function BusinessDashboard() {
     return (
         <>
@@ -10,7 +8,6 @@ export default function BusinessDashboard() {
                 <h1>Bom dia, Gabriel! 🚀</h1>
                 <p>Aqui está o resumo do seu negócio hoje.</p>
             </header>
-
             <section className="stats-grid">
                 <div className="stat-card">
                     <div className="stat-icon blue"><i className="ri-eye-line"></i></div>
@@ -37,7 +34,6 @@ export default function BusinessDashboard() {
                     </div>
                 </div>
             </section>
-
             <section className="quick-actions">
                 <h2>O que você quer fazer?</h2>
                 <div className="actions-row">
@@ -45,28 +41,24 @@ export default function BusinessDashboard() {
                         <i className="ri-add-circle-line"></i>
                         <span>Criar Novo Anúncio</span>
                     </a>
-
                     <a href="#" className="action-btn" style={{ textDecoration: 'none' }}>
                         <i className="ri-edit-box-line"></i>
                         <span>Editar Informações</span>
                     </a>
-
                     <button className="action-btn">
                         <i className="ri-share-forward-line"></i>
                         <span>Compartilhar Loja</span>
                     </button>
                 </div>
             </section>
-
             <section className="recent-products">
                 <div className="section-head">
                     <h2>Seus Anúncios Ativos</h2>
                     <a href="#">Ver todos</a>
                 </div>
-
                 <div className="products-table">
                     <div className="product-row">
-                        <img src="https://images.unsplash.com/photo-1607349913338-fca6f7fc42d0?auto=format&fit=crop&w=100&q=60" alt="Prod" />
+                        <img src="https://placehold.co/100" alt="Produto" />
                         <div className="p-info">
                             <strong>Cesta Básica Completa</strong>
                             <span>Alimentação</span>
@@ -76,7 +68,7 @@ export default function BusinessDashboard() {
                         <button className="btn-icon"><i className="ri-pencil-line"></i></button>
                     </div>
                     <div className="product-row">
-                        <img src="https://images.unsplash.com/photo-1607349913338-fca6f7fc42d0?auto=format&fit=crop&w=100&q=60" alt="Prod" />
+                        <img src="https://placehold.co/100" alt="Produto" />
                         <div className="p-info">
                             <strong>Sucos Naturais</strong>
                             <span>Alimentação</span>
@@ -90,3 +82,4 @@ export default function BusinessDashboard() {
         </>
     )
 }
+

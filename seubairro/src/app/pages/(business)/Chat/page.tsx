@@ -1,5 +1,4 @@
 import React from 'react'
-
 export default function ChatPage() {
     return (
         <div className="container mx-auto p-6">
@@ -8,3 +7,4 @@ export default function ChatPage() {
         </div>
     )
 }
+

@@ -2,59 +2,44 @@
     display: inline-block;
     position: relative;
 }
-
 .circle {
     border-radius: 50%;
     border-style: solid;
     border-right-color: transparent;
     animation: spin 0.75s linear infinite;
 }
-
-/* === TAMANHOS === */
-
 .sm {
     width: 16px;
     height: 16px;
 }
-
 .sm .circle {
     border-width: 2px;
 }
-
 .md {
     width: 24px;
     height: 24px;
 }
-
 .md .circle {
     border-width: 3px;
 }
-
 .lg {
     width: 32px;
     height: 32px;
 }
-
 .lg .circle {
     border-width: 4px;
 }
-
-/* === CORES === */
-
 .primary .circle {
     border-color: var(--color-primary);
     border-right-color: transparent;
 }
-
 .white .circle {
     border-color: var(--color-text-white);
     border-right-color: transparent;
 }
-
-/* === ANIMAÇÃO === */
-
 @keyframes spin {
     to {
         transform: rotate(360deg);
     }
 }
+

@@ -1,28 +1,20 @@
 'use client'
-
 import AppNavbar from '@/components/layout/navbar'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
 export default function ClientLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
     const pathname = usePathname()
-
-    // Helper to check active state
     const isActive = (path: string) => pathname === path ? 'active' : ''
-
     return (
-        <div style={{ backgroundColor: 'var(--client-bg-page)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-
+        <div className="client-layout" style={{ backgroundColor: 'var(--client-bg-page)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <AppNavbar />
-
             <div style={{ flex: 1 }}>
                 {children}
             </div>
-
             <div className="bottom-nav">
                 <Link href="/pages/dashboad" className={isActive('/pages/dashboad')}>
                     <i className="ri-home-5-line"></i>
@@ -44,3 +36,4 @@ export default function ClientLayout({
         </div>
     )
 }
+

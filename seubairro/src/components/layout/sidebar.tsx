@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import Link from 'next/link'
-
 export function BusinessSidebar() {
     return (
         <aside className="biz-sidebar">
@@ -9,7 +8,6 @@ export function BusinessSidebar() {
                 <h3>Minha Loja</h3>
                 <span className="status-badge online">Loja Aberta</span>
             </div>
-
             <nav className="biz-menu">
                 <Link href="/pages/business" className="menu-link active">
                     <i className="ri-dashboard-line"></i>
@@ -30,7 +28,6 @@ export function BusinessSidebar() {
                     <span>Configurações</span>
                 </Link>
             </nav>
-
             <div className="sidebar-footer">
                 <div className="plan-card">
                     <div className="plan-icon">
@@ -45,3 +42,4 @@ export function BusinessSidebar() {
         </aside>
     )
 }
+

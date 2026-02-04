@@ -1,16 +1,52 @@
-/* === BUSINESS THEME VARIABLES === */
 :root {
-    --business-primary: var(--color-primary);
-    --business-accent: var(--color-accent);
+    --business-primary: #2563EB;
+    --business-primary-hover: #1D4ED8;
+    --business-primary-light: rgba(37, 99, 235, 0.1);
+    --business-accent: #0D9488;
+    --business-accent-hover: #0F766E;
+    --business-accent-light: rgba(13, 148, 136, 0.1);
     --business-bg-page: #F1F5F9;
-    /* Slate 100 */
-    --business-sidebar-bg: #FFFFFF;
-    --business-header-bg: #FFFFFF;
+    --business-bg-surface: #FFFFFF;
+    --business-bg-input: #FFFFFF;
+    --business-bg-dark: #0F172A;
+    --business-text-title: #0F172A;
+    --business-text-body: #475569;
+    --business-text-muted: #94A3B8;
+    --business-text-white: #FFFFFF;
     --business-border: #E2E8F0;
-    --business-text-title: var(--color-text-title);
-    --business-text-body: var(--color-text-body);
+    --business-border-hover: #CBD5E1;
     --business-success: #16A34A;
-    /* Green 600 */
     --business-success-bg: #DCFCE7;
-    /* Green 100 */
+    --business-error: #DC2626;
+    --business-error-bg: #FEF2F2;
+    --business-warning: #F59E0B;
+    --business-warning-bg: #FFFBEB;
+    --business-sidebar-width: 260px;
+    --business-header-bg: #FFFFFF;
 }
+.business-layout,
+.theme-business {
+    --color-primary: var(--business-primary);
+    --color-primary-hover: var(--business-primary-hover);
+    --color-primary-light: var(--business-primary-light);
+    --color-accent: var(--business-accent);
+    --color-accent-hover: var(--business-accent-hover);
+    --color-accent-light: var(--business-accent-light);
+    --color-bg-page: var(--business-bg-page);
+    --color-bg-surface: var(--business-bg-surface);
+    --color-bg-input: var(--business-bg-input);
+    --color-bg-dark: var(--business-bg-dark);
+    --color-text-title: var(--business-text-title);
+    --color-text-body: var(--business-text-body);
+    --color-text-muted: var(--business-text-muted);
+    --color-text-white: var(--business-text-white);
+    --color-border: var(--business-border);
+    --color-border-hover: var(--business-border-hover);
+    --color-success: var(--business-success);
+    --color-success-bg: var(--business-success-bg);
+    --color-error: var(--business-error);
+    --color-error-bg: var(--business-error-bg);
+    --color-warning: var(--business-warning);
+    --color-warning-bg: var(--business-warning-bg);
+}
+

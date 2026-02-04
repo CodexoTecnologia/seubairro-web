@@ -1,5 +1,4 @@
 import { CountryCodeEnum } from '../../enums/index';
-
 export interface UpdateBusinessAddressRequest {
     street: string | null;
     number: string | null;
@@ -9,3 +8,4 @@ export interface UpdateBusinessAddressRequest {
     postalCode: string | null;
     countryCode: CountryCodeEnum;
 }
+

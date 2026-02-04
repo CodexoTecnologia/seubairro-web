@@ -1,25 +1,15 @@
 'use client'
-
 import React, { useState } from 'react'
 import '@/styles/client/filtro/filtro.css'
 import { useRouter } from 'next/navigation'
-
 export default function FiltrosPage() {
     const router = useRouter()
-
-    // Todos os anuncios, Produtos, Serviços
-    const [type, setType] = useState('all') // all, products, services
-
-    // Categotias
+    const [type, setType] = useState('all')
     const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-
-    // opções de ver os anuncios
-    const [viewMode, setViewMode] = useState('list') // grid, list, map
-
+    const [viewMode, setViewMode] = useState('list')
     const allCategories = [
         "Alimentação", "Serviços", "Varejo", "Beleza", "Educação", "Saúde"
     ]
-
     const toggleCategory = (cat: string) => {
         if (selectedCategories.includes(cat)) {
             setSelectedCategories(selectedCategories.filter(c => c !== cat))
@@ -27,19 +17,15 @@ export default function FiltrosPage() {
             setSelectedCategories([...selectedCategories, cat])
         }
     }
-
     const handleApply = () => {
-        // Here we would typically update URL params or context
         console.log({ type, selectedCategories, viewMode })
         router.back()
     }
-
     return (
         <div className="filtros-container">
             <header className="filters-header">
                 <h1>Filtros</h1>
             </header>
-
             <section className="filter-section">
                 <span className="fs-title">Tipo de Anúncio</span>
                 <div className="chips-grid">
@@ -57,11 +43,9 @@ export default function FiltrosPage() {
                     >Serviços</button>
                 </div>
             </section>
-
             <section className="filter-section">
                 <span className="fs-title">Categorias</span>
                 <div className="checkbox-list">
-                    {/* busca todas as categorias para o filtro */}
                     {allCategories.map(cat => (
                         <label key={cat} className="checkbox-item">
                             <input
@@ -74,11 +58,9 @@ export default function FiltrosPage() {
                     ))}
                 </div>
             </section>
-
             <section className="filter-section">
                 <span className="fs-title">Visualização</span>
                 <div className="view-options">
-                    {/* lista */}
                     <button
                         className={`view-option-btn ${viewMode === 'list' ? 'active' : ''}`}
                         onClick={() => setViewMode('list')}
@@ -86,8 +68,6 @@ export default function FiltrosPage() {
                         <i className="ri-list-check"></i>
                         <span>Lista</span>
                     </button>
-
-                    {/* grid */}
                     <button
                         className={`view-option-btn ${viewMode === 'grid' ? 'active' : ''}`}
                         onClick={() => setViewMode('grid')}
@@ -95,8 +75,6 @@ export default function FiltrosPage() {
                         <i className="ri-grid-fill"></i>
                         <span>Grade</span>
                     </button>
-
-                    {/* mapa */}
                     <button
                         className={`view-option-btn ${viewMode === 'map' ? 'active' : ''}`}
                         onClick={() => setViewMode('map')}
@@ -106,7 +84,6 @@ export default function FiltrosPage() {
                     </button>
                 </div>
             </section>
-
             <div className="bottom-actions">
                 <button className="btn-clear" onClick={() => {
                     setType('all')
@@ -118,3 +95,4 @@ export default function FiltrosPage() {
         </div>
     )
 }
+

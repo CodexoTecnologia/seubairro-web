@@ -1,16 +1,13 @@
 'use client'
-
 import React from 'react'
 import PasswordRecoveryForm from './components/password-recovery-form'
 import '@/styles/auth/recuperar-senha/recuperar-senha.css'
-
 export default function RecuperarSenhaPage() {
     return (
         <main className="login-container">
             <div className="login-form-side">
                 <PasswordRecoveryForm />
             </div>
-
             <div className="login-visual-side">
                 <div className="animation-layer">
                     <div className="map-background"></div>
@@ -23,18 +20,16 @@ export default function RecuperarSenhaPage() {
                             </svg>
                         </div>
                     </div>
-
                     <div className="app-point p1"><div className="point-icon"><i className="ri-shield-check-line"></i></div></div>
                     <div className="app-point p2"><div className="point-icon"><i className="ri-lock-unlock-line"></i></div></div>
                 </div>
-
                 <div className="visual-text-overlay">
                     <h2>Segurança em primeiro lugar.</h2>
                     <p>Recupere seu acesso de forma simples e rápida.</p>
                 </div>
-
                 <div className="rich-gradient-bg"></div>
             </div>
         </main>
     )
 }
+

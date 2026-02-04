@@ -8,3 +8,4 @@ export interface UpdateBusinessRequest {
     publicPhone: string | null;
     instagramUrl: string | null;
 }
+

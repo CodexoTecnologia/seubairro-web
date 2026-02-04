@@ -1,13 +1,10 @@
 'use client'
-
 import React, { useState } from 'react'
 import '@/styles/client/dashboard/dashboard.css'
-
 export default function ClientDashboard() {
     const [currentType, setCurrentType] = useState('all')
     const [currentCategory, setCurrentCategory] = useState('all')
     const [viewMode, setViewMode] = useState<'list' | 'map'>('list')
-
     const adsData = [
         {
             id: 1,
@@ -18,7 +15,7 @@ export default function ClientDashboard() {
             rating: 4.8,
             reviews: 120,
             distance: 0.2,
-            image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=500&q=60"
+            image: "https:
         },
         {
             id: 2,
@@ -29,7 +26,7 @@ export default function ClientDashboard() {
             rating: 5.0,
             reviews: 45,
             distance: 1.5,
-            image: "https://images.unsplash.com/photo-1621905476059-5f34604809f6?auto=format&fit=crop&w=500&q=60"
+            image: "https:
         },
         {
             id: 3,
@@ -40,7 +37,7 @@ export default function ClientDashboard() {
             rating: 4.5,
             reviews: 80,
             distance: 0.5,
-            image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=500&q=60"
+            image: "https:
         },
         {
             id: 4,
@@ -51,7 +48,7 @@ export default function ClientDashboard() {
             rating: 4.9,
             reviews: 200,
             distance: 3.2,
-            image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=60"
+            image: "https:
         },
         {
             id: 5,
@@ -62,7 +59,7 @@ export default function ClientDashboard() {
             rating: 4.7,
             reviews: 15,
             distance: 0.1,
-            image: "https://images.unsplash.com/photo-1598331668826-20cecc596b86?auto=format&fit=crop&w=500&q=60"
+            image: "https:
         },
         {
             id: 6,
@@ -73,27 +70,23 @@ export default function ClientDashboard() {
             rating: 4.6,
             reviews: 30,
             distance: 0.8,
-            image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=500&q=60"
+            image: "https:
         }
     ]
-
     const filteredData = adsData.filter(item => {
         const matchType = currentType === 'all' || item.type === currentType
         const matchCat = currentCategory === 'all' || item.category === currentCategory
         return matchType && matchCat
     }).sort((a, b) => a.distance - b.distance)
-
     const mockCoordinates = [
         { t: '30%', l: '40%' }, { t: '50%', l: '60%' },
         { t: '70%', l: '30%' }, { t: '20%', l: '70%' },
         { t: '40%', l: '20%' }, { t: '60%', l: '80%' }
     ]
-
     return (
         <>
             <header className="filters-header">
                 <div className="container filters-container">
-
                     <div className="type-selector-wrapper">
                         <div className="type-selector">
                             <button
@@ -116,7 +109,6 @@ export default function ClientDashboard() {
                             </button>
                         </div>
                     </div>
-
                     <div className="category-scroll">
                         <button
                             className={`cat-pill ${currentCategory === 'all' ? 'active' : ''}`}
@@ -149,7 +141,6 @@ export default function ClientDashboard() {
                             <i className="ri-scissors-cut-line"></i> Beleza
                         </button>
                     </div>
-
                     <div className="view-toggle">
                         <button
                             className={`toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
@@ -168,16 +159,13 @@ export default function ClientDashboard() {
                     </div>
                 </div>
             </header>
-
             <main className="main-content container">
-
                 {viewMode === 'list' && (
                     <div id="feedView">
                         <div className="feed-header-info">
                             <h3>Destaques perto de você</h3>
                             <span>Ordenado por proximidade <i className="ri-arrow-down-line"></i></span>
                         </div>
-
                         <div className="listings-grid" id="listingsContainer">
                             {filteredData.length === 0 ? (
                                 <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '60px', color: '#94A3B8' }}>
@@ -210,7 +198,6 @@ export default function ClientDashboard() {
                         </div>
                     </div>
                 )}
-
                 {viewMode === 'map' && (
                     <div id="mapView" className="map-wrapper">
                         <div className="simulated-map">
@@ -233,15 +220,14 @@ export default function ClientDashboard() {
                                     )
                                 })}
                             </div>
-
                             <div className="map-overlay-btn">
                                 <i className="ri-focus-3-line"></i> Centralizar em mim
                             </div>
                         </div>
                     </div>
                 )}
-
             </main>
         </>
     )
 }
+

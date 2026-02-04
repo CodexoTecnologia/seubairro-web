@@ -1,12 +1,10 @@
 import Link from 'next/link'
 import '@/styles/ui/logo.css'
-
 interface LogoProps {
     size?: 'sm' | 'md' | 'lg'
     href?: string
     showText?: boolean
 }
-
 export function Logo({ size = 'md', href = '/', showText = true }: LogoProps) {
     const content = (
         <div className={`logo ${size}`}>
@@ -15,7 +13,6 @@ export function Logo({ size = 'md', href = '/', showText = true }: LogoProps) {
             </span>
         </div>
     )
-
     if (href) {
         return (
             <Link href={href} className="logoLink">
@@ -23,6 +20,6 @@ export function Logo({ size = 'md', href = '/', showText = true }: LogoProps) {
             </Link>
         )
     }
-
     return content
 }
+

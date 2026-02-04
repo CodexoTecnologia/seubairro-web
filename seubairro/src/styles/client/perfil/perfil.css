@@ -1,16 +1,10 @@
-/* =========================================
-   PERFIL PAGE - ESTILOS COMPLETOS
-   ========================================= */
-
-/* NAV BAR (Simplificado para a página) */
 .app-navbar {
     height: 70px;
     background: #fff;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--client-border);
     display: flex;
     align-items: center;
 }
-
 .nav-container.full-width-nav {
     max-width: 100%;
     padding: 0 30px;
@@ -19,7 +13,6 @@
     align-items: center;
     justify-content: space-between;
 }
-
 .nav-logo {
     display: flex;
     align-items: center;
@@ -27,23 +20,19 @@
     text-decoration: none;
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--text-title);
+    color: var(--client-text-title);
 }
-
 .nav-logo span span {
-    color: var(--primary);
+    color: var(--client-primary);
 }
-
 .nav-logo img {
     height: 30px;
 }
-
 .nav-actions {
     display: flex;
     align-items: center;
     gap: 20px;
 }
-
 .btn-back-map {
     display: flex;
     align-items: center;
@@ -53,15 +42,13 @@
     font-size: 0.9rem;
     transition: color 0.2s;
 }
-
 .btn-back-map:hover {
-    color: var(--primary);
+    color: var(--client-primary);
 }
-
 .avatar-circle {
     width: 36px;
     height: 36px;
-    background: linear-gradient(135deg, var(--primary), #60A5FA);
+    background: linear-gradient(135deg, var(--client-primary), #60A5FA);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -70,11 +57,6 @@
     font-weight: 700;
     font-size: 0.9rem;
 }
-
-
-/* =========================================
-   LAYOUT PRINCIPAL
-   ========================================= */
 .full-screen-layout {
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -82,29 +64,23 @@
     padding: 20px;
     height: calc(100vh - 70px);
 }
-
-/* =========================================
-   SIDEBAR (MENU ESQUERDO)
-   ========================================= */
 .sidebar-panel {
     background: #fff;
     border-radius: 16px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--client-border);
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
 }
-
 .user-header {
     text-align: center;
     margin-bottom: 40px;
 }
-
 .avatar-large {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, var(--primary), #60A5FA);
+    background: linear-gradient(135deg, var(--client-primary), #60A5FA);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -115,26 +91,21 @@
     margin: 0 auto 15px auto;
     box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
 }
-
 .user-header h3 {
     font-size: 1.2rem;
-    color: var(--text-title);
+    color: var(--client-text-title);
     margin-bottom: 5px;
 }
-
 .user-email {
     color: var(--text-muted);
     font-size: 0.9rem;
 }
-
-/* Menu */
 .sidebar-menu {
     display: flex;
     flex-direction: column;
     gap: 8px;
     flex: 1;
 }
-
 .menu-item {
     display: flex;
     align-items: center;
@@ -152,105 +123,80 @@
     transition: 0.2s;
     width: 100%;
 }
-
 .icon-wrap {
     font-size: 1.3rem;
     color: var(--text-muted);
     display: flex;
 }
-
 .arrow {
     margin-left: auto;
     opacity: 0;
     transform: translateX(-5px);
     transition: 0.2s;
 }
-
-/* Hover e Active */
 .menu-item:hover {
     background: #F1F5F9;
-    color: var(--primary);
+    color: var(--client-primary);
 }
-
 .menu-item:hover .icon-wrap {
-    color: var(--primary);
+    color: var(--client-primary);
 }
-
 .menu-item.active {
     background: #EFF6FF;
-    color: var(--primary);
+    color: var(--client-primary);
 }
-
 .menu-item.active .icon-wrap {
-    color: var(--primary);
+    color: var(--client-primary);
 }
-
 .menu-item.active .arrow {
     opacity: 1;
     transform: translateX(0);
 }
-
-/* Danger */
 .menu-divider {
     height: 1px;
-    background: var(--border-color);
+    background: var(--client-border);
     margin: 10px 0;
 }
-
 .menu-item.danger {
     color: #EF4444;
     margin-top: auto;
 }
-
 .menu-item.danger:hover {
     background: #FEF2F2;
 }
-
 .menu-item.danger .icon-wrap {
     color: #EF4444;
 }
-
-/* =========================================
-   CONTEÚDO (DIREITA)
-   ========================================= */
 .content-panel {
     background: #fff;
     border-radius: 16px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--client-border);
     padding: 40px 60px;
     overflow-y: auto;
 }
-
-/* Header do Conteúdo */
 .content-header {
     margin-bottom: 40px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--client-border);
     padding-bottom: 20px;
 }
-
 .content-header h1 {
     font-size: 1.8rem;
-    color: var(--text-title);
+    color: var(--client-text-title);
     margin-bottom: 8px;
 }
-
 .content-header p {
     color: var(--text-muted);
     font-size: 1rem;
 }
-
-/* Formulários */
 .app-form {
     max-width: 800px;
 }
-
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
     margin-bottom: 25px;
 }
-
 .input-group {
     display: flex;
     flex-direction: column;
@@ -258,53 +204,44 @@
     margin-bottom: 25px;
     width: 100%;
 }
-
 .input-group.sm {
     flex: 1;
 }
-
 .input-group.lg {
     flex: 3;
 }
-
 .input-group label {
     font-weight: 600;
     font-size: 0.95rem;
-    color: var(--text-title);
+    color: var(--client-text-title);
 }
-
 .input-field {
     padding: 14px 18px;
     border: 1px solid #E2E8F0;
     border-radius: 10px;
     background: #F8FAFC;
     font-size: 1rem;
-    color: var(--text-title);
+    color: var(--client-text-title);
     transition: 0.2s;
     outline: none;
     resize: none;
 }
-
 .input-field:focus {
     background: #fff;
-    border-color: var(--primary);
+    border-color: var(--client-primary);
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
-
 .input-field.disabled {
     background: #F1F5F9;
     color: #94A3B8;
     cursor: default;
 }
-
-/* Botões de Ação */
 .form-footer {
     margin-top: 30px;
     display: flex;
 }
-
 .btn-save {
-    background: var(--primary);
+    background: var(--client-primary);
     color: white;
     padding: 14px 30px;
     border: none;
@@ -314,29 +251,24 @@
     cursor: pointer;
     transition: 0.2s;
 }
-
 .btn-save:hover {
     background: var(--primary-hover);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
 }
-
 .btn-save.secondary {
-    background: var(--text-title);
+    background: var(--client-text-title);
 }
-
-/* Card Endereço */
 .current-address-card {
     display: flex;
     align-items: center;
     gap: 20px;
     background: #F8FAFC;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--client-border);
     padding: 25px;
     border-radius: 12px;
     margin-bottom: 40px;
 }
-
 .addr-icon {
     width: 50px;
     height: 50px;
@@ -345,22 +277,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--primary);
+    color: var(--client-primary);
     font-size: 1.5rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
-
 .addr-info strong {
     display: block;
     font-size: 1.1rem;
-    color: var(--text-title);
+    color: var(--client-text-title);
     margin-bottom: 4px;
 }
-
 .addr-info span {
     color: var(--text-muted);
 }
-
 .btn-icon {
     margin-left: auto;
     background: none;
@@ -369,45 +298,35 @@
     color: var(--text-muted);
     cursor: pointer;
 }
-
 .btn-icon:hover {
-    color: var(--primary);
+    color: var(--client-primary);
 }
-
 .divider {
     height: 1px;
-    background: var(--border-color);
+    background: var(--client-border);
     margin: 40px 0;
 }
-
 .sub-title {
     font-size: 1.2rem;
-    color: var(--text-title);
+    color: var(--client-text-title);
     margin-bottom: 25px;
 }
-
 .mt-30 {
     margin-top: 30px;
 }
-
-/* Animation */
 .tab-content {
     animation: fadeIn 0.4s ease-out;
 }
-
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(10px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
-
-/* Responsividade */
 @media (max-width: 900px) {
     .full-screen-layout {
         display: flex;
@@ -415,17 +334,15 @@
         height: auto;
         padding: 15px;
     }
-
     .sidebar-panel {
         margin-bottom: 20px;
     }
-
     .content-panel {
         padding: 30px 20px;
     }
-
     .form-row {
         grid-template-columns: 1fr;
         gap: 0;
     }
 }
+
