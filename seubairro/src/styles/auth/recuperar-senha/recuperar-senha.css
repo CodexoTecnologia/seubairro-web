@@ -4,6 +4,7 @@
     min-height: 100vh;
     width: 100%;
 }
+
 .login-form-side {
     background: var(--bg-surface);
     display: flex;
@@ -14,10 +15,12 @@
     box-shadow: 10px 0 30px rgba(0, 0, 0, 0.02);
     z-index: 2;
 }
+
 .form-wrapper {
     width: 100%;
     max-width: 440px;
 }
+
 .back-link {
     display: inline-flex;
     align-items: center;
@@ -25,40 +28,49 @@
     font-weight: 600;
     color: var(--text-body);
 }
+
 .back-link:hover {
     color: var(--primary);
     text-decoration: none;
 }
+
 .auth-header {
     margin-bottom: 2rem;
 }
+
 .logo-link {
     display: flex;
     align-items: center;
     gap: 8px;
     margin-bottom: 1.5rem;
 }
+
 .logo-text {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-title);
 }
+
 .logo-text span {
     color: var(--primary);
 }
+
 .auth-header h1 {
     font-size: 1.875rem;
     color: var(--text-title);
     margin-bottom: 0.5rem;
     letter-spacing: -0.5px;
 }
+
 .auth-header p {
     color: var(--text-body);
     font-size: 1rem;
 }
+
 .input-group {
     margin-bottom: 1.25rem;
 }
+
 .input-group label {
     display: block;
     font-size: 0.875rem;
@@ -66,11 +78,13 @@
     color: var(--text-title);
     margin-bottom: 0.5rem;
 }
+
 .input-field {
     position: relative;
     display: flex;
     align-items: center;
 }
+
 .input-field .icon-left {
     position: absolute;
     left: 1rem;
@@ -78,6 +92,7 @@
     font-size: 1.125rem;
     pointer-events: none;
 }
+
 .input-field input {
     width: 100%;
     padding: 0.875rem 1rem 0.875rem 2.75rem;
@@ -88,11 +103,13 @@
     background: var(--bg-surface);
     transition: all 0.2s;
 }
+
 .input-field input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px var(--input-focus);
 }
+
 .btn-submit {
     width: 100%;
     background: var(--primary);
@@ -106,20 +123,24 @@
     transition: all 0.2s;
     margin-top: 1rem;
 }
+
 .btn-submit:hover:not(:disabled) {
     background: var(--primary-hover);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
+
 .btn-submit:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
+
 .success-box {
     text-align: center;
     padding: 30px 0;
     animation: fadeIn 0.5s ease;
 }
+
 .success-icon {
     width: 80px;
     height: 80px;
@@ -132,11 +153,13 @@
     font-size: 2.5rem;
     margin: 0 auto 20px auto;
 }
+
 .success-box p {
     color: var(--text-body);
     margin-bottom: 25px;
     font-size: 1rem;
 }
+
 .btn-outline {
     width: 100%;
     padding: 14px;
@@ -148,24 +171,29 @@
     color: var(--text-muted);
     transition: 0.3s;
 }
+
 .btn-outline:hover {
     border-color: var(--primary);
     color: var(--primary);
 }
+
 .auth-footer {
     margin-top: 2rem;
     text-align: center;
     font-size: 0.875rem;
     color: var(--text-body);
 }
+
 .auth-footer a {
     color: var(--accent);
     font-weight: 600;
     transition: text-decoration 0.2s;
 }
+
 .auth-footer a:hover {
     text-decoration: underline;
 }
+
 .login-visual-side {
     background: #0F172A;
     position: relative;
@@ -176,6 +204,7 @@
     overflow: hidden;
     color: white;
 }
+
 .rich-gradient-bg {
     position: absolute;
     width: 150%;
@@ -187,6 +216,7 @@
         #0F172A;
     z-index: 0;
 }
+
 .animation-layer {
     position: absolute;
     width: 100%;
@@ -197,6 +227,7 @@
     perspective: 1000px;
     z-index: 1;
 }
+
 .map-background {
     position: absolute;
     width: 140%;
@@ -210,6 +241,7 @@
     opacity: 0;
     animation: mapCycle 8s ease-in-out infinite;
 }
+
 .radar-center {
     position: relative;
     width: 100px;
@@ -219,6 +251,7 @@
     justify-content: center;
     z-index: 10;
 }
+
 .logo-core {
     width: 90px;
     height: 90px;
@@ -231,9 +264,11 @@
     z-index: 2;
     padding: 12px;
 }
+
 .logo-core img {
     width: 100%;
 }
+
 .radar-wave {
     position: absolute;
     top: 50%;
@@ -243,19 +278,23 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
     opacity: 0;
 }
+
 .w1 {
     animation: waveExpand 4s linear infinite;
     animation-delay: 0s;
 }
+
 .w2 {
     animation: waveExpand 4s linear infinite;
     animation-delay: 2s;
 }
+
 .app-point {
     position: absolute;
     opacity: 0;
     z-index: 5;
 }
+
 .point-icon {
     width: 44px;
     height: 44px;
@@ -268,18 +307,21 @@
     font-size: 1.2rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
+
 .p1 {
     top: 25%;
     right: 25%;
     animation: pointPop 8s ease-in-out infinite;
     animation-delay: 4s;
 }
+
 .p2 {
     bottom: 25%;
     left: 25%;
     animation: pointPop 8s ease-in-out infinite;
     animation-delay: 4.5s;
 }
+
 .visual-text-overlay {
     position: absolute;
     bottom: 50px;
@@ -288,73 +330,88 @@
     z-index: 20;
     color: white;
 }
+
 .visual-text-overlay h2 {
     font-size: 1.8rem;
     margin-bottom: 5px;
     font-weight: 700;
 }
+
 .visual-text-overlay p {
     opacity: 0.8;
 }
+
 @keyframes mapCycle {
+
     0%,
     100% {
         opacity: 0;
     }
+
     10%,
     30% {
         opacity: 0.4;
     }
+
     40% {
         opacity: 0;
         transform: rotateX(20deg) scale(1.1);
     }
 }
+
 @keyframes waveExpand {
     0% {
         width: 0;
         height: 0;
         opacity: 0.8;
     }
+
     100% {
         width: 600px;
         height: 600px;
         opacity: 0;
     }
 }
+
 @keyframes pointPop {
+
     0%,
     35% {
         transform: scale(0);
         opacity: 0;
     }
+
     40%,
     85% {
         transform: scale(1);
         opacity: 1;
     }
+
     90%,
     100% {
         transform: scale(0);
         opacity: 0;
     }
 }
+
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
+
 @media (max-width: 900px) {
     .login-container {
         grid-template-columns: 1fr;
     }
+
     .login-visual-side {
         display: none;
     }
 }
-

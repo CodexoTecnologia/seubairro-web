@@ -15,7 +15,7 @@ export default function ClientDashboard() {
             rating: 4.8,
             reviews: 120,
             distance: 0.2,
-            image: "https:
+            image: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop"
         },
         {
             id: 2,
@@ -26,7 +26,7 @@ export default function ClientDashboard() {
             rating: 5.0,
             reviews: 45,
             distance: 1.5,
-            image: "https:
+            image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1000&auto=format&fit=crop"
         },
         {
             id: 3,
@@ -37,7 +37,7 @@ export default function ClientDashboard() {
             rating: 4.5,
             reviews: 80,
             distance: 0.5,
-            image: "https:
+            image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1000&auto=format&fit=crop"
         },
         {
             id: 4,
@@ -48,7 +48,7 @@ export default function ClientDashboard() {
             rating: 4.9,
             reviews: 200,
             distance: 3.2,
-            image: "https:
+            image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1000&auto=format&fit=crop"
         },
         {
             id: 5,
@@ -59,7 +59,7 @@ export default function ClientDashboard() {
             rating: 4.7,
             reviews: 15,
             distance: 0.1,
-            image: "https:
+            image: "https://images.unsplash.com/photo-1598327771808-51885e342758?q=80&w=1000&auto=format&fit=crop"
         },
         {
             id: 6,
@@ -70,7 +70,7 @@ export default function ClientDashboard() {
             rating: 4.6,
             reviews: 30,
             distance: 0.8,
-            image: "https:
+            image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop"
         }
     ]
     const filteredData = adsData.filter(item => {

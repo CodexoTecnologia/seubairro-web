@@ -24,6 +24,7 @@
     --business-sidebar-width: 260px;
     --business-header-bg: #FFFFFF;
 }
+
 .business-layout,
 .theme-business {
     --color-primary: var(--business-primary);
@@ -49,4 +50,3 @@
     --color-warning: var(--business-warning);
     --color-warning-bg: var(--business-warning-bg);
 }
-

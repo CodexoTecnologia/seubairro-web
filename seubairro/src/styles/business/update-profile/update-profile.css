@@ -3,19 +3,23 @@
     background-color: var(--business-bg-page);
     min-height: 100vh;
 }
+
 .edit-header {
     margin-bottom: 24px;
 }
+
 .edit-header h1 {
     font-size: 1.75rem;
     font-weight: var(--font-weight-bold);
     color: var(--business-text-title);
     margin: 0;
 }
+
 .edit-header p {
     color: var(--text-muted);
     margin-top: 4px;
 }
+
 .form-section {
     background: var(--color-bg-surface);
     border-radius: var(--radius-md);
@@ -24,6 +28,7 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     border: 1px solid var(--business-border);
 }
+
 .section-title {
     font-size: 1.1rem;
     font-weight: var(--font-weight-semibold);
@@ -35,23 +40,28 @@
     align-items: center;
     gap: 8px;
 }
+
 .section-title i {
     color: var(--business-primary);
 }
+
 .form-grid {
     display: grid;
     gap: 16px;
 }
+
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
+
 .form-group label {
     font-size: 0.9rem;
     font-weight: var(--font-weight-medium);
     color: var(--business-text-title);
 }
+
 .form-input,
 .form-textarea,
 .form-select {
@@ -63,6 +73,7 @@
     transition: border-color var(--transition-base);
     width: 100%;
 }
+
 .form-input:focus,
 .form-textarea:focus,
 .form-select:focus {
@@ -70,15 +81,18 @@
     border-color: var(--business-primary);
     box-shadow: 0 0 0 3px var(--color-primary-light);
 }
+
 .form-textarea {
     min-height: 100px;
     resize: vertical;
 }
+
 .images-row {
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
 }
+
 .image-upload-box {
     border: 2px dashed var(--business-border);
     border-radius: var(--radius-md);
@@ -90,27 +104,33 @@
     transition: all var(--transition-base);
     background-color: var(--business-bg-page);
 }
+
 .image-upload-box:hover {
     border-color: var(--business-primary);
     background-color: var(--color-primary-light);
 }
+
 .upload-logo {
     width: 100px;
     height: 100px;
 }
+
 .upload-cover {
     width: 100%;
     height: 140px;
 }
+
 .upload-icon {
     font-size: 1.5rem;
     color: var(--text-muted);
     margin-bottom: 4px;
 }
+
 .upload-text {
     font-size: 0.8rem;
     color: var(--text-muted);
 }
+
 .toggle-wrapper {
     display: flex;
     align-items: center;
@@ -120,20 +140,24 @@
     border-radius: var(--radius-sm);
     border: 1px solid var(--business-border);
 }
+
 .toggle-label {
     font-weight: var(--font-weight-medium);
     color: var(--business-text-title);
 }
+
 .toggle-switch {
     position: relative;
     width: 44px;
     height: 24px;
 }
+
 .toggle-input {
     opacity: 0;
     width: 0;
     height: 0;
 }
+
 .toggle-slider {
     position: absolute;
     cursor: pointer;
@@ -145,6 +169,7 @@
     transition: .4s;
     border-radius: 24px;
 }
+
 .toggle-slider:before {
     position: absolute;
     content: "";
@@ -156,17 +181,21 @@
     transition: .4s;
     border-radius: 50%;
 }
+
 .toggle-input:checked+.toggle-slider {
     background-color: var(--business-primary);
 }
+
 .toggle-input:checked+.toggle-slider:before {
     transform: translateX(20px);
 }
+
 .hours-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
 }
+
 .action-bar {
     position: sticky;
     bottom: 0;
@@ -178,6 +207,7 @@
     gap: 12px;
     margin: 0 -16px -24px -16px;
 }
+
 .btn {
     padding: 12px 24px;
     border-radius: var(--radius-sm);
@@ -186,21 +216,24 @@
     font-size: 0.95rem;
     border: none;
 }
+
 .btn-secondary {
     background-color: var(--business-bg-page);
     color: var(--business-text-title);
 }
+
 .btn-primary {
     background-color: var(--business-primary);
     color: white;
 }
+
 @media (min-width: 768px) {
     .edit-profile-container {
         max-width: 800px;
         margin: 0 auto;
     }
+
     .form-grid.two-col {
         grid-template-columns: 1fr 1fr;
     }
 }
-

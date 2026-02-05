@@ -3,17 +3,20 @@
   min-height: 100vh;
   padding-bottom: 80px;
 }
+
 .profile-cover-wrapper {
   position: relative;
   height: 200px;
   background-color: #cbd5e1;
   overflow: hidden;
 }
+
 .cover-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .profile-header-card {
   position: relative;
   margin-top: -60px;
@@ -25,6 +28,7 @@
   margin-right: 16px;
   margin-bottom: 24px;
 }
+
 .profile-identity {
   display: flex;
   flex-direction: column;
@@ -32,6 +36,7 @@
   text-align: center;
   gap: 12px;
 }
+
 .profile-avatar {
   width: 100px;
   height: 100px;
@@ -42,12 +47,14 @@
   margin-top: -50px;
   box-shadow: var(--shadow-sm);
 }
+
 .profile-info h1 {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--business-text-title);
   margin: 0 0 4px 0;
 }
+
 .category-badge {
   display: inline-block;
   background-color: #eff6ff;
@@ -58,6 +65,7 @@
   border-radius: 20px;
   margin-bottom: 8px;
 }
+
 .rating-box {
   display: flex;
   align-items: center;
@@ -67,9 +75,11 @@
   font-size: 0.9rem;
   margin-bottom: 12px;
 }
+
 .rating-box i {
   color: #fbbf24;
 }
+
 .business-status {
   display: inline-flex;
   align-items: center;
@@ -77,24 +87,29 @@
   font-size: 0.9rem;
   font-weight: 500;
 }
+
 .business-status.open {
   color: var(--business-success);
 }
+
 .business-status.closed {
   color: var(--color-error);
 }
+
 .dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background-color: currentColor;
 }
+
 .profile-actions {
   display: flex;
   gap: 12px;
   margin-top: 16px;
   justify-content: center;
 }
+
 .btn-whatsapp {
   flex: 1;
   display: flex;
@@ -112,9 +127,11 @@
   text-decoration: none;
   transition: opacity 0.2s;
 }
+
 .btn-whatsapp:hover {
   opacity: 0.9;
 }
+
 .btn-share {
   width: 48px;
   display: flex;
@@ -127,24 +144,29 @@
   cursor: pointer;
   font-size: 1.2rem;
 }
+
 .profile-section {
   padding: 0 16px;
   margin-bottom: 32px;
 }
+
 .section-header {
   margin-bottom: 16px;
 }
+
 .section-header h2 {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--business-text-title);
   margin: 0;
 }
+
 .about-text {
   color: var(--business-text-body);
   line-height: 1.6;
   font-size: 0.95rem;
 }
+
 .info-card {
   background: var(--business-header-bg);
   border-radius: var(--radius-md);
@@ -152,31 +174,37 @@
   border: 1px solid var(--business-border);
   margin-bottom: 12px;
 }
+
 .info-row {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 12px;
 }
+
 .info-row:last-child {
   margin-bottom: 0;
 }
+
 .info-icon {
   color: var(--business-primary);
   font-size: 1.2rem;
   margin-top: 2px;
 }
+
 .info-content strong {
   display: block;
   color: var(--business-text-title);
   font-weight: 600;
   margin-bottom: 2px;
 }
+
 .info-content p {
   margin: 0;
   color: var(--business-text-body);
   font-size: 0.9rem;
 }
+
 .map-preview {
   margin-top: 12px;
   height: 120px;
@@ -189,11 +217,13 @@
   font-size: 0.9rem;
   cursor: pointer;
 }
+
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 16px;
 }
+
 .product-card {
   background: var(--business-header-bg);
   border-radius: var(--radius-md);
@@ -202,18 +232,22 @@
   border: 1px solid var(--business-border);
   transition: transform 0.2s;
 }
+
 .product-card:hover {
   transform: translateY(-2px);
 }
+
 .product-image {
   height: 120px;
   width: 100%;
   background-color: #f1f5f9;
   object-fit: cover;
 }
+
 .product-details {
   padding: 12px;
 }
+
 .product-title {
   font-size: 0.95rem;
   font-weight: 600;
@@ -223,11 +257,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .product-price {
   color: var(--business-primary);
   font-weight: 700;
   font-size: 1rem;
 }
+
 @media (min-width: 768px) {
   .profile-header-card {
     max-width: 700px;
@@ -239,26 +275,30 @@
     align-items: flex-end;
     gap: 24px;
   }
+
   .profile-identity {
     flex-direction: row;
     align-items: center;
     text-align: left;
     width: 100%;
   }
+
   .profile-avatar {
     margin-top: 0;
     width: 120px;
     height: 120px;
   }
+
   .profile-info {
     flex: 1;
   }
+
   .profile-actions {
     margin-top: 0;
     margin-left: auto;
   }
+
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }
-
