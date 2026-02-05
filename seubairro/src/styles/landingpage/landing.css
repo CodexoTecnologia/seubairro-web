@@ -1,0 +1,485 @@
+﻿/* =========================================
+   1. VARIÃVEIS & RESET (TEMA CLARO / CLEAN)
+   ========================================= */
+:root {
+    /* Paleta SeuBairro (Azul + Verde Ãgua) */
+    --primary: #2563EB;       /* Azul Royal (ConfianÃ§a/Tech) */
+    --primary-dark: #1E40AF;  /* Azul Escuro (Hover) */
+    
+    --accent: #0D9488;        /* Verde Ãgua/Teal (Local/Mapa) - Diferencia da Codexo */
+    
+    /* Fundos Claros */
+    --bg-body: #F8FAFC;       /* Cinza Gelo (Fundo Principal) */
+    --bg-surface: #FFFFFF;    /* Branco Puro (Cards) */
+    
+    /* Tipografia (Escura para contraste) */
+    --text-main: #1E293B;     /* Slate Dark (Quase preto) */
+    --text-muted: #64748B;    /* Cinza MÃ©dio */
+    
+    /* Bordas e Sombras Suaves */
+    --border-light: #E2E8F0;
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05); /* Sombra suave */
+    --shadow-hover: 0 10px 25px rgba(37, 99, 235, 0.1);
+    
+    /* Layout */
+    --max-width: 1200px;
+    --header-height: 80px;
+    --radius-card: 20px;
+    --radius-btn: 50px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a { text-decoration: none !important; color: inherit; transition: all 0.3s ease; }
+ul { list-style: none; }
+
+/* =========================================
+   2. BACKGROUND (CLEAN MAP)
+   ========================================= */
+.map-grid-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    /* Grid sutil cinza no fundo branco */
+    background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.glow-spot {
+    position: fixed; width: 800px; height: 800px;
+    /* Mancha de luz Azul/Teal muito suave */
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    z-index: -1; pointer-events: none;
+}
+.top-center { top: -300px; left: 50%; transform: translateX(-50%); }
+
+/* =========================================
+   3. NAVBAR (BRANCA CLEAN)
+   ========================================= */
+#header {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    height: var(--header-height);
+    background: rgba(255, 255, 255, 0.9); /* Branco translÃºcido */
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-light);
+    display: flex; align-items: center; transition: all 0.3s ease;
+}
+
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; width: 100%; }
+.header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+
+.brand { display: flex; align-items: center; gap: 10px; }
+.nav-logo { height: 32px; width: auto; }
+
+.brand-text { font-size: 1.35rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.03em; }
+.brand-text span { color: var(--primary); /* Azul no "Bairro" */ }
+
+#menu { display: flex; gap: 40px; align-items: center; }
+
+.nav-link {
+    font-size: 0.95rem; font-weight: 500; color: var(--text-muted); position: relative;
+}
+.nav-link:hover { color: var(--primary); }
+
+/* BotÃ£o Navbar Outline */
+.btn-header {
+    padding: 10px 24px; font-size: 0.9rem; border-radius: var(--radius-btn);
+    background: transparent; color: var(--primary);
+    border: 1px solid var(--primary);
+    display: inline-flex; align-items: center; gap: 8px; font-weight: 600;
+}
+.btn-header:hover {
+    background: var(--primary); color: #fff;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); transform: translateY(-1px);
+}
+
+#btn-mobile { display: none; background: transparent; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
+
+/* =========================================
+   4. HERO SECTION
+   ========================================= */
+.hero { padding-top: 160px; padding-bottom: 80px; position: relative; }
+.hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; }
+
+/* Badge Clean */
+.status-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #EFF6FF; /* Fundo azul bem clarinho */
+    border: 1px solid #DBEAFE;
+    color: var(--primary);
+    padding: 6px 16px; border-radius: 50px;
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;
+    margin-bottom: 24px;
+}
+.pulse-dot {
+    width: 8px; height: 8px; background: var(--accent); /* Verde Teal */
+    border-radius: 50%; box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse { 0% { transform: scale(0.95); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } 100% { transform: scale(0.95); opacity: 1; } }
+
+.hero-text h1 { font-size: 3.5rem; line-height: 1.15; margin-bottom: 20px; font-weight: 800; letter-spacing: -1px; color: var(--text-main); }
+
+.gradient-text {
+    /* Gradiente Azul para Verde Teal */
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.hero-text p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 35px; max-width: 520px; font-weight: 400; }
+
+.cta-group { display: flex; align-items: center; gap: 20px; }
+
+/* BotÃ£o Principal SÃ³lido */
+.btn-primary {
+    background: var(--primary); color: white;
+    padding: 16px 32px; border-radius: var(--radius-btn);
+    font-weight: 700; border: none; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+.btn-primary:not(.btn-header):hover {
+    background: var(--primary-dark); transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+.btn-text { color: var(--text-muted); display: flex; align-items: center; gap: 6px; font-size: 1rem; font-weight: 600; }
+.btn-text:hover { color: var(--primary); }
+
+/* =========================================
+   5. RADAR / MAPA (VersÃ£o Clean)
+   ========================================= */
+.hero-visual { display: flex; justify-content: center; position: relative; height: 420px; align-items: center; }
+
+.radar-container {
+    width: 400px; height: 400px; position: relative;
+    transform: rotateX(45deg) rotateZ(0deg); transform-style: preserve-3d;
+}
+
+.radar-circle {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(37, 99, 235, 0.15); /* Bordas cinza/azuladas */
+    background: rgba(255, 255, 255, 0.4);
+}
+.c1 { width: 130px; height: 130px; border-color: rgba(37, 99, 235, 0.3); }
+.c2 { width: 260px; height: 260px; border-style: dashed; }
+.c3 { width: 390px; height: 390px; }
+
+.radar-sweep {
+    position: absolute; top: 50%; left: 50%; width: 50%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary));
+    transform-origin: left center; animation: radar-spin 4s linear infinite;
+    opacity: 0.7;
+}
+@keyframes radar-spin { from { transform: translateY(-50%) rotate(0deg); } to { transform: translateY(-50%) rotate(360deg); } }
+
+.center-pin {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(-45deg);
+    background: #fff; width: 90px; height: 90px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2); /* Sombra suave colorida */
+    z-index: 10;
+}
+.pin-logo { width: 80%; height: auto; animation: float-logo 3s ease-in-out infinite; }
+@keyframes float-logo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+.map-point {
+    position: absolute; width: 40px; height: 40px;
+    background: #fff; border: 2px solid var(--accent); color: var(--accent);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; transform: rotateX(-45deg);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    opacity: 0; animation: fade-in-out 4s infinite;
+}
+.p1 { top: 30%; left: 30%; animation-delay: 0.5s; }
+.p2 { top: 70%; left: 70%; animation-delay: 1.5s; }
+.p3 { top: 20%; left: 80%; animation-delay: 2.5s; }
+@keyframes fade-in-out { 0%, 100% { opacity: 0; transform: rotateX(-45deg) scale(0.5); } 50% { opacity: 1; transform: rotateX(-45deg) scale(1); } }
+
+/* =========================================
+   6. INFO BAR (Branca/Cinza)
+   ========================================= */
+.info-bar {
+    border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
+    background: #F1F5F9; /* Fundo Cinza Claro */
+    padding: 30px 0; margin-top: 60px;
+}
+.info-grid { display: flex; justify-content: space-between; align-items: center; }
+.info-item { display: flex; align-items: center; gap: 16px; }
+.info-item i { font-size: 2rem; color: var(--primary); }
+.info-item strong { display: block; color: var(--text-main); font-size: 1.05rem; margin-bottom: 4px; }
+.info-item span { color: var(--text-muted); font-size: 0.9rem; }
+.divider { width: 1px; height: 40px; background: #CBD5E1; }
+
+/* =========================================
+   7. SEÃ‡Ã•ES E CARDS (Estilo "Paper")
+   ========================================= */
+.section-padding { padding: 100px 0; }
+.section-header { text-align: center; margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
+.section-header h2 { font-size: 2.5rem; margin-bottom: 15px; color: var(--text-main); font-weight: 800; letter-spacing: -0.5px; }
+.section-header p { color: var(--text-muted); font-size: 1.15rem; }
+.grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+
+.glass-card {
+    background: var(--bg-surface); /* Branco */
+    border: 1px solid var(--border-light);
+    padding: 40px; border-radius: var(--radius-card);
+    transition: 0.3s; position: relative; overflow: hidden;
+    box-shadow: var(--shadow-card);
+}
+.glass-card:hover {
+    border-color: var(--primary); transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+.glass-card.highlight {
+    background: linear-gradient(180deg, #F0FDFA 0%, #FFFFFF 100%); /* Leve toque Teal */
+    border-color: #CCFBF1;
+}
+
+.icon-box { font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
+.highlight .icon-box { color: var(--accent); } /* Ãcone Teal no destaque */
+
+.glass-card h3 { font-size: 1.4rem; margin-bottom: 12px; color: var(--text-main); font-weight: 700; }
+.glass-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
+
+/* =========================================
+   8. ECOSSISTEMA
+   ========================================= */
+.ecosystem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.eco-card {
+    background: var(--bg-surface); border: 1px solid var(--border-light);
+    padding: 45px; border-radius: var(--radius-card); position: relative; overflow: hidden; transition: 0.3s;
+    box-shadow: var(--shadow-card);
+}
+.eco-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+
+/* Headers coloridos sutis */
+.user-side { border-top: 5px solid var(--primary); }
+.business-side { border-top: 5px solid var(--accent); }
+
+.eco-icon {
+    font-size: 2rem; color: var(--primary);
+    background: #EFF6FF; /* Fundo icone azul claro */
+    width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;
+    border-radius: 16px; margin-bottom: 25px;
+}
+.business-side .eco-icon { color: var(--accent); background: #F0FDFA; }
+
+.eco-card h3 { font-size: 1.6rem; margin-bottom: 20px; color: var(--text-main); font-weight: 700; }
+.eco-card ul li { display: flex; gap: 12px; margin-bottom: 16px; color: var(--text-muted); font-size: 1rem; }
+.eco-card ul li i { font-size: 1.2rem; }
+.user-side ul li i { color: var(--primary); }
+.business-side ul li i { color: var(--accent); }
+
+.eco-badge {
+    position: absolute; top: 25px; right: 25px;
+    background: #F0FDFA; color: var(--accent);
+    padding: 5px 14px; border-radius: 50px;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    border: 1px solid #CCFBF1;
+}
+
+/* =========================================
+   9. ROADMAP (TRAJETÃ“RIA)
+   ========================================= */
+.timeline-wrapper { position: relative; padding: 20px 0; margin-bottom: 40px; }
+.timeline-line {
+    position: absolute; top: 50px; left: 10%; width: 80%; height: 2px;
+    background: linear-gradient(90deg, var(--border-light) 0%, var(--primary) 50%, var(--border-light) 100%);
+    z-index: 0;
+}
+.timeline-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; position: relative; z-index: 1; }
+.timeline-card {
+    background: var(--bg-surface); border: 1px solid var(--border-light);
+    padding: 30px; border-radius: var(--radius-card); transition: 0.3s; text-align: center;
+    box-shadow: var(--shadow-card);
+}
+
+.timeline-icon {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: #fff; border: 1px solid var(--border-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; color: var(--text-muted);
+    margin: 0 auto 20px auto; position: relative; z-index: 2;
+}
+
+/* FASES */
+.timeline-card.done .timeline-icon { border-color: var(--primary); color: var(--primary); background: #EFF6FF; }
+.timeline-card.active { transform: translateY(-10px); border-color: var(--accent); }
+.timeline-card.active .timeline-icon { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3); }
+.timeline-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: white;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 50px;
+}
+
+.step-label { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 5px; font-weight: 600; }
+.timeline-card h3 { font-size: 1.25rem; margin-bottom: 10px; color: var(--text-main); font-weight: 700; }
+.timeline-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+.roadmap-footer { text-align: center; margin-top: 40px; color: var(--text-muted); }
+.link-highlight { color: var(--primary); font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+
+/* =========================================
+   10. FOOTER MODERN (ALINHADO)
+   ========================================= */
+.footer-modern {
+    background: #0f172a; /* Azul Marinho Profundo */
+    padding: 80px 0 30px 0;
+    position: relative;
+    color: #F1F5F9;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Linha colorida no topo */
+.footer-modern::before {
+    content: '';
+    position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+    opacity: 0.6;
+}
+
+.footer-grid {
+    display: grid;
+    /* Colunas: Marca (maior), Nav (mÃ©dia), Dev (mÃ©dia) */
+    grid-template-columns: 1.5fr 1fr 1.2fr;
+    gap: 40px;
+    margin-bottom: 60px;
+    align-items: start; /* Garante que tudo comece do topo */
+}
+
+/* Coluna 1: Marca */
+.brand-col { padding-right: 20px; }
+
+.footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.footer-logo-img { height: 32px; width: auto; filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.3)); }
+.footer-desc { color: #94A3B8; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.6; max-width: 350px; }
+
+.social-links { display: flex; gap: 12px; }
+.social-links a {
+    width: 40px; height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #94A3B8; transition: 0.3s;
+}
+.social-links a:hover {
+    background: var(--primary); color: #fff;
+    border-color: var(--primary); transform: translateY(-3px);
+}
+
+/* Coluna 2: NavegaÃ§Ã£o */
+.footer-col h4 {
+    color: #fff; font-size: 1.1rem; margin-bottom: 25px;
+    font-weight: 700; letter-spacing: -0.01em;
+}
+
+.footer-nav-list li { margin-bottom: 12px; }
+.footer-nav-list a {
+    color: #94A3B8; font-size: 0.95rem; transition: 0.3s; display: inline-block;
+}
+.footer-nav-list a:hover { color: var(--accent); transform: translateX(5px); }
+
+/* Coluna 3: Codexo Badge (Pill Style) */
+.codexo-badge {
+    display: inline-flex; align-items: center; gap: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 24px; border-radius: 50px;
+    transition: all 0.3s ease; text-decoration: none;
+    max-width: fit-content; /* Ocupa apenas o espaÃ§o necessÃ¡rio */
+}
+
+.codexo-badge:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.dev-text {
+    font-size: 0.75rem; color: #94A3B8;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
+    white-space: nowrap;
+}
+
+.codexo-logo {
+    height: 22px; width: auto;
+    filter: grayscale(100%) brightness(2); opacity: 0.8; transition: 0.3s;
+}
+.codexo-badge:hover .codexo-logo { filter: grayscale(0%) brightness(1); opacity: 1; }
+.codexo-badge:hover .dev-text { color: #fff; }
+
+/* Barra Inferior */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 30px;
+    display: flex; justify-content: space-between; align-items: center;
+    color: #64748B; font-size: 0.85rem;
+}
+
+.location i { color: var(--primary); margin-right: 6px; font-size: 1rem; vertical-align: bottom; }
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr; /* 2 Colunas */
+        gap: 40px;
+    }
+    .dev-col { grid-column: span 2; } /* Badge ocupa largura total no tablet */
+}
+
+@media (max-width: 600px) {
+    .footer-grid {
+        grid-template-columns: 1fr; /* 1 Coluna */
+        text-align: center; gap: 50px;
+    }
+    .dev-col { grid-column: span 1; }
+    
+    .brand-col, .footer-brand, .social-links, .codexo-badge {
+        justify-content: center; margin: 0 auto;
+    }
+    .footer-desc { margin: 0 auto 25px auto; }
+    
+    .footer-bottom { flex-direction: column; gap: 15px; }
+}
+/* =========================================
+   11. MOBILE
+   ========================================= */
+@media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr; text-align: center; }
+    .hero-text h1 { font-size: 2.5rem; }
+    .cta-group { justify-content: center; }
+    .hero-visual { height: 320px; margin-top: 40px; }
+    .radar-container { transform: rotateX(45deg) scale(0.8); }
+    .info-grid { flex-direction: column; gap: 25px; align-items: flex-start; }
+    .divider { display: none; }
+    .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 50px; }
+    .brand-col, .footer-brand, .social-links, .codexo-badge { justify-content: center; margin: 0 auto; }
+    .footer-bottom { flex-direction: column; gap: 15px; }
+    
+    #btn-mobile { display: block; color: var(--text-main); }
+    #menu {
+        position: fixed; top: var(--header-height); right: 0; width: 100%; height: 0;
+        background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px);
+        flex-direction: column; align-items: center; justify-content: center; gap: 30px; padding: 0;
+        visibility: hidden; overflow: hidden; transition: 0.4s;
+        border-bottom: 1px solid var(--border-light);
+    }
+    #menu.active { height: 350px; visibility: visible; padding: 40px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .ecosystem-grid, .timeline-grid { grid-template-columns: 1fr; }
+    .timeline-line { width: 2px; height: 100%; top: 0; left: 50%; transform: translateX(-50%); }
+}
