@@ -3,7 +3,7 @@ import React from 'react'
 import '@/styles/business/layout.css'
 import AppNavbar from '@/components/layout/navbar'
 import { BusinessSidebar } from '@/components/layout/sidebar'
-import { Footer } from '@/components/layout/footer'
+import Footer from '@/components/layout/footer'
 export default function BusinessLayout({
     children,
 }: {

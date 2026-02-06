@@ -13,7 +13,7 @@ export default function ListarAnuncioPage() {
             price: "R$ 120,00",
             status: "active",
             category: "food",
-            image: "https:
+            image: "https://placehold.co/400",
             views: 124
         },
         {
@@ -22,7 +22,7 @@ export default function ListarAnuncioPage() {
             price: "R$ 8,50",
             status: "active",
             category: "food",
-            image: "https:
+            image: "https://placehold.co/400",
             views: 45
         },
         {
@@ -31,7 +31,7 @@ export default function ListarAnuncioPage() {
             price: "R$ 45,90",
             status: "inactive",
             category: "retail",
-            image: "https:
+            image: "https://placehold.co/400",
             views: 12
         }
     ]
