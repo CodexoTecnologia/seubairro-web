@@ -1,27 +1,21 @@
-﻿/* =========================================
-   1. VARIÃVEIS & RESET (TEMA CLARO / CLEAN)
-   ========================================= */
+﻿
 :root {
-    /* Paleta SeuBairro (Azul + Verde Ãgua) */
-    --primary: #2563EB;       /* Azul Royal (ConfianÃ§a/Tech) */
-    --primary-dark: #1E40AF;  /* Azul Escuro (Hover) */
+
+    --primary: #2563EB;       
+    --primary-dark: #1E40AF;  
     
-    --accent: #0D9488;        /* Verde Ãgua/Teal (Local/Mapa) - Diferencia da Codexo */
+    --accent: #0D9488;      
+
+    --bg-body: #F8FAFC;      
+    --bg-surface: #FFFFFF;  
     
-    /* Fundos Claros */
-    --bg-body: #F8FAFC;       /* Cinza Gelo (Fundo Principal) */
-    --bg-surface: #FFFFFF;    /* Branco Puro (Cards) */
-    
-    /* Tipografia (Escura para contraste) */
-    --text-main: #1E293B;     /* Slate Dark (Quase preto) */
-    --text-muted: #64748B;    /* Cinza MÃ©dio */
-    
-    /* Bordas e Sombras Suaves */
+    --text-main: #1E293B;  
+    --text-muted: #64748B;  
+
     --border-light: #E2E8F0;
-    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05); /* Sombra suave */
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05); 
     --shadow-hover: 0 10px 25px rgba(37, 99, 235, 0.1);
-    
-    /* Layout */
+
     --max-width: 1200px;
     --header-height: 80px;
     --radius-card: 20px;
@@ -43,12 +37,8 @@ body {
 a { text-decoration: none !important; color: inherit; transition: all 0.3s ease; }
 ul { list-style: none; }
 
-/* =========================================
-   2. BACKGROUND (CLEAN MAP)
-   ========================================= */
 .map-grid-bg {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    /* Grid sutil cinza no fundo branco */
     background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
     background-size: 30px 30px;
     opacity: 0.5;
@@ -58,42 +48,146 @@ ul { list-style: none; }
 
 .glow-spot {
     position: fixed; width: 800px; height: 800px;
-    /* Mancha de luz Azul/Teal muito suave */
     background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 60%);
     border-radius: 50%;
     z-index: -1; pointer-events: none;
 }
 .top-center { top: -300px; left: 50%; transform: translateX(-50%); }
 
-/* =========================================
-   3. NAVBAR (BRANCA CLEAN)
-   ========================================= */
 #header {
-    position: fixed; top: 0; width: 100%; z-index: 1000;
-    height: var(--header-height);
-    background: rgba(255, 255, 255, 0.9); /* Branco translÃºcido */
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border-light);
-    display: flex; align-items: center; transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
 }
 
 .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; width: 100%; }
-.header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    height: 100%;
+}
 
-.brand { display: flex; align-items: center; gap: 10px; }
-.nav-logo { height: 32px; width: auto; }
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
 
-.brand-text { font-size: 1.35rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.03em; }
-.brand-text span { color: var(--primary); /* Azul no "Bairro" */ }
+.nav-logo {
+    height: 32px;
+    width: auto;
+}
+.nav-login {
+    position: absolute;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+}
 
-#menu { display: flex; gap: 40px; align-items: center; }
+.btn-login {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: rgb(255, 255, 255);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+    position: relative;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+}
+
+
+.btn-login i {
+    font-size: 1.05rem;
+}
+
+.menu-login-item {
+    display: none;
+}
+
+.btn-login-desktop {
+    display: inline-flex;
+}
+
+#btn-mobile { 
+    display: none; 
+    background: transparent; 
+    border: none; 
+    color: var(--text-main); 
+    font-size: 1.5rem; 
+    cursor: pointer; 
+    padding: 0.5rem;
+}
+
+.brand-text {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.03em;
+}
+
+.brand-text span { color: var(--primary); }
+
+#nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#menu { display: flex; gap: 40px; gap: 2rem; list-style: none; align-items: center; }
 
 .nav-link {
-    font-size: 0.95rem; font-weight: 500; color: var(--text-muted); position: relative;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
 }
-.nav-link:hover { color: var(--primary); }
 
-/* BotÃ£o Navbar Outline */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
 .btn-header {
     padding: 10px 24px; font-size: 0.9rem; border-radius: var(--radius-btn);
     background: transparent; color: var(--primary);
@@ -107,42 +201,34 @@ ul { list-style: none; }
 
 #btn-mobile { display: none; background: transparent; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
 
-/* =========================================
-   4. HERO SECTION
-   ========================================= */
-.hero { padding-top: 160px; padding-bottom: 80px; position: relative; }
+.hero {
+    padding-top: 140px;
+    padding-bottom: 100px;
+    position: relative;
+}
 .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; }
 
-/* Badge Clean */
-.status-badge {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: #EFF6FF; /* Fundo azul bem clarinho */
-    border: 1px solid #DBEAFE;
-    color: var(--primary);
-    padding: 6px 16px; border-radius: 50px;
-    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;
+.hero-text h1 {
+    font-size: 3.75rem;
+    line-height: 1.1;
     margin-bottom: 24px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    color: var(--text-main);
 }
-.pulse-dot {
-    width: 8px; height: 8px; background: var(--accent); /* Verde Teal */
-    border-radius: 50%; box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2);
-    animation: pulse 2s infinite;
-}
-@keyframes pulse { 0% { transform: scale(0.95); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } 100% { transform: scale(0.95); opacity: 1; } }
-
-.hero-text h1 { font-size: 3.5rem; line-height: 1.15; margin-bottom: 20px; font-weight: 800; letter-spacing: -1px; color: var(--text-main); }
-
 .gradient-text {
-    /* Gradiente Azul para Verde Teal */
     background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    display: inline-block;
 }
 
 .hero-text p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 35px; max-width: 520px; font-weight: 400; }
 
 .cta-group { display: flex; align-items: center; gap: 20px; }
 
-/* BotÃ£o Principal SÃ³lido */
 .btn-primary {
     background: var(--primary); color: white;
     padding: 16px 32px; border-radius: var(--radius-btn);
@@ -158,9 +244,7 @@ ul { list-style: none; }
 .btn-text { color: var(--text-muted); display: flex; align-items: center; gap: 6px; font-size: 1rem; font-weight: 600; }
 .btn-text:hover { color: var(--primary); }
 
-/* =========================================
-   5. RADAR / MAPA (VersÃ£o Clean)
-   ========================================= */
+
 .hero-visual { display: flex; justify-content: center; position: relative; height: 420px; align-items: center; }
 
 .radar-container {
@@ -171,8 +255,7 @@ ul { list-style: none; }
 .radar-circle {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     border-radius: 50%;
-    border: 1px solid rgba(37, 99, 235, 0.15); /* Bordas cinza/azuladas */
-    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(37, 99, 235, 0.15); 
 }
 .c1 { width: 130px; height: 130px; border-color: rgba(37, 99, 235, 0.3); }
 .c2 { width: 260px; height: 260px; border-style: dashed; }
@@ -188,12 +271,13 @@ ul { list-style: none; }
 
 .center-pin {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(-45deg);
-    background: #fff; width: 90px; height: 90px;
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2); /* Sombra suave colorida */
-    z-index: 10;
+    width: 130px;
+    height: 130px;
+    z-index: 12;
 }
 .pin-logo { width: 80%; height: auto; animation: float-logo 3s ease-in-out infinite; }
+
 @keyframes float-logo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
 .map-point {
@@ -209,12 +293,9 @@ ul { list-style: none; }
 .p3 { top: 20%; left: 80%; animation-delay: 2.5s; }
 @keyframes fade-in-out { 0%, 100% { opacity: 0; transform: rotateX(-45deg) scale(0.5); } 50% { opacity: 1; transform: rotateX(-45deg) scale(1); } }
 
-/* =========================================
-   6. INFO BAR (Branca/Cinza)
-   ========================================= */
 .info-bar {
     border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
-    background: #F1F5F9; /* Fundo Cinza Claro */
+    background: #F1F5F9;
     padding: 30px 0; margin-top: 60px;
 }
 .info-grid { display: flex; justify-content: space-between; align-items: center; }
@@ -224,17 +305,20 @@ ul { list-style: none; }
 .info-item span { color: var(--text-muted); font-size: 0.9rem; }
 .divider { width: 1px; height: 40px; background: #CBD5E1; }
 
-/* =========================================
-   7. SEÃ‡Ã•ES E CARDS (Estilo "Paper")
-   ========================================= */
 .section-padding { padding: 100px 0; }
-.section-header { text-align: center; margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
+.section-header { 
+    text-align: center; 
+    margin-bottom: 60px; 
+    max-width: 800px; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
 .section-header h2 { font-size: 2.5rem; margin-bottom: 15px; color: var(--text-main); font-weight: 800; letter-spacing: -0.5px; }
 .section-header p { color: var(--text-muted); font-size: 1.15rem; }
 .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
 
 .glass-card {
-    background: var(--bg-surface); /* Branco */
+    background: var(--bg-surface); 
     border: 1px solid var(--border-light);
     padding: 40px; border-radius: var(--radius-card);
     transition: 0.3s; position: relative; overflow: hidden;
@@ -245,19 +329,16 @@ ul { list-style: none; }
     box-shadow: var(--shadow-hover);
 }
 .glass-card.highlight {
-    background: linear-gradient(180deg, #F0FDFA 0%, #FFFFFF 100%); /* Leve toque Teal */
+    background: linear-gradient(180deg, #F0FDFA 0%, #FFFFFF 100%); 
     border-color: #CCFBF1;
 }
 
 .icon-box { font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
-.highlight .icon-box { color: var(--accent); } /* Ãcone Teal no destaque */
+.highlight .icon-box { color: var(--accent); } 
 
 .glass-card h3 { font-size: 1.4rem; margin-bottom: 12px; color: var(--text-main); font-weight: 700; }
 .glass-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
 
-/* =========================================
-   8. ECOSSISTEMA
-   ========================================= */
 .ecosystem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
 .eco-card {
     background: var(--bg-surface); border: 1px solid var(--border-light);
@@ -266,13 +347,12 @@ ul { list-style: none; }
 }
 .eco-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
 
-/* Headers coloridos sutis */
 .user-side { border-top: 5px solid var(--primary); }
 .business-side { border-top: 5px solid var(--accent); }
 
 .eco-icon {
     font-size: 2rem; color: var(--primary);
-    background: #EFF6FF; /* Fundo icone azul claro */
+    background: #EFF6FF; 
     width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;
     border-radius: 16px; margin-bottom: 25px;
 }
@@ -292,9 +372,6 @@ ul { list-style: none; }
     border: 1px solid #CCFBF1;
 }
 
-/* =========================================
-   9. ROADMAP (TRAJETÃ“RIA)
-   ========================================= */
 .timeline-wrapper { position: relative; padding: 20px 0; margin-bottom: 40px; }
 .timeline-line {
     position: absolute; top: 50px; left: 10%; width: 80%; height: 2px;
@@ -316,7 +393,6 @@ ul { list-style: none; }
     margin: 0 auto 20px auto; position: relative; z-index: 2;
 }
 
-/* FASES */
 .timeline-card.done .timeline-icon { border-color: var(--primary); color: var(--primary); background: #EFF6FF; }
 .timeline-card.active { transform: translateY(-10px); border-color: var(--accent); }
 .timeline-card.active .timeline-icon { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3); }
@@ -332,11 +408,8 @@ ul { list-style: none; }
 .roadmap-footer { text-align: center; margin-top: 40px; color: var(--text-muted); }
 .link-highlight { color: var(--primary); font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
 
-/* =========================================
-   10. FOOTER MODERN (ALINHADO)
-   ========================================= */
 .footer-modern {
-    background: #0f172a; /* Azul Marinho Profundo */
+    background: #0f172a;
     padding: 80px 0 30px 0;
     position: relative;
     color: #F1F5F9;
@@ -353,14 +426,12 @@ ul { list-style: none; }
 
 .footer-grid {
     display: grid;
-    /* Colunas: Marca (maior), Nav (mÃ©dia), Dev (mÃ©dia) */
     grid-template-columns: 1.5fr 1fr 1.2fr;
     gap: 40px;
     margin-bottom: 60px;
-    align-items: start; /* Garante que tudo comece do topo */
+    align-items: start; 
 }
 
-/* Coluna 1: Marca */
 .brand-col { padding-right: 20px; }
 
 .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
@@ -381,7 +452,6 @@ ul { list-style: none; }
     border-color: var(--primary); transform: translateY(-3px);
 }
 
-/* Coluna 2: NavegaÃ§Ã£o */
 .footer-col h4 {
     color: #fff; font-size: 1.1rem; margin-bottom: 25px;
     font-weight: 700; letter-spacing: -0.01em;
@@ -393,14 +463,13 @@ ul { list-style: none; }
 }
 .footer-nav-list a:hover { color: var(--accent); transform: translateX(5px); }
 
-/* Coluna 3: Codexo Badge (Pill Style) */
 .codexo-badge {
     display: inline-flex; align-items: center; gap: 15px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 12px 24px; border-radius: 50px;
     transition: all 0.3s ease; text-decoration: none;
-    max-width: fit-content; /* Ocupa apenas o espaÃ§o necessÃ¡rio */
+    max-width: fit-content; 
 }
 
 .codexo-badge:hover {
@@ -433,18 +502,17 @@ ul { list-style: none; }
 
 .location i { color: var(--primary); margin-right: 6px; font-size: 1rem; vertical-align: bottom; }
 
-/* Responsividade */
 @media (max-width: 900px) {
     .footer-grid {
-        grid-template-columns: 1fr 1fr; /* 2 Colunas */
+        grid-template-columns: 1fr 1fr; 
         gap: 40px;
     }
-    .dev-col { grid-column: span 2; } /* Badge ocupa largura total no tablet */
+    .dev-col { grid-column: span 2; } 
 }
 
 @media (max-width: 600px) {
     .footer-grid {
-        grid-template-columns: 1fr; /* 1 Coluna */
+        grid-template-columns: 1fr; 
         text-align: center; gap: 50px;
     }
     .dev-col { grid-column: span 1; }
@@ -456,30 +524,134 @@ ul { list-style: none; }
     
     .footer-bottom { flex-direction: column; gap: 15px; }
 }
-/* =========================================
-   11. MOBILE
-   ========================================= */
+
 @media (max-width: 768px) {
-    .hero-grid { grid-template-columns: 1fr; text-align: center; }
-    .hero-text h1 { font-size: 2.5rem; }
-    .cta-group { justify-content: center; }
-    .hero-visual { height: 320px; margin-top: 40px; }
-    .radar-container { transform: rotateX(45deg) scale(0.8); }
-    .info-grid { flex-direction: column; gap: 25px; align-items: flex-start; }
-    .divider { display: none; }
-    .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 50px; }
-    .brand-col, .footer-brand, .social-links, .codexo-badge { justify-content: center; margin: 0 auto; }
-    .footer-bottom { flex-direction: column; gap: 15px; }
+    #header {
+        height: 65px;
+    }
+
+    .header-content { 
+        padding: 0 1rem;
+    }
     
-    #btn-mobile { display: block; color: var(--text-main); }
+    .nav-logo {
+        height: 28px;
+    }
+    
+    .brand-text {
+        font-size: 1.1rem;
+    }
+    
+    #nav {
+        position: static;
+        transform: none;
+    }
+    
+    #btn-mobile {
+        display: block;
+    }
+    
+    .btn-login-desktop {
+        display: none !important;
+    }
+    
+    .menu-login-item {
+        display: block;
+        width: 100%;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-light);
+    }
+    
+    .menu-login-item .btn-login {
+        width: 100%;
+        justify-content: center;
+        padding: 0.875rem 1.5rem;
+        font-size: 0.95rem;
+    }
+    
     #menu {
-        position: fixed; top: var(--header-height); right: 0; width: 100%; height: 0;
-        background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px);
-        flex-direction: column; align-items: center; justify-content: center; gap: 30px; padding: 0;
-        visibility: hidden; overflow: hidden; transition: 0.4s;
+        position: fixed;
+        top: 65px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 0;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        padding: 0;
+        visibility: hidden;
+        overflow: hidden;
+        transition: all 0.4s ease;
         border-bottom: 1px solid var(--border-light);
     }
-    #menu.active { height: 350px; visibility: visible; padding: 40px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .ecosystem-grid, .timeline-grid { grid-template-columns: 1fr; }
-    .timeline-line { width: 2px; height: 100%; top: 0; left: 50%; transform: translateX(-50%); }
+    
+    #menu.active {
+        height: auto;
+        visibility: visible;
+        padding: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    #menu li {
+        width: 100%;
+    }
+    
+    .nav-link {
+        display: block;
+        text-align: center;
+        font-size: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border-light);
+    }
+    
+    #menu li:nth-last-child(2) .nav-link {
+        border-bottom: none;
+    }
+    
+    .nav-link::after {
+        display: none;
+    }
+    
+    .hero {
+        padding-top: 120px;
+    }
+    
+    .hero-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+    
+    .cta-group { 
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .info-grid { 
+        flex-direction: column; 
+        gap: 25px; 
+    }
+    
+    .divider { 
+        display: none; 
+    }
+    
+    .ecosystem-grid, .timeline-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .timeline-line { 
+        display: none; 
+    }
+    
+    .footer-grid { 
+        grid-template-columns: 1fr; 
+    }
 }
