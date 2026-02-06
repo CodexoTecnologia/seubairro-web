@@ -1,0 +1,71 @@
+.back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    padding: 0;
+    z-index: 50;
+    color: var(--color-text-title, #0F172A);
+}
+
+.back-btn:hover {
+    width: 110px;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.back-btn .icon-box {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-primary, #2563EB);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+
+.back-btn svg {
+    fill: white;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover svg {
+    transform: translateX(-2px);
+}
+
+.back-btn .label {
+    opacity: 0;
+    white-space: nowrap;
+    margin-left: 48px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transform: translateX(-10px);
+    transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+    pointer-events: none;
+}
+
+.back-btn:hover .label {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.back-btn.business .icon-box {
+    background-color: #0F766E;
+}

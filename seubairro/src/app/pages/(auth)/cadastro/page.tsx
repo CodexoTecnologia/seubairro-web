@@ -3,7 +3,10 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import SplitText from '@/components/ui/SplitText'
+import AuthVisualPanel from '@/components/auth/auth-visual-panel'
 import '@/styles/auth/cadastro/cadastro.css'
+import '@/styles/auth/cadastro/client-forms.css'
+import '@/styles/auth/cadastro/business-forms.css'
 import { ClientForm } from './components/client.form'
 import { BusinessForm } from './components/business.form'
 import BackButton from '@/components/ui/BackButton'
@@ -97,7 +100,7 @@ export default function Cadastro() {
                                 <div className="card-arrow"><i className="ri-arrow-right-line"></i></div>
                             </div>
                             <div className="auth-footer">
-                                <p>Já tem uma conta? <Link href="/login">Fazer Login</Link></p>
+                                <p>Já tem uma conta? <Link href="login">Fazer Login</Link></p>
                             </div>
                         </div>
                     )}
@@ -109,36 +112,11 @@ export default function Cadastro() {
                     )}
                 </div>
             </div>
-            <div className="login-visual-side">
-                <div className="animation-layer">
-                    <div className="map-background"></div>
-                    <div className="radar-center">
-                        <div className="radar-wave w1"></div>
-                        <div className="radar-wave w2"></div>
-                        <div className="radar-wave w3"></div>
-                        <div className="logo-core">
-                            <img src="/assets/logo-seubairro.svg" alt="Logo" width={40} height={40} />
-                        </div>
-                    </div>
-                    <div className="app-point p1">
-                        <div className="point-icon"><i className="ri-store-2-fill"></i></div>
-                        <div className="point-label">Mercado</div>
-                    </div>
-                    <div className="app-point p2">
-                        <div className="point-icon color-2"><i className="ri-hammer-fill"></i></div>
-                        <div className="point-label">Reformas</div>
-                    </div>
-                    <div className="app-point p3">
-                        <div className="point-icon color-3"><i className="ri-restaurant-2-fill"></i></div>
-                        <div className="point-label">Lanches</div>
-                    </div>
-                    <div className="app-point p4">
-                        <div className="point-icon color-4"><i className="ri-scissors-cut-fill"></i></div>
-                        <div className="point-label">Salão</div>
-                    </div>
-                </div>
-                <div className="rich-gradient-bg"></div>
-            </div>
+            <AuthVisualPanel
+                title={mode === 'business' ? 'Expanda seu negócio' : 'Explore seu bairro'}
+                description={mode === 'business' ? 'Conecte-se com clientes locais.' : 'Encontre tudo o que precisa perto de você.'}
+                mode={mode === 'business' ? 'business' : 'client'}
+            />
         </main>
     )
 }

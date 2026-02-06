@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, FormEvent } from 'react'
 import Link from 'next/link'
-import '@/styles/auth/recuperar-senha/recuperar-senha.css'
+import '@/styles/auth/recuperar-senha/password-recovery-forms.css'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 export default function PasswordRecoveryForm() {
