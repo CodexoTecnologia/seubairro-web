@@ -1,0 +1,140 @@
+.biz-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    height: calc(100vh - var(--header-height));
+}
+
+.biz-sidebar {
+    width: var(--sidebar-width);
+    background: var(--business-sidebar-bg);
+    border-right: 1px solid var(--business-border);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    margin-bottom: 30px;
+}
+
+.sidebar-header h3 {
+    font-size: 1.1rem;
+    color: var(--business-text-title);
+    margin-bottom: 5px;
+}
+
+.status-badge {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.status-badge.online {
+    background: var(--business-success-bg);
+    color: #166534;
+}
+
+.biz-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: var(--font-weight-medium);
+    transition: var(--transition-base);
+}
+
+.menu-link:hover {
+    background: var(--color-bg-input);
+    color: var(--business-text-title);
+}
+
+.menu-link.active {
+    background: #F0FDFA;
+    color: var(--business-accent);
+    font-weight: var(--font-weight-bold);
+}
+
+.menu-link i {
+    font-size: 1.2rem;
+}
+
+.menu-link .small-icon {
+    font-size: 0.9rem;
+    margin-left: auto;
+    opacity: 0.5;
+}
+
+.counter {
+    margin-left: auto;
+    background: var(--color-error);
+    color: white;
+    font-size: var(--font-size-xs);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: var(--font-weight-bold);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--business-border);
+}
+
+.plan-card {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    background: var(--color-bg-input);
+    border-radius: 10px;
+}
+
+.plan-icon {
+    font-size: 1.2rem;
+    color: var(--color-warning);
+}
+
+.plan-card strong {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--business-text-title);
+}
+
+.plan-card a {
+    font-size: 0.8rem;
+    color: var(--business-primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+}
+
+.biz-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    background-color: var(--business-bg-page);
+}
+
+@media (max-width: 900px) {
+    .biz-sidebar {
+        display: none;
+    }
+
+    .biz-content {
+        padding: 20px;
+    }
+}

@@ -1,0 +1,220 @@
+.list-ads-container {
+    padding: 24px 16px;
+    background-color: var(--business-bg-page);
+    min-height: 100vh;
+}
+
+.page-header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.header-title h1 {
+    font-size: 1.75rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--business-text-title);
+    margin: 0;
+}
+
+.header-title p {
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.btn-create {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--business-primary);
+    color: white;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: background var(--transition-base);
+}
+
+.btn-create:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.filters-bar {
+    background: var(--color-bg-surface);
+    padding: 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--business-border);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+}
+
+.search-box i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 12px 10px 36px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--business-border);
+    font-size: 0.95rem;
+    background: var(--color-bg-surface);
+}
+
+.filter-group {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--business-border);
+    background-color: var(--color-bg-surface);
+    font-size: 0.9rem;
+    color: var(--business-text-title);
+    min-width: 120px;
+}
+
+.listings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.listing-card {
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--business-border);
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.listing-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-sm);
+    background-color: var(--business-border);
+    object-fit: cover;
+}
+
+.listing-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.listing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+}
+
+.listing-title {
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--business-text-title);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.listing-status {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-semibold);
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.listing-status.active {
+    background-color: var(--business-success-bg);
+    color: var(--business-success);
+}
+
+.listing-status.inactive {
+    background-color: var(--business-bg-page);
+    color: var(--text-muted);
+}
+
+.listing-price {
+    font-weight: var(--font-weight-bold);
+    color: var(--business-primary);
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.listing-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.listing-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--business-border);
+    background: var(--color-bg-surface);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.btn-icon:hover {
+    border-color: var(--business-primary);
+    color: var(--business-primary);
+}
+
+.btn-icon.delete:hover {
+    border-color: var(--color-error);
+    color: var(--color-error);
+}
+
+@media (min-width: 768px) {
+    .list-ads-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .filters-bar {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .search-box {
+        max-width: 300px;
+    }
+}
