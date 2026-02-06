@@ -1,0 +1,73 @@
+.back-btn {
+    background-color: transparent;
+    width: 2rem;
+    /* Small initial width (just the icon) */
+    height: 2rem;
+    border-radius: 50%;
+    /* Circle initially */
+    position: relative;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-text-title, #0F172A);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: none;
+    overflow: hidden;
+    transition: width 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    padding: 0;
+}
+
+/* Hover state: expand to show text */
+.back-btn:hover {
+    width: 8rem;
+    border-radius: 2rem;
+    background-color: var(--color-bg-surface, white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.back-btn .icon-box {
+    background-color: var(--color-primary, #2563EB);
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+    min-width: 3rem;
+    /* prevent shrinking */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+/* Icon Styles */
+.back-btn svg {
+    fill: white;
+    /* Icon should be white on primary color */
+    width: 18px;
+    height: 18px;
+    transform: translateX(-7px);
+    transition: transform 0.3s;
+}
+
+.back-btn:hover svg {
+    transform: translateX(-2px);
+}
+
+.back-btn .label {
+    opacity: 0;
+    white-space: nowrap;
+    margin-left: 10px;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    color: var(--color-text-title, #0F172A);
+}
+
+.back-btn:hover .label {
+    opacity: 1;
+    transform: translateX(0);
+}

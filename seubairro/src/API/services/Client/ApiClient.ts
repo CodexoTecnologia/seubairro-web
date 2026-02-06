@@ -17,7 +17,7 @@ export class ApiClient {
         Pick<ApiClientConfig, 'getAuthToken' | 'onUnauthorized'>;
     constructor(config: ApiClientConfig) {
         this.config = {
-            baseUrl: config.baseUrl.replace(/\/$/, ''),
+            baseUrl: config.baseUrl,
             timeout: config.timeout ?? 30000,
             defaultHeaders: config.defaultHeaders ?? {
                 'Content-Type': 'application/json',
@@ -27,7 +27,18 @@ export class ApiClient {
         };
     }
     private buildUrl(endpoint: string, params?: Record<string, string | number | boolean | undefined | null>): string {
-        const url = new URL(`${this.config.baseUrl}${endpoint}`);
+        const fullPath = `${this.config.baseUrl || ''}${endpoint}`;
+        let url: URL;
+        try {
+            url = new URL(fullPath);
+        } catch {
+            if (typeof window !== 'undefined') {
+                url = new URL(fullPath, window.location.origin);
+            } else {
+                url = new URL(fullPath, 'http://localhost');
+            }
+        }
+
         if (params) {
             Object.entries(params).forEach(([key, value]) => {
                 if (value !== undefined && value !== null) {
@@ -106,6 +117,7 @@ export class ApiClient {
                 throw new TimeoutError();
             }
             if (error instanceof TypeError) {
+                console.error('ApiClient NetworkError:', error);
                 throw new NetworkError();
             }
             throw error;

@@ -2,55 +2,78 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import SplitText from '@/components/ui/SplitText'
 import '@/styles/auth/cadastro/cadastro.css'
-export default function CadastroPage() {
+import { ClientForm } from './components/client.form'
+import { BusinessForm } from './components/business.form'
+import BackButton from '@/components/ui/BackButton'
+
+export default function Cadastro() {
+
     type Mode = 'selection' | 'client' | 'business'
     const [mode, setMode] = useState<Mode>('selection')
-    const [businessStep, setBusinessStep] = useState(1)
+
     const handleSelectClient = () => {
         setMode('client')
     }
+
     const handleSelectBusiness = () => {
         setMode('business')
-        setBusinessStep(1)
     }
+
     const handleBack = () => {
         setMode('selection')
-        setBusinessStep(1)
     }
+
     const containerClass = `login-container ${mode === 'business' ? 'theme-business' : ''}`
     const getPageTitle = () => {
         if (mode === 'client') return 'Cadastro de Vizinho'
         if (mode === 'business') return 'Cadastro de Negócio'
         return 'Crie sua conta'
     }
+
     const getPageDesc = () => {
         if (mode === 'client') return 'Preencha seus dados para acessar.'
         if (mode === 'business') return 'Vamos criar sua vitrine digital.'
         return 'Escolha como você deseja usar a plataforma.'
     }
+
     const router = useRouter()
     const handleClientRegister = (e: React.FormEvent) => {
         e.preventDefault()
-        router.push('/pages/dashboad')
+        router.push('/pages/(client)/dashboard-client')
     }
+
     const handleBusinessRegister = (e: React.FormEvent) => {
         e.preventDefault()
-        router.push('/pages/dashboard')
+        router.push('/pages/(business)/dashboard-business')
     }
+
     return (
         <main className={containerClass}>
             <div className="login-form-side">
                 <div className="form-wrapper">
                     <div className="auth-header">
                         <Link href="/" className="logo-link">
-                            <img src="/assets/logo-seubairro.svg" alt="SeuBairro" className="logo-img" width={32} height={32} />
-                            <span className="logo-text">Seu<span>Bairro</span></span>
+                            <img src="/assets/logo-seubairro.svg" alt="SeuBairro" className="logo-img" width={40} height={40} />
+                            <SplitText
+                                text="SeuBairro"
+                                className="logo-text-animated"
+                                delay={50}
+                                duration={1.25}
+                                ease="power3.out"
+                                splitType="chars"
+                                from={{ opacity: 0, y: 40 }}
+                                to={{ opacity: 1, y: 0 }}
+                                threshold={0.1}
+                                rootMargin="-100px"
+                                textAlign="left"
+                            />
                         </Link>
                         {mode !== 'selection' && (
-                            <button className="btn-back" onClick={handleBack} type="button">
-                                <i className="ri-arrow-left-line"></i> Voltar
-                            </button>
+                            <div style={{ marginBottom: '20px' }}>
+                                <BackButton onClick={handleBack} />
+                            </div>
                         )}
                         <h1>{getPageTitle()}</h1>
                         <p>{getPageDesc()}</p>
@@ -79,101 +102,10 @@ export default function CadastroPage() {
                         </div>
                     )}
                     {mode === 'client' && (
-                        <form className="hidden-form" onSubmit={handleClientRegister}>
-                            <div className="input-group">
-                                <label>Nome Completo</label>
-                                <div className="input-field">
-                                    <i className="ri-user-line icon-left"></i>
-                                    <input type="text" placeholder="Seu nome" required />
-                                </div>
-                            </div>
-                            <div className="input-group">
-                                <label>E-mail</label>
-                                <div className="input-field">
-                                    <i className="ri-mail-line icon-left"></i>
-                                    <input type="email" placeholder="seu@email.com" required />
-                                </div>
-                            </div>
-                            <div className="input-group">
-                                <label>Senha</label>
-                                <div className="input-field">
-                                    <i className="ri-lock-2-line icon-left"></i>
-                                    <input type="password" placeholder="Crie uma senha forte" required />
-                                </div>
-                            </div>
-                            <button type="submit" className="btn-submit">Criar Conta Grátis</button>
-                        </form>
+                        <ClientForm onSubmit={handleClientRegister} />
                     )}
                     {mode === 'business' && (
-                        <form className="hidden-form" onSubmit={handleBusinessRegister}>
-                            <div className="stepper">
-                                <div className={`step ${businessStep === 1 ? 'active' : ''}`}>1. Dados Pessoais</div>
-                                <div className="step-line"></div>
-                                <div className={`step ${businessStep === 2 ? 'active' : ''}`}>2. Seu Negócio</div>
-                            </div>
-                            {businessStep === 1 && (
-                                <div id="busStep1">
-                                    <div className="input-group">
-                                        <label>Nome do Responsável</label>
-                                        <div className="input-field">
-                                            <i className="ri-user-star-line icon-left"></i>
-                                            <input type="text" placeholder="Seu nome" required />
-                                        </div>
-                                    </div>
-                                    <div className="input-group">
-                                        <label>E-mail de Acesso</label>
-                                        <div className="input-field">
-                                            <i className="ri-mail-send-line icon-left"></i>
-                                            <input type="email" placeholder="email@negocio.com" required />
-                                        </div>
-                                    </div>
-                                    <div className="input-group">
-                                        <label>Senha</label>
-                                        <div className="input-field">
-                                            <i className="ri-lock-password-line icon-left"></i>
-                                            <input type="password" placeholder="Senha segura" required />
-                                        </div>
-                                    </div>
-                                    <button type="button" className="btn-submit btn-business" onClick={() => setBusinessStep(2)}>
-                                        Continuar <i className="ri-arrow-right-line"></i>
-                                    </button>
-                                </div>
-                            )}
-                            {businessStep === 2 && (
-                                <div id="busStep2" className="hidden-form">
-                                    <div className="input-group">
-                                        <label>Nome do Negócio</label>
-                                        <div className="input-field">
-                                            <i className="ri-store-2-line icon-left"></i>
-                                            <input type="text" placeholder="Ex: Mercado do João" required />
-                                        </div>
-                                    </div>
-                                    <div className="input-group">
-                                        <label>Categoria</label>
-                                        <div className="input-field">
-                                            <i className="ri-layout-grid-line icon-left"></i>
-                                            <select required className="custom-select" defaultValue="">
-                                                <option value="" disabled>Selecione uma categoria</option>
-                                                <option value="alimentacao">Alimentação</option>
-                                                <option value="servicos">Serviços</option>
-                                                <option value="varejo">Varejo</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="input-group">
-                                        <label>WhatsApp</label>
-                                        <div className="input-field">
-                                            <i className="ri-whatsapp-line icon-left"></i>
-                                            <input type="tel" placeholder="(41) 99999-9999" required />
-                                        </div>
-                                    </div>
-                                    <div className="buttons-row">
-                                        <button type="button" className="btn-outline" onClick={() => setBusinessStep(1)}>Voltar</button>
-                                        <button type="submit" className="btn-submit btn-business">Finalizar</button>
-                                    </div>
-                                </div>
-                            )}
-                        </form>
+                        <BusinessForm onSubmit={handleBusinessRegister} />
                     )}
                 </div>
             </div>

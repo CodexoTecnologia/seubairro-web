@@ -33,10 +33,11 @@
     text-decoration: none;
 }
 
-.logo-text {
+.logo-text-animated {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-title);
+    line-height: 1;
 }
 
 .logo-text span {
@@ -129,6 +130,7 @@
     flex-shrink: 0;
 }
 
+
 .card-text h3 {
     font-size: 1rem;
     margin-bottom: 4px;
@@ -167,33 +169,42 @@
     position: relative;
     display: flex;
     align-items: center;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    height: 50px;
+    padding: 0 10px;
+    transition: all 0.2s;
+}
+
+.input-field:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--input-focus);
 }
 
 .input-field .icon-left {
-    position: absolute;
-    left: 1rem;
     color: var(--text-muted);
-    font-size: 1.125rem;
+    font-size: 1.25rem;
+    margin-right: 10px;
     pointer-events: none;
+    flex-shrink: 0;
 }
 
 .input-field input,
 .input-field select {
     width: 100%;
-    padding: 0.875rem 1rem 0.875rem 2.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
+    height: 100%;
+    border: none;
+    background: transparent;
     font-size: 1rem;
     color: var(--text-title);
-    background: var(--bg-surface);
-    transition: all 0.2s;
+    padding: 0;
 }
 
 .input-field input:focus,
 .input-field select:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--input-focus);
+    box-shadow: none;
 }
 
 .stepper {
@@ -288,6 +299,7 @@
     --primary: #0D9488;
     --primary-hover: #0F766E;
     --input-focus: rgba(13, 148, 136, 0.15);
+    --color-primary: #0D9488;
 }
 
 .btn-business {
@@ -579,4 +591,21 @@
     .login-form-side {
         padding: 1.5rem;
     }
+}
+
+.btn-eye {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+.btn-eye:hover {
+    color: var(--text-title);
 }

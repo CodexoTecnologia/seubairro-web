@@ -1,104 +1,134 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import { ApiClientError, NetworkError, TimeoutError } from '@/API/services/Client/ApiClientError';
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import SplitText from '@/components/ui/SplitText'
+import { UserService } from '@/API/services/UserService'
 import '@/styles/auth/login/LoginForm.css'
 
 export default function LoginForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState('')
     const router = useRouter()
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setError('')
         setIsLoading(true)
-        // Simulação de login
-        setTimeout(() => {
+
+        try {
+            await UserService.login({ email, password })
+            router.push('/pages/dashboard-client')
+        } catch (err) {
+            console.error(err)
+            if (err instanceof Error && err.name === 'NetworkError') {
+                setError('Erro de conexão. Verifique se o backend está rodando e se o certificado SSL foi aceito.')
+            } else {
+                setError('Falha no login. Verifique suas credenciais.')
+            }
+        } finally {
             setIsLoading(false)
-            router.push('/pages/dashboard-business')
-        }, 1500)
+        }
     }
 
     return (
-        <div className="container">
-            <div className="heading">Sign In</div>
+        <div className="login-wrapper">
+            <div className="heading">
+                <img src="/assets/logo-seubairro.svg" alt="Logo SeuBairro" className='logo' />
+                <SplitText
+                    text="SeuBairro"
+                    className="title-text"
+                    delay={50}
+                    duration={1.25}
+                    ease="power3.out"
+                    splitType="chars"
+                    from={{ opacity: 0, y: 40 }}
+                    to={{ opacity: 1, y: 0 }}
+                    threshold={0.1}
+                    rootMargin="-100px"
+                    textAlign="center"
+                />
+            </div>
             <form className="form" onSubmit={handleSubmit}>
-                <input
-                    placeholder="E-mail"
-                    id="email"
-                    name="email"
-                    type="email"
-                    className="input"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    placeholder="Password"
-                    id="password"
-                    name="password"
-                    type="password"
-                    className="input"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <span className="forgot-password">
-                    <Link href="/pages/recuperar-senha">Esqueceu a senha?</Link>
-                </span>
-                <input
-                    value={isLoading ? 'Entrando...' : 'Entrar'}
-                    type="submit"
-                    className="login-button"
-                    disabled={isLoading}
-                />
-            </form>
-            <div className="social-account-container">
-                <span className="title">Ou continue com</span>
-                <div className="social-accounts">
-                    <button className="social-button google" type="button">
-                        <svg
-                            viewBox="0 0 488 512"
-                            height="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="svg"
-                        >
-                            <path
-                                d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
-                            ></path>
-                        </svg>
-                    </button>
-                    <button className="social-button apple" type="button">
-                        <svg
-                            viewBox="0 0 384 512"
-                            height="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="svg"
-                        >
-                            <path
-                                d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"
-                            ></path>
-                        </svg>
-                    </button>
-                    <button className="social-button twitter" type="button">
-                        <svg
-                            viewBox="0 0 512 512"
-                            height="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="svg"
-                        >
-                            <path
-                                d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"
-                            ></path>
-                        </svg>
+                <div className="flex-column">
+                    <label>Email</label>
+                </div>
+                <div className="inputForm">
+                    <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Layer_3" data-name="Layer 3">
+                            <path d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z"></path>
+                        </g>
+                    </svg>
+                    <input
+                        type="text"
+                        className="input"
+                        placeholder="Digite seu email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+
+                <div className="flex-column">
+                    <label>Password</label>
+                </div>
+                <div className="inputForm">
+                    <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path>
+                        <path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"></path>
+                    </svg>
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        className="input"
+                        placeholder="Digite sua senha"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: 0,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '100%'
+                        }}
+                    >
+                        {showPassword ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                            </svg>
+                        )}
                     </button>
                 </div>
-            </div>
-            <span className="agreement">
-                <Link href="/cadastro">Não tem conta? Cadastre-se</Link>
-            </span>
+
+                <div className="flex-row">
+                    <div>
+                        <input type="checkbox" id="remember" />
+                        <label htmlFor="remember">Lembrar senha</label>
+                    </div>
+                    <Link href="/pages/recuperar-senha"><span className="span">Esqueci minha senha</span></Link>
+                </div>
+                {error && <p className="error-message" style={{ color: 'red', fontSize: '14px', textAlign: 'center', margin: '10px 0' }}>{error}</p>}
+                <button className="button-submit">
+                    {isLoading ? 'Entrando...' : 'Entrar'}
+                </button>
+                <p className="p">Não tem uma conta? <Link href="/pages/cadastro"><span className="span">Cadastre-se</span></Link></p>
+            </form>
         </div>
     )
 }

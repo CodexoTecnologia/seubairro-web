@@ -10,7 +10,7 @@ export const clearAuthToken = (): void => {
     authToken = null;
 };
 export const apiClient = new ApiClient({
-    baseUrl: process.env.API_BASE_URL!,
+    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://localhost:7112',
     timeout: 30000,
     defaultHeaders: {
         'Content-Type': 'application/json',
@@ -21,4 +21,3 @@ export const apiClient = new ApiClient({
         console.warn('Sessão expirada. Usuário foi desautenticado.');
     },
 });
-
