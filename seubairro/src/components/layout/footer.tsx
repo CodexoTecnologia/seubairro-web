@@ -49,9 +49,6 @@ export default function Footer() {
 
                 <div className="footer-bottom">
                     <p>&copy; 2026 SeuBairro. Todos os direitos reservados.</p>
-                    <p className="location">
-                        <i className="ri-map-pin-line"></i> Feito em Colombo, PR
-                    </p>
                 </div>
             </div>
         </footer>

@@ -5,10 +5,7 @@ export default function Hero() {
         <section className="hero">
             <div className="container hero-grid">
                 <div className="hero-text">
-                    <div className="status-badge">
-                        <span className="pulse-dot"></span>
-                        Projeto em Evolução (V2)
-                    </div>
+
                     <h1>
                         A tecnologia a favor do <br/>
                         <span className="gradient-text">Comércio Local.</span>
