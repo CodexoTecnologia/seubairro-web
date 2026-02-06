@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 export default function Navbar() {
     const pathname = usePathname()
-    const businessPaths = ['/pages/dashboard', '/pages/criar-anuncio', '/pages/listar-anuncio', '/pages/editar-profile', '/pages/Chat']
+    const businessPaths = ['/pages/dashboard-business', '/pages/criar-anuncio', '/pages/listar-anuncio', '/pages/editar-profile', '/pages/chat']
     const isBusiness = pathname ? businessPaths.some(path => pathname.toLowerCase().startsWith(path.toLowerCase())) : false
     return (
         <nav className={`app-navbar ${isBusiness ? 'theme-business' : 'theme-client'}`}>
