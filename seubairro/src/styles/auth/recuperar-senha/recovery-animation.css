@@ -1,0 +1,205 @@
+.login-visual-side {
+    background: #0F172A;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: white;
+}
+
+.rich-gradient-bg {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+    background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.15), transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(13, 148, 136, 0.15), transparent 40%),
+        #0F172A;
+    z-index: 0;
+}
+
+.animation-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+    z-index: 1;
+}
+
+.map-background {
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center;
+    transform: rotateX(20deg);
+    opacity: 0;
+    animation: mapCycle 8s ease-in-out infinite;
+}
+
+.radar-center {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.logo-core {
+    width: 90px;
+    height: 90px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(37, 99, 235, 0.5);
+    z-index: 2;
+    padding: 12px;
+}
+
+.logo-core img {
+    width: 100%;
+}
+
+.radar-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    opacity: 0;
+}
+
+.w1 {
+    animation: waveExpand 4s linear infinite;
+    animation-delay: 0s;
+}
+
+.w2 {
+    animation: waveExpand 4s linear infinite;
+    animation-delay: 2s;
+}
+
+.app-point {
+    position: absolute;
+    opacity: 0;
+    z-index: 5;
+}
+
+.point-icon {
+    width: 44px;
+    height: 44px;
+    background: white;
+    color: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.p1 {
+    top: 25%;
+    right: 25%;
+    animation: pointPop 8s ease-in-out infinite;
+    animation-delay: 4s;
+}
+
+.p2 {
+    bottom: 25%;
+    left: 25%;
+    animation: pointPop 8s ease-in-out infinite;
+    animation-delay: 4.5s;
+}
+
+.visual-text-overlay {
+    position: absolute;
+    bottom: 50px;
+    text-align: center;
+    width: 100%;
+    z-index: 20;
+    color: white;
+}
+
+.visual-text-overlay h2 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.visual-text-overlay p {
+    opacity: 0.8;
+}
+
+@keyframes mapCycle {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    10%,
+    30% {
+        opacity: 0.4;
+    }
+
+    40% {
+        opacity: 0;
+        transform: rotateX(20deg) scale(1.1);
+    }
+}
+
+@keyframes waveExpand {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.8;
+    }
+
+    100% {
+        width: 600px;
+        height: 600px;
+        opacity: 0;
+    }
+}
+
+@keyframes pointPop {
+
+    0%,
+    35% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    40%,
+    85% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    90%,
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .login-visual-side {
+        display: none;
+    }
+}

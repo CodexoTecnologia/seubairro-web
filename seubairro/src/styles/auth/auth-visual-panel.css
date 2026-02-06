@@ -1,0 +1,204 @@
+.auth-visual-panel {
+    background: #0F172A;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: white;
+    width: 100%;
+    height: 100%;
+}
+
+.auth-visual-panel .dot-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.auth-visual-panel__gradient {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+    background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.15), transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(13, 148, 136, 0.15), transparent 40%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+
+.auth-visual-panel__text {
+    position: absolute;
+    bottom: 8%;
+    text-align: center;
+    width: 100%;
+    z-index: 20;
+    color: white;
+    padding: 0 3rem;
+    max-width: 600px;
+}
+
+.auth-visual-panel__text h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+}
+
+.auth-visual-panel__text p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.radar-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    pointer-events: none;
+    padding-bottom: 10%;
+}
+
+.radar-center {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-core {
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+}
+
+.logo-core img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.radar-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.w1 {
+    animation: waveExpand 4s linear infinite;
+    animation-delay: 0s;
+}
+
+.w2 {
+    animation: waveExpand 4s linear infinite;
+    animation-delay: 2s;
+}
+
+@keyframes waveExpand {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.8;
+    }
+
+    100% {
+        width: 600px;
+        height: 600px;
+        opacity: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .auth-visual-panel {
+        display: none;
+    }
+}
+
+
+
+.point-icon {
+    width: 44px;
+    height: 44px;
+    background: white;
+    color: var(--color-primary, #2563EB);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.point-label {
+    background: rgba(255, 255, 255, 0.95);
+    color: #0F172A;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+
+.app-point {
+    position: absolute;
+    opacity: 0;
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+    animation: pointPop 8s ease-in-out infinite;
+}
+
+.point-icon.business {
+    color: #0F766E;
+}
+
+.point-icon.recovery {
+    color: #475569;
+}
+
+@keyframes pointPop {
+
+    0%,
+    35% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    40%,
+    85% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    90%,
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}

@@ -1,10 +1,10 @@
 :root {
-    --business-primary: #2563EB;
-    --business-primary-hover: #1D4ED8;
-    --business-primary-light: rgba(37, 99, 235, 0.1);
-    --business-accent: #0D9488;
-    --business-accent-hover: #0F766E;
-    --business-accent-light: rgba(13, 148, 136, 0.1);
+    --business-primary: #0D9488;
+    --business-primary-hover: #0F766E;
+    --business-primary-light: rgba(13, 148, 136, 0.15);
+    --business-accent: #2563EB;
+    --business-accent-hover: #1D4ED8;
+    --business-accent-light: rgba(37, 99, 235, 0.1);
     --business-bg-page: #F1F5F9;
     --business-bg-surface: #FFFFFF;
     --business-bg-input: #FFFFFF;
@@ -23,6 +23,8 @@
     --business-warning-bg: #FFFBEB;
     --business-sidebar-width: 260px;
     --business-header-bg: #FFFFFF;
+    --business-gradient-start: rgba(13, 148, 136, 0.2);
+    --business-bg-visual: #064E3B;
 }
 
 .business-layout,
