@@ -1,0 +1,35 @@
+import React from 'react'
+import './back-button.css'
+
+interface BackButtonProps {
+    onClick?: () => void;
+    label?: string;
+    className?: string;
+}
+
+const BackButton: React.FC<BackButtonProps> = ({ onClick, label = "Voltar", className = "" }) => {
+    return (
+        <button className={`back-btn ${className}`} type="button" onClick={onClick}>
+            <div className="icon-box">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1024 1024"
+                    height="10px"
+                    width="10px"
+                >
+                    <path
+                        d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
+                        fill="currentColor"
+                    ></path>
+                    <path
+                        d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
+                        fill="currentColor"
+                    ></path>
+                </svg>
+            </div>
+            <p className="label">{label}</p>
+        </button>
+    )
+}
+
+export default BackButton

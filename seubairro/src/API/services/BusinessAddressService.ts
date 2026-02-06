@@ -1,7 +1,6 @@
 import { BaseService } from './BaseService';
 import type { CreateBusinessAddressRequest, UpdateBusinessAddressRequest } from '../dtos/Request/index';
 import type { BusinessAddressResponse } from '../dtos/Response/index';
-
 class BusinessAddressServiceImpl extends BaseService<
     BusinessAddressResponse,
     CreateBusinessAddressRequest,
@@ -16,5 +15,5 @@ class BusinessAddressServiceImpl extends BaseService<
         });
     }
 }
-
 export const BusinessAddressService = new BusinessAddressServiceImpl();
+

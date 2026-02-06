@@ -8,3 +8,4 @@ export type { CreateListingRequest } from '../CreateListingRequest';
 export type { UpdateListingRequest } from '../UpdateListingRequest';
 export type { CreateUserRequest } from '../CreateUserRequest';
 export type { UserLoginRequest } from '../UserLoginRequest';
+

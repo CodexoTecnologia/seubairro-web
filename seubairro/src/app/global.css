@@ -1,0 +1,205 @@
+.container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+.app-navbar {
+    height: var(--header-height);
+    background-color: var(--color-bg-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-fixed);
+    width: 100%;
+}
+.nav-container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-title);
+}
+.nav-logo img {
+    height: 32px;
+    width: auto;
+}
+.nav-logo span span {
+    color: var(--color-primary);
+}
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex: 1;
+    max-width: 500px;
+    margin: 0 var(--spacing-xl);
+}
+.search-input-wrapper {
+    flex: 1;
+    position: relative;
+    color: var(--color-text-body);
+}
+.search-input-wrapper input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-input);
+    font-size: var(--font-size-sm);
+    transition: var(--transition-fast);
+}
+.search-input-wrapper input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: var(--color-bg-surface);
+}
+.search-input-wrapper i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+}
+.location-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-body);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+.location-badge i {
+    color: var(--color-primary);
+}
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--color-text-body);
+    font-size: 1.2rem;
+    transition: var(--transition-fast);
+}
+.icon-btn:hover {
+    background-color: var(--color-bg-page);
+    color: var(--color-primary);
+}
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px 4px 4px;
+    background: var(--color-bg-page);
+    border-radius: var(--radius-full);
+    transition: var(--transition-fast);
+}
+.user-profile:hover {
+    background: var(--color-border);
+}
+.avatar-circle {
+    width: 32px;
+    height: 32px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+}
+.user-name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-title);
+}
+@media (max-width: 768px) {
+    .search-bar-container {
+        display: none;
+    }
+    .user-name {
+        display: none;
+    }
+    .user-profile {
+        padding: 0;
+        background: none;
+    }
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+body {
+    background-color: var(--color-bg-page);
+    color: var(--color-text-body);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    line-height: var(--line-height-normal);
+}
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+ul,
+ol {
+    list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-text-title);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+}
+

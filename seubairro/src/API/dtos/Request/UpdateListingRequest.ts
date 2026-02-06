@@ -7,3 +7,4 @@ export interface UpdateListingRequest {
     readonly price?: number;
     readonly currencyCode?: string | null;
 }
+

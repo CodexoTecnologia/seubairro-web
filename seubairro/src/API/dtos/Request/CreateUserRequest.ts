@@ -6,3 +6,4 @@ export interface CreateUserRequest {
     birthDate: string;
     taxId: string | null;
 }
+

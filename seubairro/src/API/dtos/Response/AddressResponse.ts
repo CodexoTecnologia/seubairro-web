@@ -3,3 +3,4 @@ export interface AddressResponse {
     userId: string;
     active: boolean;
 }
+

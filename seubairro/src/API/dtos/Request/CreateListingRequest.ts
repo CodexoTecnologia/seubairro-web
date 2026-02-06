@@ -7,3 +7,4 @@ export interface CreateListingRequest {
     price: number;
     currencyCode: string | null;
 }
+

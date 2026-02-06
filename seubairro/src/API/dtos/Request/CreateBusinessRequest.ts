@@ -9,3 +9,4 @@ export interface CreateBusinessRequest {
     publicPhone: string | null;
     instagramUrl: string | null;
 }
+
