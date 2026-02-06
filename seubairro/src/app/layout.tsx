@@ -29,7 +29,12 @@ export default function RootLayout({
 }) {
     return (
         <html lang="pt-BR">
-
+            <head>
+                <link 
+                    href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" 
+                    rel="stylesheet" 
+                />
+            </head>
             <body className={inter.className}>
                 <ClickSpark
                     sparkColor="#2563EB"

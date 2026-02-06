@@ -1,37 +1,59 @@
 'use client'
-import React from 'react'
-import Link from 'next/link'
-export function Footer() {
-    const currentYear = new Date().getFullYear()
+
+export default function Footer() {
     return (
-        <footer style={{
-            marginTop: 'auto',
-            borderTop: '1px solid #E2E8F0',
-            padding: '2rem 1rem',
-            backgroundColor: '#fff',
-            textAlign: 'center',
-            color: '#64748B',
-            fontSize: '0.875rem'
-        }}>
-            <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'center', gap: '8px', alignItems: 'center' }}>
-                    <img src="/assets/logo-seubairro.svg" alt="SeuBairro" style={{ height: '24px', opacity: 0.8 }} />
-                    <span style={{ fontWeight: 600, color: '#334155' }}>SeuBairro</span>
+        <footer className="footer-modern">
+            <div className="container">
+                <div className="footer-grid">
+                    <div className="footer-col brand-col">
+                        <div className="footer-brand">
+                            <img src="/assets/logo-seubairro.svg" alt="Logo" className="footer-logo-img" />
+                            <div className="brand-text">Seu<span>Bairro</span></div>
+                        </div>
+                        <p className="footer-desc">
+                            A plataforma definitiva para conectar vizinhos e fortalecer a economia local. 
+                            Tecnologia com propósito.
+                        </p>
+
+                        <div className="social-links">
+                            <a href="https://instagram.com/codexotecnologia" target="_blank" aria-label="Instagram">
+                                <i className="ri-instagram-line"></i>
+                            </a>
+                            <a href="https://linkedin.com/company/codexo-tecnologia" target="_blank" aria-label="LinkedIn">
+                                <i className="ri-linkedin-fill"></i>
+                            </a>
+                            <a href="https://codexo.com.br" target="_blank" aria-label="Site">
+                                <i className="ri-global-line"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className="footer-col nav-col">
+                        <h4>Explorar</h4>
+                        <ul className="footer-nav-list">
+                            <li><a href="#proposito">Propósito</a></li>
+                            <li><a href="#para-quem">Para Moradores</a></li>
+                            <li><a href="#para-quem">Para Negócios</a></li>
+                            <li><a href="#roadmap">Trajetória</a></li>
+                        </ul>
+                    </div>
+
+                    <div className="footer-col dev-col">
+                        <h4>Tecnologia</h4>
+                        <a href="https://codexo.com.br" target="_blank" className="codexo-badge">
+                            <span className="dev-text">Desenvolvido por</span>
+                            <img src="/assets/logo_codexo_nome_branco.svg" alt="Codexo" className="codexo-logo" />
+                        </a>
+                    </div>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
-                    <Link href="#" style={{ color: '#64748B', textDecoration: 'none' }}>Sobre</Link>
-                    <Link href="#" style={{ color: '#64748B', textDecoration: 'none' }}>Termos de Uso</Link>
-                    <Link href="#" style={{ color: '#64748B', textDecoration: 'none' }}>Privacidade</Link>
-                    <Link href="#" style={{ color: '#64748B', textDecoration: 'none' }}>Contato</Link>
+
+                <div className="footer-bottom">
+                    <p>&copy; 2026 SeuBairro. Todos os direitos reservados.</p>
+                    <p className="location">
+                        <i className="ri-map-pin-line"></i> Feito em Colombo, PR
+                    </p>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginBottom: '1.5rem' }}>
-                    <a href="#" style={{ fontSize: '1.2rem', color: '#64748B' }}><i className="ri-instagram-line"></i></a>
-                    <a href="#" style={{ fontSize: '1.2rem', color: '#64748B' }}><i className="ri-facebook-circle-line"></i></a>
-                    <a href="#" style={{ fontSize: '1.2rem', color: '#64748B' }}><i className="ri-twitter-x-line"></i></a>
-                </div>
-                <p>&copy; {currentYear} SeuBairro - Conectando vizinhos e negócios locais.</p>
             </div>
         </footer>
     )
 }
-
