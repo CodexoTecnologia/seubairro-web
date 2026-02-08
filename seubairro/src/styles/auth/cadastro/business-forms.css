@@ -1,0 +1,25 @@
+.selection-card.business:hover {
+    border-color: var(--color-primary);
+    background: var(--business-primary-light);
+}
+
+.selection-card.business .card-icon {
+    color: var(--color-primary);
+    background: var(--business-primary-light);
+}
+
+.theme-business .login-visual-side {
+    background: var(--business-bg-visual, #064E3B);
+}
+
+.theme-business .rich-gradient-bg {
+    background: radial-gradient(circle at 50% 50%, var(--business-gradient-start, rgba(13, 148, 136, 0.2)), transparent 60%), var(--business-bg-visual, #064E3B);
+}
+
+.theme-business .logo-core {
+    box-shadow: 0 0 40px rgba(13, 148, 136, 0.6);
+}
+
+.theme-business .point-icon {
+    color: var(--color-primary);
+}

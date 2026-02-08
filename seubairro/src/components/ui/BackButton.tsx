@@ -1,5 +1,5 @@
 import React from 'react'
-import './back-button.css'
+import '@/styles/ui/back-button.css'
 
 interface BackButtonProps {
     onClick?: () => void;
@@ -13,18 +13,12 @@ const BackButton: React.FC<BackButtonProps> = ({ onClick, label = "Voltar", clas
             <div className="icon-box">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1024 1024"
-                    height="10px"
-                    width="10px"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    width="20px"
+                    height="20px"
                 >
-                    <path
-                        d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
-                        fill="currentColor"
-                    ></path>
-                    <path
-                        d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-                        fill="currentColor"
-                    ></path>
+                    <path d="M7.82843 11L13.1924 5.63604L11.7782 4.22183L3.99999 12L11.7782 19.7782L13.1924 18.364L7.82843 13H20V11H7.82843Z"></path>
                 </svg>
             </div>
             <p className="label">{label}</p>

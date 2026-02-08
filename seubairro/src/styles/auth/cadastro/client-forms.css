@@ -1,0 +1,9 @@
+.selection-card.client:hover {
+    border-color: var(--color-primary);
+    background: var(--client-primary-light);
+}
+
+.selection-card.client .card-icon {
+    color: var(--color-primary);
+    background: var(--client-primary-light);
+}
