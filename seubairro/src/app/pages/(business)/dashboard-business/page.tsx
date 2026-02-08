@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import '@/styles/business/dashboard/dashboard.css'
+import Link from 'next/link'
 export default function BusinessDashboard() {
     return (
         <>
@@ -37,10 +38,10 @@ export default function BusinessDashboard() {
             <section className="quick-actions">
                 <h2>O que você quer fazer?</h2>
                 <div className="actions-row">
-                    <a href="#" className="action-btn primary" style={{ textDecoration: 'none' }}>
+                    <Link href="/pages/criar-anuncio" className="action-btn primary" style={{ textDecoration: 'none' }}>
                         <i className="ri-add-circle-line"></i>
                         <span>Criar Novo Anúncio</span>
-                    </a>
+                    </Link>
                     <a href="#" className="action-btn" style={{ textDecoration: 'none' }}>
                         <i className="ri-edit-box-line"></i>
                         <span>Editar Informações</span>
