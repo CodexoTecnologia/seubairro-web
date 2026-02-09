@@ -3,6 +3,7 @@ import React from 'react'
 import { FilterHeader, ListView, MapView } from './components'
 import { useListingFilters } from './hooks/useListingFilters'
 import { mockListings } from './data/mockListings'
+import { mockCategories } from './data/mockCategories'
 import '@/styles/client/dashboard/dashboard.css'
 
 export default function ClientDashboard() {
@@ -22,6 +23,7 @@ export default function ClientDashboard() {
                 currentType={currentType}
                 currentCategory={currentCategory}
                 viewMode={viewMode}
+                categories={mockCategories}
                 onTypeChange={setCurrentType}
                 onCategoryChange={setCurrentCategory}
                 onViewModeChange={setViewMode}

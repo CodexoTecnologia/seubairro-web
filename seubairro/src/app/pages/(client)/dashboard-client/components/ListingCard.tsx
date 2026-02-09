@@ -26,7 +26,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
     const router = useRouter()
 
     const handleClick = () => {
-        router.push('/pages/detalhes-anuncio')
+        router.push(`/pages/detalhes-anuncio/${listing.id}`)
     }
 
     const handleFavorite = (e: React.MouseEvent) => {

@@ -1,16 +1,18 @@
-//Cabeçalho dos Filtros - pendente de consumir a API
+//Cabeçalho dos Filtros - preparado para consumir a API
 //Por tipo (Todos, Produtos, Serviços)
-//Por categoria (Alimentação, Serviços, Varejo, Beleza) - alterar depois com o que vem do banco de dados
+//Por categoria (dinâmica - vinda de data/mockCategories ou futuramente da API)
 //Tipo de visualização (Lista ou Mapa)
 
 'use client'
 import React from 'react'
 import { Button } from '@/components/ui'
+import { Category } from '../data/mockCategories'
 
 interface FilterHeaderProps {
     currentType: string
     currentCategory: string
     viewMode: 'list' | 'map'
+    categories: Category[]
     onTypeChange: (type: string) => void
     onCategoryChange: (category: string) => void
     onViewModeChange: (mode: 'list' | 'map') => void
@@ -20,6 +22,7 @@ export default function FilterHeader({
     currentType,
     currentCategory,
     viewMode,
+    categories,
     onTypeChange,
     onCategoryChange,
     onViewModeChange
@@ -54,41 +57,16 @@ export default function FilterHeader({
                 </div>
 
                 <div className="category-scroll">
-                    <Button
-                        variant="ghost"
-                        className={`cat-pill ${currentCategory === 'all' ? 'active' : ''}`}
-                        onClick={() => onCategoryChange('all')}
-                    >
-                        <i className="ri-apps-2-line"></i> Tudo
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        className={`cat-pill ${currentCategory === 'alimentacao' ? 'active' : ''}`}
-                        onClick={() => onCategoryChange('alimentacao')}
-                    >
-                        <i className="ri-restaurant-2-line"></i> Alimentação
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        className={`cat-pill ${currentCategory === 'servicos' ? 'active' : ''}`}
-                        onClick={() => onCategoryChange('servicos')}
-                    >
-                        <i className="ri-hammer-line"></i> Serviços
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        className={`cat-pill ${currentCategory === 'varejo' ? 'active' : ''}`}
-                        onClick={() => onCategoryChange('varejo')}
-                    >
-                        <i className="ri-shopping-bag-3-line"></i> Varejo
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        className={`cat-pill ${currentCategory === 'beleza' ? 'active' : ''}`}
-                        onClick={() => onCategoryChange('beleza')}
-                    >
-                        <i className="ri-scissors-cut-line"></i> Beleza
-                    </Button>
+                    {categories.map((category) => (
+                        <Button
+                            key={category.id}
+                            variant="ghost"
+                            className={`cat-pill ${currentCategory === category.id ? 'active' : ''}`}
+                            onClick={() => onCategoryChange(category.id)}
+                        >
+                            <i className={category.icon}></i> {category.name}
+                        </Button>
+                    ))}
                 </div>
 
                 <div className="view-toggle">
