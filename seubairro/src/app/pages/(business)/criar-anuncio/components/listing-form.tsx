@@ -19,6 +19,8 @@ interface ListingFormProps {
 interface Category {
     id: string
     name: string
+    categoryType: number
+    isActive: boolean
 }
 
 export default function ListingForm({ type }: ListingFormProps) {
@@ -39,13 +41,32 @@ export default function ListingForm({ type }: ListingFormProps) {
 
     useEffect(() => {
         fetchCategories()
-    }, [])
+    }, [type])
 
-    const fetchCategories = async () => {
+      const fetchCategories = async () => {
         try {
             setLoadingCategories(true)
-            const response = await apiClient.get('/Category/list')
-            setCategories(response.data)
+            const categoryType = type === 'product' ? 1 : 2
+
+            const resp = await apiClient.get('/api/Category/all')
+            const data = Array.isArray((resp as any)?.data)
+                ? (resp as any).data
+                : Array.isArray(resp)
+                ? (resp as any)
+                : []
+
+            const filtered: Category[] = data
+                .filter((c: any) => c && c.isActive && c.categoryType === categoryType)
+                .map((c: any) => ({ id: c.id, name: c.name, categoryType: c.categoryType, isActive: c.isActive }))
+
+            setCategories(filtered)
+
+            setFormData(prev => {
+                if (prev.categoryId && !filtered.some(f => f.id === prev.categoryId)) {
+                    return { ...prev, categoryId: '' }
+                }
+                return prev
+            })
         } catch (err) {
             setError('Erro ao carregar categorias')
         } finally {
@@ -84,7 +105,7 @@ export default function ListingForm({ type }: ListingFormProps) {
                 price: parseFloat(formData.price.replace(',', '.')),
             }
 
-            await apiClient.post('/Listing/create', payload)
+            await apiClient.post('/api/listing', payload)
             setSuccess(true)
             setFormData({
                 categoryId: '',
@@ -196,8 +217,6 @@ export default function ListingForm({ type }: ListingFormProps) {
                             required
                         >
                             <option value="BRL">Real (BRL)</option>
-                            <option value="USD">Dólar (USD)</option>
-                            <option value="EUR">Euro (EUR)</option>
                         </select>
                     </div>
                 </div>

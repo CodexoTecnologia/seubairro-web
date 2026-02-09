@@ -8,9 +8,6 @@ export default function CriarAnuncioPage() {
 
     return (
         <div className="create-ad-container">
-            <header className="page-header">
-                <h1>Criar Novo Anúncio</h1>
-            </header>
             <div className="type-selector">
                 <button
                     className={`type-btn ${adType === 'product' ? 'active' : ''}`}
