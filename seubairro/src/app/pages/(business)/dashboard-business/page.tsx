@@ -42,7 +42,7 @@ export default function BusinessDashboard() {
                         <i className="ri-add-circle-line"></i>
                         <span>Criar Novo Anúncio</span>
                     </Link>
-                    <a href="#" className="action-btn" style={{ textDecoration: 'none' }}>
+                    <a href="/pages/editar-profile" className="action-btn" style={{ textDecoration: 'none' }}>
                         <i className="ri-edit-box-line"></i>
                         <span>Editar Informações</span>
                     </a>
