@@ -17,7 +17,8 @@ export const apiClient = new ApiClient({
     },
     getAuthToken: () => getAuthToken(),
     onUnauthorized: async () => {
-        clearAuthToken();
-        console.warn('Sessão expirada. Usuário foi desautenticado.');
+        if (typeof window !== 'undefined') {
+            window.location.href = '/login';
+        }
     },
 });
