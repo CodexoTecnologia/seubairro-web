@@ -48,7 +48,7 @@ export default function ListingForm({ type }: ListingFormProps) {
             setLoadingCategories(true)
             const categoryType = type === 'product' ? 1 : 2
 
-            const resp = await apiClient.get('/api/Category/all')
+            const resp = await apiClient.get('/api/Category/all', {requiresAuth: false,})
             const data = Array.isArray((resp as any)?.data)
                 ? (resp as any).data
                 : Array.isArray(resp)
@@ -105,7 +105,7 @@ export default function ListingForm({ type }: ListingFormProps) {
                 price: parseFloat(formData.price.replace(',', '.')),
             }
 
-            await apiClient.post('/api/listing', payload)
+            await apiClient.post('/api/listing', payload, {requiresAuth: true,})
             setSuccess(true)
             setFormData({
                 categoryId: '',
@@ -141,7 +141,11 @@ export default function ListingForm({ type }: ListingFormProps) {
                         disabled={loadingCategories}
                     >
                         <option value="">
-                            {loadingCategories ? 'Carregando categorias...' : 'Selecione uma categoria'}
+                            {loadingCategories 
+                                ? 'Carregando categorias...' 
+                                : categories.length === 0
+                                ? 'Nenhuma categoria disponível'
+                                : 'Selecione uma categoria'}
                         </option>
                         {categories.map(category => (
                             <option key={category.id} value={category.id}>
