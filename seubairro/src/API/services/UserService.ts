@@ -13,9 +13,7 @@ export interface UserResponse {
     updatedAt?: string;
 }
 export interface LoginResponse {
-    token: string;
-    user: UserResponse;
-    expiresAt?: string;
+    expiration: string;
 }
 class UserServiceImpl {
     async getCurrentUser(): Promise<UserResponse> {
@@ -42,14 +40,17 @@ class UserServiceImpl {
             credentials,
             { requiresAuth: false }
         );
-        if (response.token) {
-            setAuthToken(response.token);
-        }
         return response;
     }
     async logout(): Promise<void> {
-        setAuthToken(null);
+        try {
+            await apiClient.post<void>('/api/User/logout', {}, {
+                requiresAuth: true,
+            });
+        } catch (error) {
+            console.error('Erro ao fazer logout:', error);
+        }
     }
 }
-export const UserService = new UserServiceImpl();
 
+export const UserService = new UserServiceImpl();

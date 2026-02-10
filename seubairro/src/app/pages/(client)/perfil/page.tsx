@@ -38,7 +38,7 @@ export default function ClientProfile() {
                             <i className="ri-arrow-right-s-line arrow"></i>
                         </button>
                         <div className="menu-divider"></div>
-                        <a href="/login" className="menu-item danger">
+                        <a href="/pages/login" className="menu-item danger">
                             <div className="icon-wrap"><i className="ri-logout-box-r-line"></i></div>
                             <span>Sair da conta</span>
                         </a>

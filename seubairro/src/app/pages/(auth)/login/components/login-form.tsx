@@ -1,39 +1,41 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
-import { ApiClientError, NetworkError, TimeoutError } from '@/API/services/Client/ApiClientError';
 import { useRouter } from 'next/navigation'
+import { useAuthContext } from '@/contexts/AuthContext'
 import Link from 'next/link'
 import SplitText from '@/components/ui/SplitText'
-import { UserService } from '@/API/services/UserService'
 import '@/styles/auth/login/LoginForm.css'
+import { UserLoginRequest } from '@/API/dtos/Request/index'
 
 export default function LoginForm() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const router = useRouter()
+    const { login } = useAuthContext()
+    
+    const [formData, setFormData] = useState<UserLoginRequest>({
+        email: '',
+        password: '',
+    })
+    
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
-    const router = useRouter()
-
+    const [rememberMe, setRememberMe] = useState(false)
+    
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setError('')
         setIsLoading(true)
+        setError('')
 
-        try {
-            await UserService.login({ email, password })
+        const result = await login(formData)
+
+        if (result.success) {
             router.push('/pages/dashboard-client')
-        } catch (err) {
-            console.error(err)
-            if (err instanceof Error && err.name === 'NetworkError') {
-                setError('Erro de conexão. Verifique se o backend está rodando e se o certificado SSL foi aceito.')
-            } else {
-                setError('Falha no login. Verifique suas credenciais.')
-            }
-        } finally {
-            setIsLoading(false)
+        } else {
+            setError(result.message)
         }
+
+        setIsLoading(false)
     }
 
     return (
@@ -65,11 +67,13 @@ export default function LoginForm() {
                         </g>
                     </svg>
                     <input
-                        type="text"
+                        type="email"
                         className="input"
                         placeholder="Digite seu email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        disabled={isLoading}
+                        required
                     />
                 </div>
 
@@ -85,12 +89,15 @@ export default function LoginForm() {
                         type={showPassword ? "text" : "password"}
                         className="input"
                         placeholder="Digite sua senha"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        disabled={isLoading}
+                        required
                     />
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
+                        disabled={isLoading}
                         style={{
                             background: 'none',
                             border: 'none',
@@ -118,16 +125,41 @@ export default function LoginForm() {
 
                 <div className="flex-row">
                     <div>
-                        <input type="checkbox" id="remember" />
+                        <input 
+                            type="checkbox" 
+                            id="remember"
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                            disabled={isLoading}
+                        />
                         <label htmlFor="remember">Lembrar senha</label>
                     </div>
-                    <Link href="/pages/recuperar-senha"><span className="span">Esqueci minha senha</span></Link>
+                    <Link href="/pages/recuperar-senha">
+                        <span className="span">Esqueci minha senha</span>
+                    </Link>
                 </div>
-                {error && <p className="error-message" style={{ color: 'red', fontSize: '14px', textAlign: 'center', margin: '10px 0' }}>{error}</p>}
-                <button className="button-submit">
+
+                {error && (
+                    <p className="error-message" style={{ 
+                        color: 'red', 
+                        fontSize: '14px', 
+                        textAlign: 'center', 
+                        margin: '10px 0' 
+                    }}>
+                        {error}
+                    </p>
+                )}
+
+                <button className="button-submit" type="submit" disabled={isLoading}>
                     {isLoading ? 'Entrando...' : 'Entrar'}
                 </button>
-                <p className="p">Não tem uma conta? <Link href="/pages/cadastro"><span className="span">Cadastre-se</span></Link></p>
+
+                <p className="p">
+                    Não tem uma conta? {' '}
+                    <Link href="/pages/cadastro">
+                        <span className="span">Cadastre-se</span>
+                    </Link>
+                </p>
             </form>
         </div>
     )
