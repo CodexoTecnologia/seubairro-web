@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { apiClient } from '@/API/services/Client/apiClientInstance'
+import { apiClient } from '@/API/Client/apiClientInstance'
 
 interface ListingFormData {
     categoryId: string
@@ -43,17 +43,17 @@ export default function ListingForm({ type }: ListingFormProps) {
         fetchCategories()
     }, [type])
 
-      const fetchCategories = async () => {
+    const fetchCategories = async () => {
         try {
             setLoadingCategories(true)
             const categoryType = type === 'product' ? 1 : 2
 
-            const resp = await apiClient.get('/api/Category/all', {requiresAuth: false,})
+            const resp = await apiClient.get('/api/Category/all', { requiresAuth: false, })
             const data = Array.isArray((resp as any)?.data)
                 ? (resp as any).data
                 : Array.isArray(resp)
-                ? (resp as any)
-                : []
+                    ? (resp as any)
+                    : []
 
             const filtered: Category[] = data
                 .filter((c: any) => c && c.isActive && c.categoryType === categoryType)
@@ -105,7 +105,7 @@ export default function ListingForm({ type }: ListingFormProps) {
                 price: parseFloat(formData.price.replace(',', '.')),
             }
 
-            await apiClient.post('/api/listing', payload, {requiresAuth: true,})
+            await apiClient.post('/api/listing', payload, { requiresAuth: true, })
             setSuccess(true)
             setFormData({
                 categoryId: '',
@@ -127,7 +127,7 @@ export default function ListingForm({ type }: ListingFormProps) {
         <form onSubmit={handleSubmit} className="listing-form">
             <div className="form-section">
                 <h2>Informações Básicas</h2>
-                
+
                 <div className="form-group">
                     <label htmlFor="categoryId">
                         Categoria <span className="required">*</span>
@@ -141,11 +141,11 @@ export default function ListingForm({ type }: ListingFormProps) {
                         disabled={loadingCategories}
                     >
                         <option value="">
-                            {loadingCategories 
-                                ? 'Carregando categorias...' 
+                            {loadingCategories
+                                ? 'Carregando categorias...'
                                 : categories.length === 0
-                                ? 'Nenhuma categoria disponível'
-                                : 'Selecione uma categoria'}
+                                    ? 'Nenhuma categoria disponível'
+                                    : 'Selecione uma categoria'}
                         </option>
                         {categories.map(category => (
                             <option key={category.id} value={category.id}>
@@ -192,7 +192,7 @@ export default function ListingForm({ type }: ListingFormProps) {
 
             <div className="form-section">
                 <h2>Preço e {type === 'product' ? 'Estoque' : 'Disponibilidade'}</h2>
-                
+
                 <div className="form-row">
                     <div className="form-group">
                         <label htmlFor="price">
