@@ -15,7 +15,7 @@ export interface UserResponse {
 
 export interface LoginResponse {
     expiration: string;
-    token?: string; // Token JWT pode vir aqui ou em cookie HttpOnly
+    token?: string;
 }
 
 class UserServiceImpl {
@@ -37,36 +37,6 @@ class UserServiceImpl {
                 requiresAuth: false,
             }
         );
-    }
-
-    /**
-     * Realiza o login do usuário.
-     * O token JWT é gerenciado automaticamente pelo AuthManager através do padrão Bridge.
-     */
-    async login(credentials: UserLoginRequest): Promise<LoginResponse> {
-        // O authManager.login() já será chamado pelo useAuth hook
-        // Aqui fazemos apenas a requisição HTTP
-        const response = await apiClient.post<LoginResponse, UserLoginRequest>(
-            '/api/User/login',
-            credentials,
-            { requiresAuth: false }
-        );
-
-        return response;
-    }
-
-    /**
-     * Realiza o logout do usuário.
-     * O token JWT é removido automaticamente pelo AuthManager.
-     */
-    async logout(): Promise<void> {
-        try {
-            await apiClient.post<void>('/api/User/logout', {}, {
-                requiresAuth: true,
-            });
-        } catch (error) {
-            console.error('Erro ao fazer logout:', error);
-        }
     }
 }
 
