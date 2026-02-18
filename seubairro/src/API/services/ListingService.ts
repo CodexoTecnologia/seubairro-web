@@ -1,4 +1,4 @@
-import { apiClient } from './Client/apiClientInstance';
+import { apiClient } from '../Client/apiClientInstance';
 import { BaseService } from './BaseService';
 import type { CreateListingRequest, UpdateListingRequest } from '../dtos/Request/index';
 export interface ListingResponse {

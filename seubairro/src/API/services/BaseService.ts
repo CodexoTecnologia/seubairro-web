@@ -1,4 +1,4 @@
-import { apiClient } from './Client/apiClientInstance';
+import { apiClient } from '../Client/apiClientInstance';
 interface BaseServiceConfig {
     basePath: string;
     requiresAuth?: boolean;

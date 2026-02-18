@@ -4,7 +4,6 @@ export interface ApiClientConfig {
     baseUrl: string;
     timeout?: number;
     defaultHeaders?: Record<string, string>;
-    getAuthToken?: () => string | null | Promise<string | null>;
     onUnauthorized?: () => void | Promise<void>;
 }
 
@@ -16,8 +15,9 @@ export interface RequestOptions extends Omit<RequestInit, 'method' | 'body'> {
 }
 
 export class ApiClient {
-    private config: Required<Omit<ApiClientConfig, 'getAuthToken' | 'onUnauthorized'>> &
-        Pick<ApiClientConfig, 'getAuthToken' | 'onUnauthorized'>;
+    private token: string | null = null;
+    private config: Required<Omit<ApiClientConfig, 'onUnauthorized'>> &
+        Pick<ApiClientConfig, 'onUnauthorized'>;
 
     constructor(config: ApiClientConfig) {
         this.config = {
@@ -26,9 +26,16 @@ export class ApiClient {
             defaultHeaders: config.defaultHeaders ?? {
                 'Content-Type': 'application/json',
             },
-            getAuthToken: config.getAuthToken,
             onUnauthorized: config.onUnauthorized,
         };
+    }
+
+    setBearerToken(token: string | null) {
+        this.token = token;
+    }
+
+    getBearerToken(): string | null {
+        return this.token;
     }
 
     private buildUrl(endpoint: string, params?: Record<string, string | number | boolean | undefined | null>): string {
@@ -59,6 +66,15 @@ export class ApiClient {
             ...this.config.defaultHeaders,
             ...options.headers,
         };
+
+        if (options.requiresAuth && this.token) {
+            if (this.token.startsWith('Bearer ')) {
+                headers['Authorization'] = this.token;
+            } else {
+                headers['Authorization'] = `Bearer ${this.token}`;
+            }
+        }
+
         return headers;
     }
 
@@ -71,7 +87,6 @@ export class ApiClient {
             return null as T;
         }
 
-        // Clone response para poder ler múltiplas vezes se necessário
         const clonedResponse = response.clone();
         let data: unknown;
 

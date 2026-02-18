@@ -16,4 +16,3 @@ class BusinessAddressServiceImpl extends BaseService<
     }
 }
 export const BusinessAddressService = new BusinessAddressServiceImpl();
-
