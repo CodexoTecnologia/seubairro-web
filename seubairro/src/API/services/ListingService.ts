@@ -39,6 +39,13 @@ class ListingServiceImpl extends BaseService<
             requiresAuth: true,
         });
     }
+
+    async getNearby(maxDistanceKm: number = 50): Promise<ListingResponse[]> {
+        return apiClient.get<ListingResponse[]>('/api/Listing/nearby', {
+            params: { maxDistanceKm },
+            requiresAuth: true,
+        });
+    }
 }
 export const ListingService = new ListingServiceImpl();
 

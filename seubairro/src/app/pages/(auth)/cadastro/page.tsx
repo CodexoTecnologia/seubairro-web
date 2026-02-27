@@ -105,10 +105,10 @@ export default function Cadastro() {
                         </div>
                     )}
                     {mode === 'client' && (
-                        <ClientForm onSubmit={handleClientRegister} />
+                        <ClientForm />
                     )}
                     {mode === 'business' && (
-                        <BusinessForm onSubmit={handleBusinessRegister} />
+                        <BusinessForm />
                     )}
                 </div>
             </div>

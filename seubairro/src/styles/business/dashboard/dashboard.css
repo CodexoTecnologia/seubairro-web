@@ -94,7 +94,8 @@
 }
 
 .actions-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin-bottom: 40px;
 }
@@ -239,10 +240,6 @@
 }
 
 @media (max-width: 900px) {
-    .actions-row {
-        flex-direction: column;
-    }
-
     .action-btn {
         flex-direction: row;
         padding: 15px;

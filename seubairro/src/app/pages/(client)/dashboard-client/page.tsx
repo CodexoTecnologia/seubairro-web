@@ -1,88 +1,66 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { ListingService } from '@/API/services/ListingService'
+import { CategoryService } from '@/API/services/CategoryService'
+import type { ListingResponse } from '@/API/services/ListingService'
+import type { CategoryResponse } from '@/API/dtos/Response/business/CategoryResponse'
 import '@/styles/client/dashboard/dashboard.css'
+
 export default function ClientDashboard() {
     const [currentType, setCurrentType] = useState('all')
     const [currentCategory, setCurrentCategory] = useState('all')
     const [viewMode, setViewMode] = useState<'list' | 'map'>('list')
-    const adsData = [
-        {
-            id: 1,
-            title: "Mercadinho da Família",
-            type: "product",
-            category: "alimentacao",
-            price: "Ofertas do Dia",
-            rating: 4.8,
-            reviews: 120,
-            distance: 0.2,
-            image: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop"
-        },
-        {
-            id: 2,
-            title: "Eletricista Rápido",
-            type: "service",
-            category: "servicos",
-            price: "A partir de R$ 80",
-            rating: 5.0,
-            reviews: 45,
-            distance: 1.5,
-            image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1000&auto=format&fit=crop"
-        },
-        {
-            id: 3,
-            title: "Salão Beleza Pura",
-            type: "service",
-            category: "beleza",
-            price: "Corte R$ 35,00",
-            rating: 4.5,
-            reviews: 80,
-            distance: 0.5,
-            image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1000&auto=format&fit=crop"
-        },
-        {
-            id: 4,
-            title: "Hamburgueria Artesanal",
-            type: "product",
-            category: "alimentacao",
-            price: "Combo R$ 29,90",
-            rating: 4.9,
-            reviews: 200,
-            distance: 3.2,
-            image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1000&auto=format&fit=crop"
-        },
-        {
-            id: 5,
-            title: "Conserto de Celular",
-            type: "service",
-            category: "servicos",
-            price: "Orçamento Grátis",
-            rating: 4.7,
-            reviews: 15,
-            distance: 0.1,
-            image: "https://images.unsplash.com/photo-1598327771808-51885e342758?q=80&w=1000&auto=format&fit=crop"
-        },
-        {
-            id: 6,
-            title: "Moda Local",
-            type: "product",
-            category: "varejo",
-            price: "Peças exclusivas",
-            rating: 4.6,
-            reviews: 30,
-            distance: 0.8,
-            image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop"
+    const [adsData, setAdsData] = useState<any[]>([])
+    const [categoriesMap, setCategoriesMap] = useState<Record<string, CategoryResponse>>({})
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        const loadDashboardData = async () => {
+            try {
+                setIsLoading(true)
+                // Fetch categories
+                const catsRaw = await CategoryService.getAll()
+                const catsArray = Array.isArray(catsRaw) ? catsRaw : ((catsRaw as any)?.data || [])
+
+                const typeMap: Record<string, CategoryResponse> = {}
+                catsArray.forEach((c: CategoryResponse) => {
+                    typeMap[c.id] = c
+                })
+                setCategoriesMap(typeMap)
+
+                // Fetch nearby listings (mocking max distance 50km for now)
+                const listingsRaw = await ListingService.getNearby(50)
+                const listingsArray = Array.isArray(listingsRaw) ? listingsRaw : ((listingsRaw as any)?.data || [])
+
+                const formattedAds = listingsArray.map((listing: ListingResponse, i: number) => {
+                    const category = typeMap[listing.categoryId]
+                    return {
+                        id: listing.id,
+                        title: listing.title || 'Anúncio sem título',
+                        type: category?.categoryType === 1 ? 'product' : 'service',
+                        category: category?.name?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') || 'outros',
+                        categoryName: category?.name || 'Geral',
+                        price: `R$ ${listing.price.toFixed(2)}`
+                    }
+                })
+
+                setAdsData(formattedAds)
+            } catch (error) {
+                console.error('Erro ao carregar dashboard', error)
+            } finally {
+                setIsLoading(false)
+            }
         }
-    ]
+
+        loadDashboardData()
+    }, [])
+
     const filteredData = adsData.filter(item => {
         const matchType = currentType === 'all' || item.type === currentType
-        const matchCat = currentCategory === 'all' || item.category === currentCategory
+        const matchCat = currentCategory === 'all' || item.category.includes(currentCategory) || currentCategory === item.category
         return matchType && matchCat
-    }).sort((a, b) => a.distance - b.distance)
-    const mockCoordinates = [
-        { t: '30%', l: '40%' }, { t: '50%', l: '60%' },
-        { t: '70%', l: '30%' }, { t: '20%', l: '70%' },
-        { t: '40%', l: '20%' }, { t: '60%', l: '80%' }
-    ]
+    })
+
     return (
         <>
             <header className="filters-header">
@@ -141,91 +119,35 @@ export default function ClientDashboard() {
                             <i className="ri-scissors-cut-line"></i> Beleza
                         </button>
                     </div>
-                    <div className="view-toggle">
-                        <button
-                            className={`toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
-                            onClick={() => setViewMode('list')}
-                            id="btnListView"
-                        >
-                            <i className="ri-list-check"></i>
-                        </button>
-                        <button
-                            className={`toggle-btn ${viewMode === 'map' ? 'active' : ''}`}
-                            onClick={() => setViewMode('map')}
-                            id="btnMapView"
-                        >
-                            <i className="ri-map-2-line"></i>
-                        </button>
-                    </div>
                 </div>
             </header>
             <main className="main-content container">
-                {viewMode === 'list' && (
-                    <div id="feedView">
-                        <div className="feed-header-info">
-                            <h3>Destaques perto de você</h3>
-                            <span>Ordenado por proximidade <i className="ri-arrow-down-line"></i></span>
-                        </div>
-                        <div className="listings-grid" id="listingsContainer">
-                            {filteredData.length === 0 ? (
-                                <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '60px', color: '#94A3B8' }}>
-                                    <i className="ri-search-2-line" style={{ fontSize: '3rem', marginBottom: '10px', display: 'block' }}></i>
-                                    <p>Nenhum resultado encontrado.</p>
-                                </div>
-                            ) : (
-                                filteredData.map(item => (
-                                    <div key={item.id} className="ad-card" onClick={() => window.location.href = '/pages/detalhes-anuncio'}>
-                                        <div className="ad-image" style={{ backgroundImage: `url('${item.image}')` }}>
-                                            <div className="dist-badge">
-                                                <i className="ri-map-pin-2-fill"></i> {item.distance} km
-                                            </div>
-                                            <button className="fav-btn"><i className="ri-heart-line"></i></button>
+                <div id="feedView">
+                    <div className="feed-header-info">
+                        <h3>Destaques perto de você</h3>
+                    </div>
+                    <div className="listings-grid" id="listingsContainer">
+                        {filteredData.length === 0 ? (
+                            <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '60px', color: '#94A3B8' }}>
+                                <i className="ri-search-2-line" style={{ fontSize: '3rem', marginBottom: '10px', display: 'block' }}></i>
+                                <p>Nenhum resultado encontrado.</p>
+                            </div>
+                        ) : (
+                            filteredData.map(item => (
+                                <div key={item.id} className="ad-card" onClick={() => window.location.href = '/pages/detalhes-anuncio'}>
+                                    <div className="ad-content">
+                                        <div className="ad-category">
+                                            <i className={item.type === 'product' ? 'ri-shopping-bag-3-fill' : 'ri-user-star-fill'} style={{ marginRight: '4px' }}></i>
+                                            {item.categoryName}
                                         </div>
-                                        <div className="ad-content">
-                                            <div className="ad-category">
-                                                <i className={item.type === 'product' ? 'ri-shopping-bag-3-fill' : 'ri-user-star-fill'} style={{ marginRight: '4px' }}></i>
-                                                {item.category}
-                                            </div>
-                                            <h3 className="ad-title">{item.title}</h3>
-                                            <div className="ad-rating">
-                                                <i className="ri-star-fill"></i> {item.rating} <span>({item.reviews})</span>
-                                            </div>
-                                            <div className="ad-price">{item.price}</div>
-                                        </div>
+                                        <h3 className="ad-title">{item.title}</h3>
+                                        <div className="ad-price">{item.price}</div>
                                     </div>
-                                ))
-                            )}
-                        </div>
+                                </div>
+                            ))
+                        )}
                     </div>
-                )}
-                {viewMode === 'map' && (
-                    <div id="mapView" className="map-wrapper">
-                        <div className="simulated-map">
-                            <div className="map-bg"></div>
-                            <div id="mapPinsContainer">
-                                {filteredData.map((item, index) => {
-                                    const pos = mockCoordinates[index % mockCoordinates.length]
-                                    return (
-                                        <div
-                                            key={item.id}
-                                            className="map-pin"
-                                            style={{ top: pos.t, left: pos.l }}
-                                            onClick={() => window.location.href = '/pages/detalhes-anuncio'}
-                                        >
-                                            <div className="pin-shape">
-                                                <i className={item.type === 'product' ? 'ri-shopping-bag-3-fill' : 'ri-user-star-fill'}></i>
-                                            </div>
-                                            <div className="pin-label">{item.title}</div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                            <div className="map-overlay-btn">
-                                <i className="ri-focus-3-line"></i> Centralizar em mim
-                            </div>
-                        </div>
-                    </div>
-                )}
+                </div>
             </main>
         </>
     )

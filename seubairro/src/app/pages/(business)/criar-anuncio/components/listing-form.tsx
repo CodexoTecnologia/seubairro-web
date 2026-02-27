@@ -1,6 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { apiClient } from '@/API/Client/apiClientInstance'
+import { CategoryService } from '@/API/services/CategoryService'
+import { ListingService } from '@/API/services/ListingService'
+import type { CreateListingRequest } from '@/API/dtos/Request/index'
+import type { CategoryResponse } from '@/API/dtos/Response/index'
 
 interface ListingFormData {
     categoryId: string
@@ -16,13 +19,6 @@ interface ListingFormProps {
     type: 'product' | 'service'
 }
 
-interface Category {
-    id: string
-    name: string
-    categoryType: number
-    isActive: boolean
-}
-
 export default function ListingForm({ type }: ListingFormProps) {
     const [formData, setFormData] = useState<ListingFormData>({
         categoryId: '',
@@ -33,7 +29,7 @@ export default function ListingForm({ type }: ListingFormProps) {
         price: '',
         currencyCode: 'BRL',
     })
-    const [categories, setCategories] = useState<Category[]>([])
+    const [categories, setCategories] = useState<CategoryResponse[]>([])
     const [loading, setLoading] = useState(false)
     const [loadingCategories, setLoadingCategories] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -48,16 +44,10 @@ export default function ListingForm({ type }: ListingFormProps) {
             setLoadingCategories(true)
             const categoryType = type === 'product' ? 1 : 2
 
-            const resp = await apiClient.get('/api/Category/all', { requiresAuth: false, })
-            const data = Array.isArray((resp as any)?.data)
-                ? (resp as any).data
-                : Array.isArray(resp)
-                    ? (resp as any)
-                    : []
+            const rawData = await CategoryService.getAll()
+            const data = Array.isArray(rawData) ? rawData : ((rawData as any)?.data || [])
 
-            const filtered: Category[] = data
-                .filter((c: any) => c && c.isActive && c.categoryType === categoryType)
-                .map((c: any) => ({ id: c.id, name: c.name, categoryType: c.categoryType, isActive: c.isActive }))
+            const filtered: CategoryResponse[] = data.filter((c: any) => c && c.isActive && c.categoryType === categoryType)
 
             setCategories(filtered)
 
@@ -99,13 +89,17 @@ export default function ListingForm({ type }: ListingFormProps) {
         setSuccess(false)
 
         try {
-            const payload = {
-                ...formData,
+            const payload: CreateListingRequest = {
+                categoryId: formData.categoryId,
+                title: formData.title,
                 slug: generateSlug(formData.title),
+                stockQuantity: type === 'product' ? formData.stockQuantity : 0,
+                description: formData.description,
                 price: parseFloat(formData.price.replace(',', '.')),
+                currencyCode: formData.currencyCode,
             }
 
-            await apiClient.post('/api/listing', payload, { requiresAuth: true, })
+            await ListingService.create(payload)
             setSuccess(true)
             setFormData({
                 categoryId: '',
