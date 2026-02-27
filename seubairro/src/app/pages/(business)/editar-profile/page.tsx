@@ -3,18 +3,27 @@ import React, { useEffect, useState } from 'react'
 import '@/styles/business/update-profile/update-profile.css'
 import ProfileForm from './components/profile-form'
 import { BusinessService, type BusinessResponse } from '@/API/services/BusinessService'
+import { useAuthContext } from '@/contexts/AuthContext';
 
 export default function EditarProfilePage() {
     const [business, setBusiness] = useState<BusinessResponse | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    const { user, isAuthenticated } = useAuthContext();
+
     useEffect(() => {
         async function loadInitialData() {
+            if (!isAuthenticated || !user?.id) {
+                setError("Usuário não autenticado.");
+                setLoading(false);
+                return;
+            }
+
             try {
-                const ownerId = "id-do-usuario"; // Substitua pela lógica de auth
+                const ownerId = user.id;
                 const data = await BusinessService.getByOwnerId(ownerId);
-                
+
                 if (data && data.length > 0) {
                     setBusiness(data[0]);
                 } else {
@@ -27,7 +36,7 @@ export default function EditarProfilePage() {
             }
         }
         loadInitialData();
-    }, []);
+    }, [user, isAuthenticated]);
 
     if (loading) return <div className="edit-profile-container">Carregando...</div>;
     if (error) return <div className="edit-profile-container">{error}</div>;
@@ -38,7 +47,7 @@ export default function EditarProfilePage() {
                 <h1>Editar Perfil</h1>
                 <p>Gerencie as informações que seus clientes veem.</p>
             </header>
-            
+
             <ProfileForm initialData={business!} />
         </div>
     );

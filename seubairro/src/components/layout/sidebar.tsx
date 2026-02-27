@@ -9,21 +9,20 @@ export function BusinessSidebar() {
                 <span className="status-badge online">Loja Aberta</span>
             </div>
             <nav className="biz-menu">
-                <Link href="/pages/business" className="menu-link active">
+                <Link href="/pages/dashboard-business" className="menu-link active">
                     <i className="ri-dashboard-line"></i>
                     <span>Visão Geral</span>
                 </Link>
-                <Link href="/pages/business/anuncios" className="menu-link">
+                <Link href="/pages/listar-anuncio" className="menu-link">
                     <i className="ri-store-2-line"></i>
                     <span>Meus Anúncios</span>
-                    <span className="counter">3</span>
                 </Link>
-                <Link href="/pages/business/mensagens" className="menu-link">
+                <Link href="/pages/Chat" className="menu-link">
                     <i className="ri-message-3-line"></i>
                     <span>Mensagens</span>
                     <span className="small-icon"><i className="ri-external-link-line"></i></span>
                 </Link>
-                <Link href="/pages/business/configuracoes" className="menu-link">
+                <Link href="/pages/editar-profile" className="menu-link">
                     <i className="ri-settings-3-line"></i>
                     <span>Configurações</span>
                 </Link>

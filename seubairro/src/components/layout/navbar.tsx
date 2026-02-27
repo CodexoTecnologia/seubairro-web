@@ -2,6 +2,8 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import '@/styles/layout/navbar.css'
+
 export default function Navbar() {
     const pathname = usePathname()
     const businessPaths = ['/pages/dashboard', '/pages/criar-anuncio', '/pages/listar-anuncio', '/pages/editar-profile', '/pages/Chat']

@@ -1,13 +1,25 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { UserService } from '@/API/services/UserService'
+import type { CreateEntrepeneurRequest } from '@/API/dtos/Request/business/CreateEntrepeneurRequest'
 import '@/styles/auth/login/LoginForm.css'
 
-interface BusinessFormProps {
-    onSubmit: (e: React.FormEvent) => void;
-}
-
-export const BusinessForm: React.FC<BusinessFormProps> = ({ onSubmit }) => {
+export const BusinessForm: React.FC = () => {
+    const router = useRouter()
     const [businessStep, setBusinessStep] = useState(1)
     const [showBusinessPassword, setShowBusinessPassword] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState('')
+
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        password: '',
+        birthDate: '',
+        businessName: '',
+        category: '',
+        whatsapp: ''
+    })
 
     const inputStyle = {
         background: 'transparent',
@@ -19,8 +31,64 @@ export const BusinessForm: React.FC<BusinessFormProps> = ({ onSubmit }) => {
         color: 'inherit'
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target
+        setFormData(prev => ({ ...prev, [name]: value }))
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setIsLoading(true)
+        setError('')
+
+        const nameParts = formData.fullName.trim().split(' ')
+        const firstName = nameParts[0]
+        const lastName = nameParts.slice(1).join(' ') || null
+
+        // Default valid dates for dummy requirements
+        const birthDateFormatted = formData.birthDate
+            ? new Date(formData.birthDate).toISOString()
+            : new Date().toISOString()
+
+        const request: CreateEntrepeneurRequest = {
+            firstName: firstName || null,
+            lastName: lastName,
+            email: formData.email,
+            password: formData.password,
+            birthDate: birthDateFormatted,
+            taxId: null,
+            business: {
+                ownerId: '00000000-0000-0000-0000-000000000000', // Backend handles this
+                businessName: formData.businessName,
+                legalName: formData.businessName,
+                taxId: null,
+                description: null,
+                logoUrl: null,
+                coverImageUrl: null,
+                publicPhone: formData.whatsapp,
+                instagramUrl: null
+            }
+        }
+
+        try {
+            await UserService.registerEntrepeneur(request)
+
+            // Login after success
+            const loginResp = await UserService.login({ email: formData.email, password: formData.password })
+            if (loginResp && loginResp.token) {
+                router.push('/pages/(business)/dashboard-business')
+            } else {
+                router.push('/pages/login')
+            }
+        } catch (err: any) {
+            setError(err.message || 'Erro ao criar conta. Verifique os dados e tente novamente.')
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     return (
-        <form className="form" onSubmit={onSubmit} style={{ width: '100%', padding: 0, gap: '15px' }}>
+        <form className="form" onSubmit={handleSubmit} style={{ width: '100%', padding: 0, gap: '15px' }}>
             <div className="stepper">
                 <div className={`step ${businessStep === 1 ? 'active' : ''}`}>1. Dados Pessoais</div>
                 <div className="step-line"></div>
@@ -34,17 +102,15 @@ export const BusinessForm: React.FC<BusinessFormProps> = ({ onSubmit }) => {
                         <label>Nome do Responsável</label>
                     </div>
                     <div className="inputForm">
-                        <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
-                            <g id="Layer_3" data-name="Layer 3">
-                                <circle cx="16" cy="16" r="15" fill="none" strokeWidth="2" strokeMiterlimit="10" />
-                                <path d="M16 17a7 7 0 1 0-7-7 7 7 0 0 0 7 7zm0-12a5 5 0 1 1-5 5 5 5 0 0 1 5-5zM27 28.5a1 1 0 0 0-1-1 11 11 0 0 0-20 0 1 1 0 0 0-1 1v.5h22z" />
-                            </g>
-                        </svg>
+                        <i className="ri-user-line" style={{ fontSize: '20px' }}></i>
                         <input
                             type="text"
+                            name="fullName"
                             className="input"
                             style={inputStyle}
-                            placeholder="Seu nome"
+                            placeholder="Seu nome completo"
+                            value={formData.fullName}
+                            onChange={handleChange}
                             required
                         />
                     </div>
@@ -53,16 +119,31 @@ export const BusinessForm: React.FC<BusinessFormProps> = ({ onSubmit }) => {
                         <label>E-mail de Acesso</label>
                     </div>
                     <div className="inputForm">
-                        <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
-                            <g id="Layer_3" data-name="Layer 3">
-                                <path d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z"></path>
-                            </g>
-                        </svg>
+                        <i className="ri-mail-line" style={{ fontSize: '20px' }}></i>
                         <input
                             type="email"
+                            name="email"
                             className="input"
                             style={inputStyle}
                             placeholder="email@negocio.com"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <div className="flex-column">
+                        <label>Data de Nascimento</label>
+                    </div>
+                    <div className="inputForm" style={{ height: '40px', padding: '0 10px' }}>
+                        <i className="ri-calendar-line" style={{ fontSize: '20px' }}></i>
+                        <input
+                            type="date"
+                            name="birthDate"
+                            className="input"
+                            style={{ ...inputStyle, WebkitAppearance: 'none' }}
+                            value={formData.birthDate}
+                            onChange={handleChange}
                             required
                         />
                     </div>
@@ -71,15 +152,15 @@ export const BusinessForm: React.FC<BusinessFormProps> = ({ onSubmit }) => {
                         <label>Senha</label>
                     </div>
                     <div className="inputForm">
-                        <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path>
-                            <path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"></path>
-                        </svg>
+                        <i className="ri-lock-line" style={{ fontSize: '20px' }}></i>
                         <input
                             type={showBusinessPassword ? "text" : "password"}
+                            name="password"
                             className="input"
                             style={inputStyle}
                             placeholder="Senha segura"
+                            value={formData.password}
+                            onChange={handleChange}
                             required
                         />
                         <button
@@ -97,21 +178,21 @@ export const BusinessForm: React.FC<BusinessFormProps> = ({ onSubmit }) => {
                                 color: 'inherit'
                             }}
                         >
-                            {showBusinessPassword ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                </svg>
-                            ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                                </svg>
-                            )}
+                            {showBusinessPassword ? <i className="ri-eye-line" style={{ fontSize: '20px' }}></i> : <i className="ri-eye-off-line" style={{ fontSize: '20px' }}></i>}
                         </button>
                     </div>
 
-                    <button type="button" className="btn-submit btn-business" onClick={() => setBusinessStep(2)} style={{ marginTop: '10px' }}>
+                    <button
+                        type="button"
+                        className="btn-submit btn-business"
+                        onClick={() => {
+                            if (formData.fullName && formData.email && formData.password && formData.birthDate) {
+                                setBusinessStep(2)
+                            } else {
+                                alert("Preencha todos os campos antes de continuar.")
+                            }
+                        }}
+                        style={{ marginTop: '10px' }}>
                         Continuar <i className="ri-arrow-right-line"></i>
                     </button>
                 </div>
@@ -127,23 +208,28 @@ export const BusinessForm: React.FC<BusinessFormProps> = ({ onSubmit }) => {
                         <i className="ri-store-2-line" style={{ fontSize: '20px' }}></i>
                         <input
                             type="text"
+                            name="businessName"
                             className="input"
                             style={inputStyle}
                             placeholder="Ex: Mercado do João"
+                            value={formData.businessName}
+                            onChange={handleChange}
                             required
                         />
                     </div>
 
                     <div className="flex-column">
-                        <label>Categoria</label>
+                        <label>Categoria principal</label>
                     </div>
                     <div className="inputForm">
                         <i className="ri-layout-grid-line" style={{ fontSize: '20px' }}></i>
                         <select
+                            name="category"
                             required
                             className="input"
                             style={inputStyle}
-                            defaultValue=""
+                            value={formData.category}
+                            onChange={handleChange}
                         >
                             <option value="" disabled>Selecione uma categoria</option>
                             <option value="alimentacao">Alimentação</option>
@@ -159,16 +245,27 @@ export const BusinessForm: React.FC<BusinessFormProps> = ({ onSubmit }) => {
                         <i className="ri-whatsapp-line" style={{ fontSize: '20px' }}></i>
                         <input
                             type="tel"
+                            name="whatsapp"
                             className="input"
                             style={inputStyle}
                             placeholder="(41) 99999-9999"
+                            value={formData.whatsapp}
+                            onChange={handleChange}
                             required
                         />
                     </div>
 
+                    {error && (
+                        <p className="error-message" style={{ color: 'red', fontSize: '14px', textAlign: 'center' }}>
+                            {error}
+                        </p>
+                    )}
+
                     <div className="buttons-row">
                         <button type="button" className="btn-outline" onClick={() => setBusinessStep(1)}>Voltar</button>
-                        <button type="submit" className="btn-submit btn-business">Finalizar</button>
+                        <button type="submit" className="btn-submit btn-business" disabled={isLoading}>
+                            {isLoading ? 'Finalizando...' : 'Finalizar'}
+                        </button>
                     </div>
                 </div>
             )}
