@@ -1,6 +1,5 @@
-import { CountryCodeEnum } from '../../enums/index';
-export interface CreateBusinessAddressRequest {
-    businessId: string;
+import { CountryCodeEnum } from '../../../enums/index/index';
+export interface UpdateAddressRequest {
     street: string | null;
     number: string | null;
     neighborhood: string | null;
