@@ -1,6 +1,11 @@
 import { apiClient } from '../Client/apiClientInstance';
-import type { CreateUserRequest, UserLoginRequest } from '../dtos/Request/index';
-import { CountryCodeEnum } from '../enums/index';
+import type {
+    CreateUserRequest,
+    UserLoginRequest,
+    CreateCustomerRequest,
+    CreateEntrepeneurRequest
+} from '../dtos/Request/index/index';
+import { CountryCodeEnum } from '../enums/index/index';
 
 export interface UserResponse {
     id: string;
@@ -34,6 +39,44 @@ class UserServiceImpl {
             data,
             {
                 params: { countryCode },
+                requiresAuth: false,
+            }
+        );
+    }
+
+    async registerCustomer(
+        data: CreateCustomerRequest,
+        countryCode: CountryCodeEnum = CountryCodeEnum.Brasil
+    ): Promise<UserResponse> {
+        return apiClient.post<UserResponse, CreateCustomerRequest>(
+            '/api/User/customer',
+            data,
+            {
+                params: { countryCode },
+                requiresAuth: false,
+            }
+        );
+    }
+
+    async registerEntrepeneur(
+        data: CreateEntrepeneurRequest,
+        countryCode: CountryCodeEnum = CountryCodeEnum.Brasil
+    ): Promise<UserResponse> {
+        return apiClient.post<UserResponse, CreateEntrepeneurRequest>(
+            '/api/User/entrepeneur',
+            data,
+            {
+                params: { countryCode },
+                requiresAuth: false,
+            }
+        );
+    }
+
+    async login(data: UserLoginRequest): Promise<LoginResponse> {
+        return apiClient.post<LoginResponse, UserLoginRequest>(
+            '/api/User/login',
+            data,
+            {
                 requiresAuth: false,
             }
         );

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { UserService, UserResponse } from '@/API/services/UserService';
-import type { UserLoginRequest } from '@/API/dtos/Request/UserLoginRequest';
+import type { UserLoginRequest } from '@/API/dtos/Request/client/UserLoginRequest';
 import { authService } from '@/API/services/(Auth)/AuthInstance';
 
 interface AuthState {

@@ -4,6 +4,7 @@ export {
     AddressService,
     BusinessAddressService,
     ListingService,
+    CategoryService,
     apiClient,
     setAuthToken,
     getAuthToken,
@@ -33,11 +34,15 @@ export type {
     UpdateListingRequest,
     CreateUserRequest,
     UserLoginRequest,
+    CreateCategoryRequest,
+    CreateCustomerRequest,
+    CreateEntrepeneurRequest,
 } from './dtos/Request/index';
 
 export type {
     AddressResponse,
     BusinessAddressResponse,
+    CategoryResponse,
 } from './dtos/Response/index';
 
 export type {
@@ -50,5 +55,5 @@ export type {
     PaginatedResponse,
 } from './Interfaces';
 
-export { CountryCodeEnum, getCountryName } from './enums/index';
+export { CountryCodeEnum, getCountryName, CategoryTypeEnum } from './enums/index';
 
