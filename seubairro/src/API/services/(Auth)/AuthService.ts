@@ -26,7 +26,7 @@ export class AuthService implements IAuthService {
     ): Promise<TResponse> {
         try {
             const response = await apiClient.post<TResponse, TCredentials>(
-                '/api/User/login',
+                '/api/Auth/login',
                 credentials,
                 { requiresAuth: false }
             );
@@ -50,13 +50,13 @@ export class AuthService implements IAuthService {
     }
 
     async logout(): Promise<void> {
-        try {
-            await apiClient.post('/api/User/logout', {}, { requiresAuth: true });
-        } catch (error) {
-            console.error('Erro ao fazer logout no servidor', error);
-        } finally {
-            this.setToken(null);
-        }
+        this.setToken(null);
+    }
+
+    async resetPassword(email: string, newPassword: string): Promise<void> {
+        await apiClient.post('/api/Auth/reset-password', { email, newPassword }, {
+            requiresAuth: true,
+        });
     }
 
     getToken(): string | null {

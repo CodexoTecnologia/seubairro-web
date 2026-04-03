@@ -154,12 +154,12 @@ export default function LoginForm() {
                     {isLoading ? 'Entrando...' : 'Entrar'}
                 </button>
 
-                <p className="p">
+                {/* <p className="p">
                     Não tem uma conta? {' '}
                     <Link href="/pages/cadastro">
                         <span className="span">Cadastre-se</span>
                     </Link>
-                </p>
+                </p> */}
             </form>
         </div>
     )

@@ -48,4 +48,3 @@ class ListingServiceImpl extends BaseService<
     }
 }
 export const ListingService = new ListingServiceImpl();
-

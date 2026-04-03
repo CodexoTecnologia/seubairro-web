@@ -1,7 +1,6 @@
 import { apiClient } from '../Client/apiClientInstance';
 import type {
     CreateUserRequest,
-    UserLoginRequest,
     CreateCustomerRequest,
     CreateEntrepeneurRequest
 } from '../dtos/Request/index/index';
@@ -72,15 +71,6 @@ class UserServiceImpl {
         );
     }
 
-    async login(data: UserLoginRequest): Promise<LoginResponse> {
-        return apiClient.post<LoginResponse, UserLoginRequest>(
-            '/api/User/login',
-            data,
-            {
-                requiresAuth: false,
-            }
-        );
-    }
 }
 
 export const UserService = new UserServiceImpl();
