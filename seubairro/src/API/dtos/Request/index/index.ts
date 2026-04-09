@@ -1,11 +1,13 @@
-export type { CreateAddressRequest } from '../CreateAddressRequest';
-export type { UpdateAddressRequest } from '../UpdateAddressRequest';
-export type { CreateBusinessRequest } from '../CreateBusinessRequest';
-export type { UpdateBusinessRequest } from '../UpdateBusinessRequest';
-export type { CreateBusinessAddressRequest } from '../CreateBusinessAddressRequest';
-export type { UpdateBusinessAddressRequest } from '../UpdateBusinessAddressRequest';
-export type { CreateListingRequest } from '../CreateListingRequest';
-export type { UpdateListingRequest } from '../UpdateListingRequest';
-export type { CreateUserRequest } from '../CreateUserRequest';
-export type { UserLoginRequest } from '../UserLoginRequest';
-
+export type { CreateAddressRequest } from '../client/CreateAddressRequest';
+export type { UpdateAddressRequest } from '../client/UpdateAddressRequest';
+export type { CreateBusinessRequest } from '../business/CreateBusinessRequest';
+export type { UpdateBusinessRequest } from '../business/UpdateBusinessRequest';
+export type { CreateBusinessAddressRequest } from '../business/CreateBusinessAddressRequest';
+export type { UpdateBusinessAddressRequest } from '../business/UpdateBusinessAddressRequest';
+export type { CreateListingRequest } from '../business/CreateListingRequest';
+export type { UpdateListingRequest } from '../business/UpdateListingRequest';
+export type { CreateUserRequest } from '../client/CreateUserRequest';
+export type { UserLoginRequest } from '../client/UserLoginRequest';
+export type { CreateCategoryRequest } from '../business/CreateCategoryRequest';
+export type { CreateCustomerRequest } from '../client/CreateCustomerRequest';
+export type { CreateEntrepeneurRequest } from '../business/CreateEntrepeneurRequest';

@@ -1,3 +1,4 @@
-export type { AddressResponse } from '../AddressResponse';
-export type { BusinessAddressResponse } from '../BusinessAddressResponse';
+export type { AddressResponse } from '../client/AddressResponse';
+export type { BusinessAddressResponse } from '../business/BusinessAddressResponse';
+export type { CategoryResponse } from '../business/CategoryResponse';
 

@@ -18,7 +18,6 @@ export default function BusinessLayout({
                     {children}
                 </main>
             </div>
-            <Footer />
         </div>
     )
 }

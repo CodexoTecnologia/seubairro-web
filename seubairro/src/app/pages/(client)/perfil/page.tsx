@@ -1,16 +1,24 @@
 'use client'
 import React, { useState } from 'react'
 import '@/styles/client/perfil/perfil.css'
+import { useAuthContext } from '@/contexts/AuthContext'
+
 export default function ClientProfile() {
     const [activeTab, setActiveTab] = useState('personal')
+    const { user, logout } = useAuthContext()
+
+    const fullName = user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : 'Visitante'
+    const initial = fullName ? fullName.charAt(0).toUpperCase() : 'V'
+    const email = user ? user.email : 'visitante@seubairro.com'
+
     return (
         <>
             <div className="full-screen-layout">
                 <aside className="sidebar-panel">
                     <div className="user-header">
-                        <div className="avatar-large">G</div>
-                        <h3>Gabriel Silva</h3>
-                        <span className="user-email">gabriel@email.com</span>
+                        <div className="avatar-large">{initial}</div>
+                        <h3>{fullName}</h3>
+                        <span className="user-email">{email}</span>
                     </div>
                     <nav className="sidebar-menu">
                         <button
@@ -38,10 +46,10 @@ export default function ClientProfile() {
                             <i className="ri-arrow-right-s-line arrow"></i>
                         </button>
                         <div className="menu-divider"></div>
-                        <a href="/login" className="menu-item danger">
+                        <button onClick={logout} className="menu-item danger" style={{ border: 'none', background: 'transparent', width: '100%', textAlign: 'left', cursor: 'pointer' }}>
                             <div className="icon-wrap"><i className="ri-logout-box-r-line"></i></div>
                             <span>Sair da conta</span>
-                        </a>
+                        </button>
                     </nav>
                 </aside>
                 <main className="content-panel">
@@ -55,11 +63,11 @@ export default function ClientProfile() {
                                 <div className="form-row">
                                     <div className="input-group">
                                         <label>Nome Completo</label>
-                                        <input type="text" defaultValue="Gabriel Silva" className="input-field" />
+                                        <input type="text" defaultValue={fullName} className="input-field" />
                                     </div>
                                     <div className="input-group">
-                                        <label>Telefone / WhatsApp</label>
-                                        <input type="tel" defaultValue="(41) 99999-9999" className="input-field" />
+                                        <label>E-mail de Acesso</label>
+                                        <input type="email" defaultValue={email || ''} className="input-field" disabled style={{ opacity: 0.6 }} />
                                     </div>
                                 </div>
                                 <div className="input-group">
@@ -126,7 +134,7 @@ export default function ClientProfile() {
                             <form className="app-form">
                                 <div className="input-group">
                                     <label>E-mail de Acesso</label>
-                                    <input type="email" defaultValue="gabriel@email.com" className="input-field disabled" readOnly />
+                                    <input type="email" defaultValue={email || ''} className="input-field disabled" readOnly />
                                 </div>
                                 <div className="divider"></div>
                                 <h3 className="sub-title">Alterar Senha</h3>

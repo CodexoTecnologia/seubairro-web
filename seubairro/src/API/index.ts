@@ -4,6 +4,7 @@ export {
     AddressService,
     BusinessAddressService,
     ListingService,
+    CategoryService,
     apiClient,
     setAuthToken,
     getAuthToken,
@@ -14,12 +15,14 @@ export {
     TimeoutError,
     BaseService,
 } from './services/index';
+
 export type {
     UserResponse,
     LoginResponse,
     BusinessResponse,
     ListingResponse,
 } from './services/index';
+
 export type {
     CreateAddressRequest,
     UpdateAddressRequest,
@@ -31,11 +34,17 @@ export type {
     UpdateListingRequest,
     CreateUserRequest,
     UserLoginRequest,
+    CreateCategoryRequest,
+    CreateCustomerRequest,
+    CreateEntrepeneurRequest,
 } from './dtos/Request/index';
+
 export type {
     AddressResponse,
     BusinessAddressResponse,
+    CategoryResponse,
 } from './dtos/Response/index';
+
 export type {
     ApiError,
     ValidationError,
@@ -44,6 +53,7 @@ export type {
     ApiResponse,
     PaginationParams,
     PaginatedResponse,
-} from './interfaces';
-export { CountryCodeEnum, getCountryName } from './enums/index';
+} from './Interfaces';
+
+export { CountryCodeEnum, getCountryName, CategoryTypeEnum } from './enums/index';
 

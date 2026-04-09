@@ -3,6 +3,7 @@ export enum CountryCodeEnum {
     Argentina = 2,
     Uruguai = 3,
 }
+
 export const getCountryName = (code: CountryCodeEnum): string => {
     const names: Record<CountryCodeEnum, string> = {
         [CountryCodeEnum.Brasil]: 'Brasil',
