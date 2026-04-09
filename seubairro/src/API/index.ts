@@ -45,15 +45,7 @@ export type {
     CategoryResponse,
 } from './dtos/Response/index';
 
-export type {
-    ApiError,
-    ValidationError,
-    ApiErrorResponse,
-    ApiSuccessResponse,
-    ApiResponse,
-    PaginationParams,
-    PaginatedResponse,
-} from './Interfaces';
+export type { ApiErrorDetail, ApiErrorResponse } from './Client/ApiClientError';
 
 export { CountryCodeEnum, getCountryName, CategoryTypeEnum } from './enums/index';
 

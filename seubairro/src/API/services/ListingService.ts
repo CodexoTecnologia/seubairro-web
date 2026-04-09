@@ -23,10 +23,30 @@ class ListingServiceImpl extends BaseService<
         super({
             basePath: '/api/Listing',
             requiresAuth: true,
-            idParamName: 'id',
-            usePathId: false,
+            usePathId: true,
         });
     }
+
+    async create(data: CreateListingRequest): Promise<ListingResponse> {
+        const formData = new FormData();
+        formData.append('CategoryId', data.categoryId);
+        formData.append('Title', data.title ?? '');
+        formData.append('Slug', data.slug ?? '');
+        formData.append('StockQuantity', String(data.stockQuantity));
+        formData.append('Description', data.description ?? '');
+        formData.append('Price', String(data.price));
+        formData.append('CurrencyCode', data.currencyCode ?? 'BRL');
+        return apiClient.postForm<ListingResponse>('/api/Listing', formData, {
+            requiresAuth: true,
+        });
+    }
+
+    async getByBusiness(businessId: string): Promise<ListingResponse[]> {
+        return apiClient.get<ListingResponse[]>(`/api/Listing/business/${businessId}`, {
+            requiresAuth: true,
+        });
+    }
+
     async activate(id: string): Promise<ListingResponse> {
         return apiClient.patch<ListingResponse>('/api/Listing/active', undefined, {
             params: { id },

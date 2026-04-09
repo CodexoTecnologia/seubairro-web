@@ -1,6 +1,14 @@
-import type { ApiErrorResponse } from '../Interfaces';
+export interface ApiErrorDetail {
+    statusCode: number;
+    message: string;
+    [key: string]: unknown;
+}
 
-export type { ApiErrorResponse, ApiErrorDetail } from '../Interfaces';
+export interface ApiErrorResponse {
+    success: false;
+    error: ApiErrorDetail;
+    [key: string]: unknown;
+}
 
 export class ApiClientError extends Error {
     public readonly statusCode: number;

@@ -1,8 +1,10 @@
+'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { UserService } from '@/API/services/UserService'
+import { authService } from '@/API/services/(Auth)/AuthInstance'
 import type { CreateEntrepeneurRequest } from '@/API/dtos/Request/business/CreateEntrepeneurRequest'
-import '@/styles/auth/login/LoginForm.css'
+import '@/styles/auth/cadastro/business-forms.css'
 
 export const BusinessForm: React.FC = () => {
     const router = useRouter()
@@ -74,12 +76,8 @@ export const BusinessForm: React.FC = () => {
             await UserService.registerEntrepeneur(request)
 
             // Login after success
-            const loginResp = await UserService.login({ email: formData.email, password: formData.password })
-            if (loginResp && loginResp.token) {
-                router.push('/pages/(business)/dashboard-business')
-            } else {
-                router.push('/pages/login')
-            }
+            await authService.login({ email: formData.email, password: formData.password })
+            router.push('/pages/choose-profile')
         } catch (err: any) {
             setError(err.message || 'Erro ao criar conta. Verifique os dados e tente novamente.')
         } finally {

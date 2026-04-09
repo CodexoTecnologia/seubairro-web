@@ -34,9 +34,8 @@ export default function BusinessPerfilPage() {
                     return
                 }
 
-                // 2. Fetch Listings limit or all for this owner
-                // Assuming ListingService.getAll() returns this user's listings
-                const listingsRaw = await ListingService.getAll()
+                // 2. Fetch Listings for this business
+                const listingsRaw = await ListingService.getByBusiness(currentBusiness.id)
                 const listingsArray = Array.isArray(listingsRaw) ? listingsRaw : ((listingsRaw as any)?.data || [])
 
                 const activeListings = listingsArray
