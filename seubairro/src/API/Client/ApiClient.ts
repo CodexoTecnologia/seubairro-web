@@ -160,6 +160,43 @@ export class ApiClient {
         return this.request<T>('GET', endpoint, options);
     }
 
+    async postForm<T>(endpoint: string, formData: FormData, options?: RequestOptions): Promise<T> {
+        const url = this.buildUrl(endpoint, options?.params);
+        const headers = await this.buildHeaders({ ...options, headers: {} });
+        delete headers['Content-Type'];
+
+        if (options?.requiresAuth && this.token) {
+            headers['Authorization'] = this.token.startsWith('Bearer ')
+                ? this.token
+                : `Bearer ${this.token}`;
+        }
+
+        const timeout = options?.timeout ?? this.config.timeout;
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers,
+                body: formData,
+                signal: controller.signal,
+                credentials: 'include',
+            });
+            clearTimeout(timeoutId);
+            return await this.handleResponse<T>(response);
+        } catch (error) {
+            clearTimeout(timeoutId);
+            if (error instanceof Error && error.name === 'AbortError') {
+                throw new TimeoutError();
+            }
+            if (error instanceof TypeError) {
+                throw new NetworkError();
+            }
+            throw error;
+        }
+    }
+
     async post<T, B = unknown>(endpoint: string, body?: B, options?: RequestOptions): Promise<T> {
         return this.request<T>('POST', endpoint, options, body);
     }

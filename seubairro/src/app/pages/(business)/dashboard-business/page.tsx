@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { ListingService } from '@/API/services/ListingService'
 import { CategoryService } from '@/API/services/CategoryService'
+import { BusinessService } from '@/API/services/BusinessService'
 
 export default function BusinessDashboard() {
     const { user } = useAuthContext()
@@ -13,11 +14,17 @@ export default function BusinessDashboard() {
 
     useEffect(() => {
         const fetchDashboardData = async () => {
+            if (!user?.id) return
             try {
                 setIsLoading(true)
+                const businessRaw = await BusinessService.getByOwnerId(user.id)
+                const businessArr = Array.isArray(businessRaw) ? businessRaw : ((businessRaw as any)?.data || [])
+                if (businessArr.length === 0) return
+
+                const businessId = businessArr[0].id
                 const [catsRaw, listingsRaw] = await Promise.all([
                     CategoryService.getAll(),
-                    ListingService.getAll()
+                    ListingService.getByBusiness(businessId)
                 ])
 
                 const catsArray = Array.isArray(catsRaw) ? catsRaw : ((catsRaw as any)?.data || [])

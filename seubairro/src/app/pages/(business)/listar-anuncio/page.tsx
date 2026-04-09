@@ -2,10 +2,13 @@
 import React, { useState, useEffect } from 'react'
 import '@/styles/business/list-anuncio/list-anuncio.css'
 import Link from 'next/link'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { ListingService } from '@/API/services/ListingService'
 import { CategoryService } from '@/API/services/CategoryService'
+import { BusinessService } from '@/API/services/BusinessService'
 
 export default function ListarAnuncioPage() {
+    const { user } = useAuthContext()
     const [searchTerm, setSearchTerm] = useState('')
     const [statusFilter, setStatusFilter] = useState('all')
     const [categoryFilter, setCategoryFilter] = useState('all')
@@ -15,11 +18,17 @@ export default function ListarAnuncioPage() {
 
     useEffect(() => {
         const loadListings = async () => {
+            if (!user?.id) return
             try {
                 setIsLoading(true)
+                const businessRaw = await BusinessService.getByOwnerId(user.id)
+                const businessArr = Array.isArray(businessRaw) ? businessRaw : ((businessRaw as any)?.data || [])
+                if (businessArr.length === 0) return
+
+                const businessId = businessArr[0].id
                 const [catsRaw, adsRaw] = await Promise.all([
                     CategoryService.getAll(),
-                    ListingService.getAll()
+                    ListingService.getByBusiness(businessId)
                 ])
 
                 const catsArray = Array.isArray(catsRaw) ? catsRaw : ((catsRaw as any)?.data || [])
@@ -46,7 +55,7 @@ export default function ListarAnuncioPage() {
             }
         }
         loadListings()
-    }, [])
+    }, [user])
 
     const handleDelete = async (id: string) => {
         if (confirm("Tem certeza que deseja excluir este anúncio?")) {

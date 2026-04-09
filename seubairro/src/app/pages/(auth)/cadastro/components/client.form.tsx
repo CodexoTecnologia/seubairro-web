@@ -1,8 +1,10 @@
+'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { UserService } from '@/API/services/UserService'
+import { authService } from '@/API/services/(Auth)/AuthInstance'
 import type { CreateCustomerRequest } from '@/API/dtos/Request/client/CreateCustomerRequest'
-import '@/styles/auth/login/LoginForm.css'
+import '@/styles/auth/cadastro/client-forms.css'
 
 export const ClientForm: React.FC = () => {
     const router = useRouter()
@@ -54,13 +56,8 @@ export const ClientForm: React.FC = () => {
             await UserService.registerCustomer(request)
 
             // Login after success
-            const loginResp = await UserService.login({ email: formData.email, password: formData.password })
-            if (loginResp && loginResp.token) {
-                // Should store token here or rely on AuthInstance
-                router.push('/pages/(client)/dashboard-client')
-            } else {
-                router.push('/pages/login')
-            }
+            await authService.login({ email: formData.email, password: formData.password })
+            router.push('/pages/choose-profile')
         } catch (err: any) {
             setError(err.message || 'Erro ao criar conta. Verifique os dados e tente novamente.')
         } finally {
