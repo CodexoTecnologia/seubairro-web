@@ -1,5 +1,17 @@
-import { IAuthService } from '../../Interfaces/(Auth)/IAuthService';
-import { ITokenService } from '../../Interfaces/(Auth)/ITokenService';
+interface IAuthService {
+    login<TCredentials, TResponse>(credentials: TCredentials): Promise<TResponse>;
+    logout(): Promise<void>;
+    resetPassword(email: string, newPassword: string): Promise<void>;
+    getToken(): string | null;
+    setToken(token: string | null): void;
+    isAuthenticated(): boolean;
+}
+
+interface ITokenService {
+    save(token: string): void;
+    get(): string | null;
+    remove(): void;
+}
 import { JwtHelper } from '../../helper/JwtHelper';
 import { apiClient } from '../../Client/apiClientInstance';
 import { LocalStorageService } from './LocalStorageService';

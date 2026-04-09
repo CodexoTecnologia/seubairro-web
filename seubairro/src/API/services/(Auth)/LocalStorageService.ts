@@ -1,4 +1,8 @@
-import { ITokenService } from '../../Interfaces/(Auth)/ITokenService';
+interface ITokenService {
+    save(token: string): void;
+    get(): string | null;
+    remove(): void;
+}
 
 export class LocalStorageService implements ITokenService {
     private readonly storageKey: string;
