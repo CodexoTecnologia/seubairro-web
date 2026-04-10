@@ -10,22 +10,19 @@ export default function EditarProfilePage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const { user, isAuthenticated } = useAuthContext();
+    const { user } = useAuthContext();
 
     useEffect(() => {
+        if (!user?.id) return;
+
         async function loadInitialData() {
-            if (!isAuthenticated || !user?.id) {
-                setError("Usuário não autenticado.");
-                setLoading(false);
-                return;
-            }
-
             try {
-                const ownerId = user.id;
-                const data = await BusinessService.getByOwnerId(ownerId);
+                const raw = await BusinessService.getByOwnerId(user!.id);
+                const rawData = (raw as any)?.data ?? raw;
+                const arr = Array.isArray(rawData) ? rawData : rawData ? [rawData] : [];
 
-                if (data && data.length > 0) {
-                    setBusiness(data[0]);
+                if (arr.length > 0) {
+                    setBusiness(arr[0]);
                 } else {
                     setError("Nenhum estabelecimento encontrado.");
                 }
@@ -36,7 +33,7 @@ export default function EditarProfilePage() {
             }
         }
         loadInitialData();
-    }, [user, isAuthenticated]);
+    }, [user]);
 
     if (loading) return <div className="edit-profile-container">Carregando...</div>;
     if (error) return <div className="edit-profile-container">{error}</div>;

@@ -8,11 +8,10 @@ import { CountryCodeEnum } from '../enums/index/index';
 
 export interface UserResponse {
     id: string;
-    firstName: string | null;
-    lastName: string | null;
+    name: string | null;
     email: string | null;
-    birthDate: string;
-    taxId: string | null;
+    birthDate?: string;
+    taxId?: string | null;
     createdAt?: string;
     updatedAt?: string;
 }
@@ -24,9 +23,10 @@ export interface LoginResponse {
 
 class UserServiceImpl {
     async getCurrentUser(): Promise<UserResponse> {
-        return apiClient.get<UserResponse>('/api/User', {
+        const response = await apiClient.get<any>('/api/User', {
             requiresAuth: true,
         });
+        return response?.data ?? response;
     }
 
     async register(

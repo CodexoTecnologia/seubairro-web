@@ -30,7 +30,7 @@ export default function LoginForm() {
         const result = await login(formData)
 
         if (result.success) {
-            router.push('/pages/dashboard-client')
+            router.push('/pages/choose-profile')
         } else {
             setError(result.message)
         }

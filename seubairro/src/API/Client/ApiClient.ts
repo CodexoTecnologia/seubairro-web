@@ -101,18 +101,24 @@ export class ApiClient {
         }
 
         if (!response.ok) {
+            let message = `HTTP ${response.status}`;
+
+            if (typeof data === 'string' && data.length > 0) {
+                message = data;
+            } else if (typeof data === 'object' && data !== null) {
+                const d = data as Record<string, any>;
+                message = d.title ?? d.message ?? d.error?.message ?? d.detail ?? `HTTP ${response.status}`;
+            }
+
             const errorResponse: { success: false; error: { statusCode: number; message: string } } = {
                 success: false,
                 error: {
                     statusCode: response.status,
-                    message: typeof data === 'string' ? data : 'Erro desconhecido',
+                    message,
                 },
             };
 
-            if (typeof data === 'object' && data !== null && 'error' in data) {
-                Object.assign(errorResponse, data);
-            }
-
+            console.error(`[ApiClient] ${response.status} ${response.url}`, data);
             throw new ApiClientError(errorResponse);
         }
 

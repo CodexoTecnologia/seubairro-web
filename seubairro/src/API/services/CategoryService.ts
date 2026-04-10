@@ -4,23 +4,23 @@ import type { CreateCategoryRequest } from '../dtos/Request/index/index';
 
 class CategoryServiceImpl {
     async getById(id: string): Promise<CategoryResponse> {
-        return apiClient.get<CategoryResponse>(`/api/Category`, { params: { id } });
+        return apiClient.get<CategoryResponse>(`/api/ListingCategory`, { params: { id } });
     }
 
     async create(data: CreateCategoryRequest): Promise<CategoryResponse> {
-        return apiClient.post<CategoryResponse, CreateCategoryRequest>('/api/Category', data);
+        return apiClient.post<CategoryResponse, CreateCategoryRequest>('/api/ListingCategory', data);
     }
 
     async getAll(): Promise<CategoryResponse[]> {
-        return apiClient.get<CategoryResponse[]>('/api/Category/all');
+        return apiClient.get<CategoryResponse[]>('/api/ListingCategory/all');
     }
 
     async deactivate(id: string): Promise<void> {
-        return apiClient.patch<void>('/api/Category/deactive', undefined, { params: { id } });
+        return apiClient.patch<void>('/api/ListingCategory/deactive', undefined, { params: { id } });
     }
 
     async activate(id: string): Promise<void> {
-        return apiClient.patch<void>('/api/Category/active', undefined, { params: { id } });
+        return apiClient.patch<void>('/api/ListingCategory/active', undefined, { params: { id } });
     }
 }
 

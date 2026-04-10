@@ -33,7 +33,7 @@ export default function ClientDashboard() {
                 const listingsArray = Array.isArray(listingsRaw) ? listingsRaw : ((listingsRaw as any)?.data || [])
 
                 const formattedAds = listingsArray.map((listing: ListingResponse, i: number) => {
-                    const category = typeMap[listing.categoryId]
+                    const category = typeMap[listing.listingCategoryId]
                     return {
                         id: listing.id,
                         title: listing.title || 'Anúncio sem título',

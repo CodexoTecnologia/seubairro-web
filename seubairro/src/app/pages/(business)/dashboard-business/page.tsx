@@ -18,7 +18,8 @@ export default function BusinessDashboard() {
             try {
                 setIsLoading(true)
                 const businessRaw = await BusinessService.getByOwnerId(user.id)
-                const businessArr = Array.isArray(businessRaw) ? businessRaw : ((businessRaw as any)?.data || [])
+                const rawData = (businessRaw as any)?.data ?? businessRaw
+                const businessArr = Array.isArray(rawData) ? rawData : rawData ? [rawData] : []
                 if (businessArr.length === 0) return
 
                 const businessId = businessArr[0].id
@@ -38,8 +39,8 @@ export default function BusinessDashboard() {
                 const formatted = listingsArray.map((l: any) => ({
                     id: l.id,
                     title: l.title || 'Anúncio sem título',
-                    categoryName: catMap[l.categoryId] || 'Geral',
-                    price: `R$ ${l.price.toFixed(2)}`,
+                    categoryName: catMap[l.listingCategoryId] || 'Geral',
+                    price: `R$ ${(l.price ?? 0).toFixed(2)}`,
                     isActive: l.isActive
                 }))
 
@@ -52,12 +53,12 @@ export default function BusinessDashboard() {
         }
 
         fetchDashboardData()
-    }, [])
+    }, [user])
 
     return (
         <>
             <header className="content-header">
-                <h1>Bom dia, {user?.firstName || 'Empreendedor'}! 🚀</h1>
+                <h1>Olá, {user?.name || 'Empreendedor'}!</h1>
                 <p>Aqui está o resumo do seu negócio hoje.</p>
             </header>
             <section className="quick-actions">
