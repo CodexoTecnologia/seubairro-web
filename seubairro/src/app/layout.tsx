@@ -6,6 +6,7 @@ import './global.css'
 import ClickSpark from '@/components/ui/click-spark'
 import GlobalLoader from '@/components/ui/global-loader'
 import { AuthProvider } from '@/contexts/AuthContext'
+import { ProfileModeProvider } from '@/contexts/ProfileModeContext'
 const inter = Inter({
     subsets: ['latin'],
     weight: ['400', '500', '600', '700'],
@@ -37,6 +38,7 @@ export default function RootLayout({
                 />
             </head>
             <body className={inter.className}>
+                <ProfileModeProvider>
                 <AuthProvider>
                 <ClickSpark
                     sparkColor="#2563EB"
@@ -50,6 +52,7 @@ export default function RootLayout({
                     </GlobalLoader>
                 </ClickSpark>
               </AuthProvider>
+                </ProfileModeProvider>
             </body>
         </html>
     )

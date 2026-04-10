@@ -22,6 +22,10 @@ export function BusinessSidebar() {
                     <span>Mensagens</span>
                     <span className="small-icon"><i className="ri-external-link-line"></i></span>
                 </Link>
+                <Link href="/pages/perfil-publico" className="menu-link">
+                    <i className="ri-store-3-line"></i>
+                    <span>Perfil Público</span>
+                </Link>
                 <Link href="/pages/editar-profile" className="menu-link">
                     <i className="ri-settings-3-line"></i>
                     <span>Configurações</span>

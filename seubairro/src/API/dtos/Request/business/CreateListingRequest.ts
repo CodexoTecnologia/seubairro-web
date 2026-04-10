@@ -1,5 +1,5 @@
 export interface CreateListingRequest {
-    categoryId: string;
+    listingCategoryId: string;
     title: string | null;
     slug: string | null;
     stockQuantity: number;

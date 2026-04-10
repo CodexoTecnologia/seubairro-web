@@ -6,7 +6,7 @@ import { BusinessService, type BusinessResponse } from '@/API/services/BusinessS
 import { ListingService } from '@/API/services/ListingService'
 
 export default function BusinessPerfilPage() {
-    const { user, isAuthenticated } = useAuthContext()
+    const { user } = useAuthContext()
     const [business, setBusiness] = useState<BusinessResponse | null>(null)
     const [listings, setListings] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
@@ -14,20 +14,18 @@ export default function BusinessPerfilPage() {
 
     useEffect(() => {
         const fetchProfileData = async () => {
-            if (!isAuthenticated || !user?.id) {
-                setError("Usuário não autenticado.");
-                setLoading(false);
-                return;
-            }
+            if (!user?.id) return
 
             try {
                 setLoading(true)
                 // 1. Fetch Business
                 const businessRaw = await BusinessService.getByOwnerId(user.id)
+                const rawData = (businessRaw as any)?.data ?? businessRaw
+                const businessArr = Array.isArray(rawData) ? rawData : rawData ? [rawData] : []
                 let currentBusiness: BusinessResponse | null = null
 
-                if (businessRaw && businessRaw.length > 0) {
-                    currentBusiness = businessRaw[0]
+                if (businessArr.length > 0) {
+                    currentBusiness = businessArr[0]
                     setBusiness(currentBusiness)
                 } else {
                     setError("Nenhum estabelecimento encontrado.")
@@ -35,6 +33,7 @@ export default function BusinessPerfilPage() {
                 }
 
                 // 2. Fetch Listings for this business
+                if (!currentBusiness) return
                 const listingsRaw = await ListingService.getByBusiness(currentBusiness.id)
                 const listingsArray = Array.isArray(listingsRaw) ? listingsRaw : ((listingsRaw as any)?.data || [])
 
@@ -43,7 +42,7 @@ export default function BusinessPerfilPage() {
                     .map((l: any) => ({
                         id: l.id,
                         title: l.title || 'Produto sem título',
-                        price: `R$ ${l.price.toFixed(2)}`,
+                        price: `R$ ${(l.price ?? 0).toFixed(2)}`,
                         image: "https://placehold.co/200" // mock image
                     }))
 
@@ -57,7 +56,7 @@ export default function BusinessPerfilPage() {
         }
 
         fetchProfileData()
-    }, [user, isAuthenticated])
+    }, [user])
 
     if (loading) {
         return (

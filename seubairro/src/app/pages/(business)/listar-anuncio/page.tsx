@@ -22,7 +22,8 @@ export default function ListarAnuncioPage() {
             try {
                 setIsLoading(true)
                 const businessRaw = await BusinessService.getByOwnerId(user.id)
-                const businessArr = Array.isArray(businessRaw) ? businessRaw : ((businessRaw as any)?.data || [])
+                const rawData = (businessRaw as any)?.data ?? businessRaw
+                const businessArr = Array.isArray(rawData) ? rawData : rawData ? [rawData] : []
                 if (businessArr.length === 0) return
 
                 const businessId = businessArr[0].id
@@ -30,6 +31,7 @@ export default function ListarAnuncioPage() {
                     CategoryService.getAll(),
                     ListingService.getByBusiness(businessId)
                 ])
+                console.log('[listar-anuncio] listings:', adsRaw)
 
                 const catsArray = Array.isArray(catsRaw) ? catsRaw : ((catsRaw as any)?.data || [])
                 setCategories(catsArray)
@@ -41,10 +43,10 @@ export default function ListarAnuncioPage() {
                 const formattedAds = listingsArray.map((l: any) => ({
                     id: l.id,
                     title: l.title || 'Anúncio sem título',
-                    price: `R$ ${l.price.toFixed(2)}`,
+                    price: `R$ ${(l.price ?? 0).toFixed(2)}`,
                     status: l.isActive ? 'active' : 'inactive',
-                    categoryId: l.categoryId,
-                    categoryName: catMap[l.categoryId] || 'Geral'
+                    categoryId: l.listingCategoryId,
+                    categoryName: catMap[l.listingCategoryId] || 'Geral'
                 }))
 
                 setAds(formattedAds)

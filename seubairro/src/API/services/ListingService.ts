@@ -3,7 +3,7 @@ import { BaseService } from './BaseService';
 import type { CreateListingRequest, UpdateListingRequest } from '../dtos/Request/index';
 export interface ListingResponse {
     id: string;
-    categoryId: string;
+    listingCategoryId: string;
     title: string | null;
     slug: string | null;
     stockQuantity: number;
@@ -29,7 +29,7 @@ class ListingServiceImpl extends BaseService<
 
     async create(data: CreateListingRequest): Promise<ListingResponse> {
         const formData = new FormData();
-        formData.append('CategoryId', data.categoryId);
+        formData.append('ListingCategoryId', data.listingCategoryId);
         formData.append('Title', data.title ?? '');
         formData.append('Slug', data.slug ?? '');
         formData.append('StockQuantity', String(data.stockQuantity));
