@@ -44,12 +44,12 @@ export default function ListarAnuncioPage() {
                 const formattedAds = listingsArray.map((l: any) => ({
                     id: l.id,
                     title: l.title || 'Anúncio sem título',
-                    price: `R$ ${(l.price ?? 0).toFixed(2)}`,
-                    status: l.isActive ? 'active' : 'inactive',
-                    categoryId: l.listingCategoryId,
-                    categoryName: catsArray.find((c: any) => c.id === l.listingCategoryId)?.name || 'Geral'
+                    price: l.price ?? 0,
+                    isActive: l.isActive,
+                    listingCategoryId: l.listingCategoryId,
+                    categoryName: catsArray.find((c: any) => c.id === l.listingCategoryId)?.name || 'Geral',
+                    imageUrl: l.imageUrl || "https://images.unsplash.com/photo-1588964895597-a51e21f816d0?auto=format&fit=crop&w=100&q=60"
                 }))
-
                 setAds(formattedAds)
             } catch (error) {
                 console.error("Erro ao carregar anúncios", error)
@@ -90,8 +90,8 @@ export default function ListarAnuncioPage() {
 
     const filteredAds = ads.filter(ad => {
         const matchesSearch = ad.title?.toLowerCase().includes(searchTerm.toLowerCase())
-        const matchesStatus = statusFilter === 'all' || 
-                             (statusFilter === 'active' ? ad.isActive === true : ad.isActive === false)
+        const matchesStatus = statusFilter === 'all' ||
+            (statusFilter === 'active' ? ad.isActive === true : ad.isActive === false)
         const matchesCategory = categoryFilter === 'all' || ad.listingCategoryId === categoryFilter
         return matchesSearch && matchesStatus && matchesCategory
     })
@@ -99,49 +99,53 @@ export default function ListarAnuncioPage() {
     const getCategoryName = (id: string) => categories.find(c => c.id === id)?.name || 'Geral'
 
     return (
-        <div className="list-ads-container">
-            <header className="page-header">
-                <div className="header-title">
-                    <h1>Meus Produtos e Serviços</h1>
-                    <p>Gerencie seu catálogo, preços e disponibilidade.</p>
-                </div>
-                <Link href="/pages/criar-anuncio" className="btn-create">
-                    <i className="ri-add-line"></i> Novo Anúncio
+<div className="list-ads-container">
+        <header className="page-header">
+            <div className="header-title">
+                <h1>Meus Anúncios</h1>
+                <p>Gerencie seu catálogo de produtos e serviços.</p>
+            </div>
+        </header>
+          <section className="toolbar-container">
+            <div className="search-box">
+                <i className="ri-search-line"></i>
+                <input
+                    type="text"
+                    className="search-input"
+                    placeholder="Pesquisar anúncio..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+            
+            <div className="toolbar-actions">
+                <select 
+                    className="filter-select" 
+                    value={statusFilter} 
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                >
+                    <option value="all">Todos Status</option>
+                    <option value="active">Ativos</option>
+                    <option value="inactive">Inativos</option>
+                </select>
+
+                <select 
+                    className="filter-select" 
+                    value={categoryFilter} 
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                >
+                    <option value="all">Categorias</option>
+                    {categories.map((c) => (
+                        <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                </select>
+
+                <Link href="/pages/criar-anuncio" className="btn-create-compact">
+                    <i className="ri-add-line"></i>
+                    <span>Novo</span>
                 </Link>
-            </header>
-            <section className="filters-bar">
-                <div className="search-box">
-                    <i className="ri-search-line"></i>
-                    <input
-                        type="text"
-                        className="search-input"
-                        placeholder="Buscar por nome..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-                <div className="filter-group">
-                    <select
-                        className="filter-select"
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                    >
-                        <option value="all">Todos os Status</option>
-                        <option value="active">Ativos</option>
-                        <option value="inactive">Inativos</option>
-                    </select>
-                    <select
-                        className="filter-select"
-                        value={categoryFilter}
-                        onChange={(e) => setCategoryFilter(e.target.value)}
-                    >
-                        <option value="all">Todas Categorias</option>
-                        {categories.map((c) => (
-                            <option key={c.id} value={c.id}>{c.name}</option>
-                        ))}
-                    </select>
-                </div>
-            </section>
+            </div>
+        </section>
 
             {isLoading ? (
                 <p>Carregando anúncios...</p>
@@ -152,8 +156,8 @@ export default function ListarAnuncioPage() {
                             <div className="mc-drag"><i className="ri-drag-move-2-fill"></i></div>
 
                             <div className="mc-image">
-                                {}
-                                <img src="https://images.unsplash.com/photo-1588964895597-a51e21f816d0?auto=format&fit=crop&w=100&q=60" alt={ad.title || ''} />
+                                { }
+                                <img src={ad.imageUrl} alt={ad.title || 'Imagem do produto'} />
                             </div>
 
                             <div className="mc-details">
