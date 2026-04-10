@@ -6,7 +6,7 @@ import type { CreateListingRequest } from '@/API/dtos/Request/index'
 import type { CategoryResponse } from '@/API/dtos/Response/index'
 
 interface ListingFormData {
-    categoryId: string
+    listingCategoryId: string
     title: string
     slug: string
     stockQuantity: number
@@ -21,7 +21,7 @@ interface ListingFormProps {
 
 export default function ListingForm({ type }: ListingFormProps) {
     const [formData, setFormData] = useState<ListingFormData>({
-        categoryId: '',
+        listingCategoryId: '',
         title: '',
         slug: '',
         stockQuantity: 0,
@@ -52,8 +52,8 @@ export default function ListingForm({ type }: ListingFormProps) {
             setCategories(filtered)
 
             setFormData(prev => {
-                if (prev.categoryId && !filtered.some(f => f.id === prev.categoryId)) {
-                    return { ...prev, categoryId: '' }
+                if (prev.listingCategoryId && !filtered.some(f => f.id === prev.listingCategoryId)) {
+                    return { ...prev, listingCategoryId: '' }
                 }
                 return prev
             })
@@ -90,7 +90,7 @@ export default function ListingForm({ type }: ListingFormProps) {
 
         try {
             const payload: CreateListingRequest = {
-                categoryId: formData.categoryId,
+                listingCategoryId: formData.listingCategoryId,
                 title: formData.title,
                 slug: generateSlug(formData.title),
                 stockQuantity: type === 'product' ? formData.stockQuantity : 0,
@@ -102,7 +102,7 @@ export default function ListingForm({ type }: ListingFormProps) {
             await ListingService.create(payload)
             setSuccess(true)
             setFormData({
-                categoryId: '',
+                listingCategoryId: '',
                 title: '',
                 slug: '',
                 stockQuantity: 0,
@@ -123,13 +123,13 @@ export default function ListingForm({ type }: ListingFormProps) {
                 <h2>Informações Básicas</h2>
 
                 <div className="form-group">
-                    <label htmlFor="categoryId">
+                    <label htmlFor="listingCategoryId">
                         Categoria <span className="required">*</span>
                     </label>
                     <select
-                        id="categoryId"
-                        name="categoryId"
-                        value={formData.categoryId}
+                        id="listingCategoryId"
+                        name="listingCategoryId"
+                        value={formData.listingCategoryId}
                         onChange={handleChange}
                         required
                         disabled={loadingCategories}

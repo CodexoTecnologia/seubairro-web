@@ -38,7 +38,7 @@ export default function BusinessDashboard() {
                 const formatted = listingsArray.map((l: any) => ({
                     id: l.id,
                     title: l.title || 'Anúncio sem título',
-                    categoryName: catMap[l.categoryId] || 'Geral',
+                    categoryName: catMap[l.listingCategoryId] || 'Geral',
                     price: `R$ ${l.price.toFixed(2)}`,
                     isActive: l.isActive
                 }))

@@ -43,8 +43,8 @@ export default function ListarAnuncioPage() {
                     title: l.title || 'Anúncio sem título',
                     price: `R$ ${l.price.toFixed(2)}`,
                     status: l.isActive ? 'active' : 'inactive',
-                    categoryId: l.categoryId,
-                    categoryName: catMap[l.categoryId] || 'Geral'
+                    categoryId: l.listingCategoryId,
+                    categoryName: catMap[l.listingCategoryId] || 'Geral'
                 }))
 
                 setAds(formattedAds)
