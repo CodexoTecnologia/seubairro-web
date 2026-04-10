@@ -7,7 +7,7 @@ export default function ClientProfile() {
     const [activeTab, setActiveTab] = useState('personal')
     const { user, logout } = useAuthContext()
 
-    const fullName = user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : 'Visitante'
+    const fullName = user?.name || 'Visitante'
     const initial = fullName ? fullName.charAt(0).toUpperCase() : 'V'
     const email = user ? user.email : 'visitante@seubairro.com'
 
