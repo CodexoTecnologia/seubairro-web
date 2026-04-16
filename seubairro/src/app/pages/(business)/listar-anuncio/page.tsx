@@ -77,16 +77,6 @@ export default function ListarAnuncioPage() {
         }
     }
 
-    const handleDelete = async (id: string) => {
-        if (confirm("Tem certeza que deseja excluir este anúncio?")) {
-            try {
-                await ListingService.delete(id)
-                setAds(prev => prev.filter(ad => ad.id !== id))
-            } catch (err) {
-                alert("Erro ao excluir o anúncio")
-            }
-        }
-    }
 
     const filteredAds = ads.filter(ad => {
         const matchesSearch = ad.title?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -193,9 +183,6 @@ export default function ListarAnuncioPage() {
                                 <Link href={`/pages/editar-anuncio/${ad.id}`} className="btn-icon-action" title="Editar">
                                     <i className="ri-pencil-line"></i>
                                 </Link>
-                                <button className="btn-icon-action delete" title="Excluir" onClick={() => handleDelete(ad.id)}>
-                                    <i className="ri-delete-bin-line"></i>
-                                </button>
                             </div>
                         </div>
                     ))}
