@@ -15,6 +15,7 @@ export default function ListarAnuncioPage() {
     const [ads, setAds] = useState<any[]>([])
     const [categories, setCategories] = useState<any[]>([])
     const [isLoading, setIsLoading] = useState(true)
+    const [isUpdating, setIsUpdating] = useState<string | null>(null)
 
     useEffect(() => {
         const loadListings = async () => {
@@ -43,12 +44,12 @@ export default function ListarAnuncioPage() {
                 const formattedAds = listingsArray.map((l: any) => ({
                     id: l.id,
                     title: l.title || 'Anúncio sem título',
-                    price: `R$ ${(l.price ?? 0).toFixed(2)}`,
-                    status: l.isActive ? 'active' : 'inactive',
-                    categoryId: l.listingCategoryId,
-                    categoryName: catMap[l.listingCategoryId] || 'Geral'
+                    price: l.price ?? 0,
+                    isActive: l.isActive,
+                    listingCategoryId: l.listingCategoryId,
+                    categoryName: catsArray.find((c: any) => c.id === l.listingCategoryId)?.name || 'Geral',
+                    imageUrl: l.imageUrl || "https://images.unsplash.com/photo-1588964895597-a51e21f816d0?auto=format&fit=crop&w=100&q=60"
                 }))
-
                 setAds(formattedAds)
             } catch (error) {
                 console.error("Erro ao carregar anúncios", error)
@@ -59,95 +60,133 @@ export default function ListarAnuncioPage() {
         loadListings()
     }, [user])
 
-    const handleDelete = async (id: string) => {
-        if (confirm("Tem certeza que deseja excluir este anúncio?")) {
-            try {
-                await ListingService.delete(id)
-                setAds(prev => prev.filter(ad => ad.id !== id))
-            } catch (err) {
-                alert("Erro ao excluir o anúncio")
+    const handleToggleStatus = async (id: string, currentStatus: boolean) => {
+        try {
+            setIsUpdating(id)
+            if (currentStatus) {
+                await ListingService.deactivate(id)
+            } else {
+                await ListingService.activate(id)
             }
+
+            setAds(prev => prev.map(ad => ad.id === id ? { ...ad, isActive: !currentStatus } : ad))
+        } catch (err) {
+            alert("Erro ao alterar status do anúncio")
+        } finally {
+            setIsUpdating(null)
         }
     }
 
+
     const filteredAds = ads.filter(ad => {
-        const matchesSearch = ad.title.toLowerCase().includes(searchTerm.toLowerCase())
-        const matchesStatus = statusFilter === 'all' || ad.status === statusFilter
-        const matchesCategory = categoryFilter === 'all' || ad.categoryId === categoryFilter
+        const matchesSearch = ad.title?.toLowerCase().includes(searchTerm.toLowerCase())
+        const matchesStatus = statusFilter === 'all' ||
+            (statusFilter === 'active' ? ad.isActive === true : ad.isActive === false)
+        const matchesCategory = categoryFilter === 'all' || ad.listingCategoryId === categoryFilter
         return matchesSearch && matchesStatus && matchesCategory
     })
 
+    const getCategoryName = (id: string) => categories.find(c => c.id === id)?.name || 'Geral'
+
     return (
-        <div className="list-ads-container">
-            <div className="page-header">
-                <div className="header-title">
-                    <h1>Seus Anúncios</h1>
-                    <p>Gerencie seus produtos e serviços ativos.</p>
-                </div>
-                <Link href="/pages/criar-anuncio" className="btn-create">
-                    <i className="ri-add-line"></i> Novo Anúncio
+<div className="list-ads-container">
+        <header className="page-header">
+            <div className="header-title">
+                <h1>Meus Anúncios</h1>
+                <p>Gerencie seu catálogo de produtos e serviços.</p>
+            </div>
+        </header>
+          <section className="toolbar-container">
+            <div className="search-box">
+                <i className="ri-search-line"></i>
+                <input
+                    type="text"
+                    className="search-input"
+                    placeholder="Pesquisar anúncio..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+            
+            <div className="toolbar-actions">
+                <select 
+                    className="filter-select" 
+                    value={statusFilter} 
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                >
+                    <option value="all">Todos Status</option>
+                    <option value="active">Ativos</option>
+                    <option value="inactive">Inativos</option>
+                </select>
+
+                <select 
+                    className="filter-select" 
+                    value={categoryFilter} 
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                >
+                    <option value="all">Categorias</option>
+                    {categories.map((c) => (
+                        <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                </select>
+
+                <Link href="/pages/criar-anuncio" className="btn-create-compact">
+                    <i className="ri-add-line"></i>
+                    <span>Novo</span>
                 </Link>
             </div>
-            <div className="filters-bar">
-                <div className="search-box">
-                    <i className="ri-search-line"></i>
-                    <input
-                        type="text"
-                        className="search-input"
-                        placeholder="Buscar anúncio..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-                <div className="filter-group">
-                    <select
-                        className="filter-select"
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                    >
-                        <option value="all">Todos os Status</option>
-                        <option value="active">Ativos</option>
-                        <option value="inactive">Inativos</option>
-                    </select>
-                    <select
-                        className="filter-select"
-                        value={categoryFilter}
-                        onChange={(e) => setCategoryFilter(e.target.value)}
-                    >
-                        <option value="all">Todas Categorias</option>
-                        {categories.map((c) => (
-                            <option key={c.id} value={c.id}>{c.name}</option>
-                        ))}
-                    </select>
-                </div>
-            </div>
+        </section>
+
             {isLoading ? (
                 <p>Carregando anúncios...</p>
-            ) : filteredAds.length === 0 ? (
-                <p>Nenhum anúncio encontrado.</p>
             ) : (
                 <div className="listings-list">
                     {filteredAds.map(ad => (
-                        <div key={ad.id} className="listing-card">
-                            <div className="listing-info">
-                                <div className="listing-header">
-                                    <h3 className="listing-title">{ad.title}</h3>
-                                    <span className={`listing-status ${ad.status}`}>
-                                        {ad.status === 'active' ? 'Ativo' : 'Inativo'}
-                                    </span>
-                                </div>
-                                <div className="listing-price">{ad.price}</div>
+                        <div key={ad.id} className={`manage-card ${!ad.isActive ? 'paused' : ''} ${isUpdating === ad.id ? 'updating' : ''}`}>
+                            <div className="mc-drag"><i className="ri-drag-move-2-fill"></i></div>
+
+                            <div className="mc-image">
+                                { }
+                                <img src={ad.imageUrl} alt={ad.title || 'Imagem do produto'} />
                             </div>
-                            <div className="listing-actions">
-                                <button className="btn-icon" title="Editar">
+
+                            <div className="mc-details">
+                                <h3>{ad.title}</h3>
+                                <span className="mc-cat">Anúncio • {getCategoryName(ad.listingCategoryId)}</span>
+                            </div>
+
+                            <div className="mc-metrics">
+                                <div className="metric"><i className="ri-eye-line"></i> 0</div>
+                                <div className="metric"><i className="ri-cursor-line"></i> 0</div>
+                            </div>
+
+                            <div className="mc-price">
+                                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(ad.price)}
+                            </div>
+
+                            <div className="mc-status">
+                                <label className="switch">
+                                    <input
+                                        type="checkbox"
+                                        checked={ad.isActive}
+                                        disabled={isUpdating === ad.id}
+                                        onChange={() => handleToggleStatus(ad.id, ad.isActive)}
+                                    />
+                                    <span className="slider round"></span>
+                                </label>
+                                <span className={`status-text ${ad.isActive ? 'active' : 'inactive'}`}>
+                                    {ad.isActive ? 'Ativo' : 'Pausado'}
+                                </span>
+                            </div>
+
+                            <div className="mc-actions">
+                                <Link href={`/pages/editar-anuncio/${ad.id}`} className="btn-icon-action" title="Editar">
                                     <i className="ri-pencil-line"></i>
-                                </button>
-                                <button className="btn-icon delete" title="Excluir" onClick={() => handleDelete(ad.id)}>
-                                    <i className="ri-delete-bin-line"></i>
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     ))}
+                    {filteredAds.length === 0 && <p className="empty-state">Nenhum anúncio encontrado.</p>}
                 </div>
             )}
         </div>

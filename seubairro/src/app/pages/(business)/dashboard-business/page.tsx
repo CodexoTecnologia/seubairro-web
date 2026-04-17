@@ -34,14 +34,17 @@ export default function BusinessDashboard() {
 
                 const listingsArray = Array.isArray(listingsRaw) ? listingsRaw : ((listingsRaw as any)?.data || [])
 
-                // Assuming getAll returns user's listings or we have to filter them. 
-                // Since this is for business dashboard, we trust the API to return relevant listings for now.
-                const formatted = listingsArray.map((l: any) => ({
+                const top3Listings = [...listingsArray]
+                    .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime())
+                    .slice(0, 3)
+
+                const formatted = top3Listings.map((l: any) => ({
                     id: l.id,
                     title: l.title || 'Anúncio sem título',
                     categoryName: catMap[l.listingCategoryId] || 'Geral',
-                    price: `R$ ${(l.price ?? 0).toFixed(2)}`,
-                    isActive: l.isActive
+                    price: l.price ?? 0, // MANTENDO COMO NÚMERO
+                    isActive: l.isActive,
+                    imageUrl: l.imageUrl || "https://images.unsplash.com/photo-1607349913338-fca6f7fc42d0?auto=format&fit=crop&w=100&q=60"
                 }))
 
                 setListings(formatted)
@@ -55,12 +58,13 @@ export default function BusinessDashboard() {
         fetchDashboardData()
     }, [user])
 
-    return (
+   return (
         <>
             <header className="content-header">
-                <h1>Olá, {user?.name || 'Empreendedor'}!</h1>
+                <h1>Olá, {user?.name || 'Empreendedor'}! 🚀</h1>
                 <p>Aqui está o resumo do seu negócio hoje.</p>
             </header>
+            
             <section className="quick-actions">
                 <h2>O que você quer fazer?</h2>
                 <div className="actions-row">
@@ -68,36 +72,50 @@ export default function BusinessDashboard() {
                         <i className="ri-add-circle-line"></i>
                         <span>Criar Novo Anúncio</span>
                     </Link>
-                    <a href="/pages/editar-profile" className="action-btn" style={{ textDecoration: 'none' }}>
+                    <Link href="/pages/editar-profile" className="action-btn" style={{ textDecoration: 'none' }}>
                         <i className="ri-edit-box-line"></i>
                         <span>Editar Informações</span>
-                    </a>
+                    </Link>
                     <button className="action-btn">
                         <i className="ri-share-forward-line"></i>
                         <span>Compartilhar Loja</span>
                     </button>
                 </div>
             </section>
+            
             <section className="recent-products">
                 <div className="section-head">
-                    <h2>Seus Anúncios Ativos</h2>
+                    <h2>Seus Anúncios Mais Recentes</h2>
                     <Link href="/pages/listar-anuncio">Ver todos</Link>
                 </div>
+                
                 <div className="products-table">
                     {isLoading ? (
-                        <p style={{ padding: '20px', color: '#64748b' }}>Carregando seus anúncios...</p>
+                        <p style={{ padding: '20px', color: 'var(--text-muted)' }}>Carregando seus anúncios...</p>
                     ) : listings.length === 0 ? (
-                        <p style={{ padding: '20px', color: '#64748b' }}>Você ainda não tem anúncios. Crie o seu primeiro!</p>
+                        <p style={{ padding: '20px', color: 'var(--text-muted)' }}>Você ainda não tem anúncios. Crie o seu primeiro!</p>
                     ) : (
                         listings.map(item => (
                             <div className="product-row" key={item.id}>
+
+                                <img src={item.imageUrl} alt={item.title} />
+                                
                                 <div className="p-info">
                                     <strong>{item.title}</strong>
                                     <span>{item.categoryName}</span>
                                 </div>
-                                <div className="p-price">{item.price}</div>
-                                <div className={`p-status ${item.isActive ? 'active' : ''}`}>{item.isActive ? 'Ativo' : 'Inativo'}</div>
-                                <button className="btn-icon"><i className="ri-pencil-line"></i></button>
+
+                                <div className="p-price">
+                                    {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.price)}
+                                </div>
+                                
+                                <div className={`p-status ${item.isActive ? 'active' : ''}`}>
+                                    {item.isActive ? 'Ativo' : 'Inativo'}
+                                </div>
+                                
+                                <Link href={`/pages/editar-anuncio/${item.id}`} className="btn-icon" title="Editar">
+                                    <i className="ri-pencil-line"></i>
+                                </Link>
                             </div>
                         ))
                     )}
@@ -106,4 +124,3 @@ export default function BusinessDashboard() {
         </>
     )
 }
-
