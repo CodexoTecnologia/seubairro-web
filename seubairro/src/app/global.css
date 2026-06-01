@@ -1,197 +1,102 @@
-.container {
-    width: 100%;
-    max-width: var(--container-width);
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
+@import "tailwindcss";
+@import "remixicon/fonts/remixicon.css";
+
+/*
+ * Design System tokens — fonte única para utilitários Tailwind v4.
+ * `@theme` expõe variáveis tanto como tokens CSS quanto como utilitários
+ * Tailwind (bg-primary, text-accent, etc).
+ *
+ * Theming por contexto: aplique data-context="business" | "client" no layout.
+ * Os utilitários acompanham automaticamente.
+ */
+@theme {
+  /* Cores semânticas */
+  --color-primary: #2563EB;
+  --color-primary-hover: #1D4ED8;
+  --color-accent: #0D9488;
+  --color-accent-hover: #0F766E;
+
+  --color-surface: #FFFFFF;
+  --color-page: #F8FAFC;
+  --color-input: #F1F5F9;
+  --color-dark: #0F172A;
+
+  --color-title: #0F172A;
+  --color-body: #475569;
+  --color-muted: #94A3B8;
+  --color-border-default: #E2E8F0;
+
+  --color-success: #059669;
+  --color-success-bg: #ECFDF5;
+  --color-danger: #DC2626;
+  --color-danger-bg: #FEF2F2;
+  --color-warning: #F59E0B;
+  --color-warning-bg: #FFFBEB;
+  --color-info: #0EA5E9;
+  --color-info-bg: #F0F9FF;
+
+  /* Forma / sombra / movimento */
+  --radius-card: 0.75rem;
+  --radius-pill: 9999px;
+  --shadow-soft: 0 2px 12px rgb(0 0 0 / 0.06);
+  --shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-primary: 0 10px 30px -12px rgb(37 99 235 / 0.6);
+
+  --duration-instant: 80ms;
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+
+  /* Layout */
+  --nav-height: 70px;
 }
 
-.app-navbar {
-    height: var(--header-height);
-    background-color: var(--color-bg-surface);
-    border-bottom: 1px solid var(--color-border);
-    position: sticky;
-    top: 0;
-    z-index: var(--z-fixed);
-    width: 100%;
+/* Sobrescrita por contexto */
+[data-context="business"] {
+  --color-primary: #0D9488;
+  --color-primary-hover: #0F766E;
+  --color-accent: #2563EB;
+  --color-accent-hover: #1D4ED8;
+  --color-page: #F1F5F9;
+  --shadow-primary: 0 10px 30px -12px rgb(13 148 136 / 0.6);
 }
 
-.search-bar-container {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    flex: 1;
-    max-width: 500px;
-    margin: 0 var(--spacing-xl);
+[data-context="client"] {
+  --color-primary: #2563EB;
+  --color-primary-hover: #1D4ED8;
+  --color-accent: #0D9488;
+  --color-accent-hover: #0F766E;
+  --color-page: #F8FAFC;
+  --shadow-primary: 0 10px 30px -12px rgb(37 99 235 / 0.6);
 }
 
-.search-input-wrapper {
-    flex: 1;
-    position: relative;
-    color: var(--color-text-body);
-}
-
-.search-input-wrapper input {
-    width: 100%;
-    padding: 10px 16px 10px 40px;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--color-border);
-    background: var(--color-bg-input);
-    font-size: var(--font-size-sm);
-    transition: var(--transition-fast);
-}
-
-.search-input-wrapper input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    background: var(--color-bg-surface);
-}
-
-.search-input-wrapper i {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--color-text-muted);
-}
-
-.location-badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: var(--font-size-sm);
-    color: var(--color-text-body);
-    font-weight: var(--font-weight-medium);
-    white-space: nowrap;
-}
-
-.location-badge i {
-    color: var(--color-primary);
-}
-
-.icon-btn {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: var(--color-text-body);
-    font-size: 1.2rem;
-    transition: var(--transition-fast);
-}
-
-.icon-btn:hover {
-    background-color: var(--color-bg-page);
-    color: var(--color-primary);
-}
-
-.user-profile {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px 12px 4px 4px;
-    background: var(--color-bg-page);
-    border-radius: var(--radius-full);
-    transition: var(--transition-fast);
-}
-
-.user-profile:hover {
-    background: var(--color-border);
-}
-
-.avatar-circle {
-    width: 32px;
-    height: 32px;
-    background: var(--color-primary);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: var(--font-weight-bold);
-    font-size: var(--font-size-sm);
-}
-
-.user-name {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-title);
-}
-
-@media (max-width: 768px) {
-    .search-bar-container {
-        display: none;
-    }
-    .user-name {
-        display: none;
-    }
-    .user-profile {
-        padding: 0;
-        background: none;
-    }
-}
-
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* Reset mínimo + ajustes globais */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-    background-color: var(--color-bg-page);
-    color: var(--color-text-body);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-    line-height: var(--line-height-normal);
+  background-color: var(--color-page);
+  color: var(--color-body);
+  min-height: 100vh;
+  line-height: 1.5;
 }
 
-img,
-picture,
-video,
-canvas,
-svg {
-    display: block;
-    max-width: 100%;
+/* Acessibilidade — respeita preferência do sistema por menos movimento. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
-
-input,
-button,
-textarea,
-select {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-    border: none;
-    background: none;
-    font-family: inherit;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-ul,
-ol {
-    list-style: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: var(--color-text-title);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-tight);
-}
-
