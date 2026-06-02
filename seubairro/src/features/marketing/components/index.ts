@@ -1,0 +1,6 @@
+export { default as Header } from './header'
+export { default as Hero } from './hero'
+export { default as InfoBar } from './info-bar'
+export { default as Purpose } from './purpose'
+export { default as ForWho } from './for-who'
+export { default as Roadmap } from './roadmap'
