@@ -74,8 +74,6 @@ export default function Navbar() {
               onChange={(e) => setSearch(e.target.value)}
               fullWidth
               className="rounded-full bg-[var(--color-input)] focus:bg-[var(--color-surface)]"
-              // Label visualmente oculto mas acessível para screen readers.
-              // eslint-disable-next-line jsx-a11y/no-redundant-roles
               aria-label="Buscar produtos ou serviços"
             />
           </form>
@@ -88,7 +86,6 @@ export default function Navbar() {
             aria-label="Notificações"
           >
             <i className="ri-notification-3-line text-xl" aria-hidden />
-            {/* Placeholder de badge — exibir condicionalmente quando houver pendência. */}
             {false && (
               <span
                 aria-hidden

@@ -58,9 +58,6 @@ const gradientFor: Record<Mode, string> = {
 
 export default function AuthVisualPanel({ title, description, mode = 'client' }: Props) {
   const { base, active } = COLORS[mode]
-
-  // Pontos são puramente derivados de `mode` — useMemo em vez de useState+useEffect
-  // evita o ciclo render → effect → setState → re-render.
   const points = useMemo<Point[]>(() => {
     const items = POINTS[mode]
     return items.map((p, i) => ({ ...p, style: positionFor(i, items.length) }))

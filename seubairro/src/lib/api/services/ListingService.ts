@@ -31,8 +31,6 @@ export interface ListingResponse {
     currencyCode: string | null;
     imageUrl: string | null;
     isActive: boolean;
-    // Quando o backend popular esses campos, o badge "Aberto agora" começa a aparecer
-    // automaticamente nos cards. Enquanto não vier, ficam undefined e o badge se omite.
     businessId?: string | null;
     businessSlug?: string | null;
     createdAt?: string;

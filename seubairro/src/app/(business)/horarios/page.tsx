@@ -15,7 +15,6 @@ export default function HorariosPage() {
   const [business, setBusiness] = useState<BusinessResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  // Bumpa o status-card pra revalidar sempre que algo muda (grade salva, toggle fechado).
   const [statusRefreshKey, setStatusRefreshKey] = useState(0)
   const refreshStatus = useCallback(() => setStatusRefreshKey((k) => k + 1), [])
 

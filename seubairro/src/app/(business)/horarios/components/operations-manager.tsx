@@ -30,8 +30,6 @@ type DayDraft = {
 }
 
 const DAY_ORDER: DaysWeek[] = [1, 2, 3, 4, 5, 6, 0]
-const DEFAULT_OPEN = '08:00'
-const DEFAULT_CLOSE = '18:00'
 
 const buildInitialDrafts = (ops: BusinessOperationResponse[]): DayDraft[] => {
   const byDay = new Map<DaysWeek, BusinessOperationResponse>()
@@ -41,8 +39,8 @@ const buildInitialDrafts = (ops: BusinessOperationResponse[]): DayDraft[] => {
     return {
       daysWeek: day,
       enabled: Boolean(op),
-      openTime: op ? fromApiTime(op.openTime) || DEFAULT_OPEN : DEFAULT_OPEN,
-      closeTime: op ? fromApiTime(op.closeTime) || DEFAULT_CLOSE : DEFAULT_CLOSE,
+      openTime: op ? fromApiTime(op.openTime) || '' : '',
+      closeTime: op ? fromApiTime(op.closeTime) || '' : '',
     }
   })
 }

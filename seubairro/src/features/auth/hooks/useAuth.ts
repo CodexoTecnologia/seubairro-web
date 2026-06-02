@@ -13,9 +13,7 @@ type AuthState = {
   roles: AppRole[]
 }
 
-/** Resposta esperada do /api/Auth/login — string OU { token }. Backend é inconsistente. */
 type LoginResponse = string | { token?: string }
-
 type LoginResult = { success: boolean; message: string }
 
 const EMPTY: AuthState = { user: null, loading: false, isAuthenticated: false, roles: [] }
@@ -49,8 +47,7 @@ export function useAuth() {
     }
   }, [])
 
-  // Padrão canônico de "fetch on mount" — o setState mora dentro do loadUser,
-  // não diretamente no effect (escape válido da regra).
+
   useEffect(() => {
     loadUser()
   }, [loadUser])

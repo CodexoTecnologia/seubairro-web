@@ -9,7 +9,6 @@ import { cn } from '@/lib/utils/cn'
 
 type Props = {
   businessId: string
-  /** Aumente pra forçar refetch fora do polling — após salvar grade/status. */
   refreshKey?: number
 }
 

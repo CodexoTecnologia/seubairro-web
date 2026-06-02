@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
+// @ts-expect-error -- CSS side-effect import without type declarations
 import 'leaflet/dist/leaflet.css'
 
 type Props = {
@@ -12,10 +13,6 @@ type Props = {
   zoom?: number
 }
 
-/**
- * Leaflet usa imagens dos markers via URL relativo que quebra em bundlers.
- * Esse fix aplica os ícones via CDN do unpkg uma única vez.
- */
 const fixDefaultIcon = () => {
   // @ts-expect-error — internal property used by leaflet
   delete L.Icon.Default.prototype._getIconUrl

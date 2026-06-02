@@ -10,7 +10,6 @@ type Status = 'idle' | 'loading' | 'ready' | 'error'
 type Result = {
   slug: string | null
   businessId: string | null
-  /** Href para o perfil público — ou rota de edição caso ainda não tenha negócio criado. */
   href: string
   status: Status
   isReady: boolean

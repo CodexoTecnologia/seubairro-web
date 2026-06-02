@@ -168,10 +168,6 @@ export class ApiClient {
         const timeout = options.timeout ?? this.config.timeout;
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeout);
-
-        // Cookies só viajam em chamadas autenticadas. Em endpoints anônimos
-        // (cadastro, login) `omit` evita que um cookie antigo identifique a
-        // sessão e o backend rejeite por "já autenticado" (403).
         const credentials: RequestCredentials =
             options.credentials ?? (options.requiresAuth ? 'include' : 'omit');
 

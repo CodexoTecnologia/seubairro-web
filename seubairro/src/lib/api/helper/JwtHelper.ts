@@ -6,7 +6,6 @@ export interface JwtPayload {
     iss?: string;
     aud?: string | string[];
     jti?: string;
-    /** Claims arbitrárias (roles, custom, etc.) — narrow no consumer. */
     [key: string]: unknown;
 }
 

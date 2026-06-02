@@ -14,8 +14,6 @@ const RecoverySchema = z.object({
 type RecoveryInput = z.infer<typeof RecoverySchema>
 
 export default function PasswordRecoveryForm() {
-  // Capturamos o email no submit em vez de assinar via watch() — evita o aviso
-  // de compatibilidade com React Compiler.
   const [submittedEmail, setSubmittedEmail] = useState('')
   const isSuccess = submittedEmail !== ''
   const {

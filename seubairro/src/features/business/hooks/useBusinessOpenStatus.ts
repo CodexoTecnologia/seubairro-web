@@ -16,7 +16,7 @@ const DEFAULT_POLL_MS = 60_000
 
 /**
  * Consulta o status "aberto agora" para o negócio autenticado.
- * Renova periodicamente para refletir abertura/fechamento sem refresh manual.
+ * Remover para refletir abertura/fechamento sem refresh manual.
  */
 export const useBusinessOpenStatus = (
   businessId: string | null | undefined,

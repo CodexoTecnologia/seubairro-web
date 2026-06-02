@@ -48,7 +48,6 @@ const SplitText: React.FC<SplitTextProps> = ({
     }, [onLetterAnimationComplete]);
 
     useEffect(() => {
-        // Sincroniza estado com sistema externo (document.fonts).
         if (document.fonts.status === 'loaded') {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setFontsLoaded(true);

@@ -1,8 +1,5 @@
 'use client'
 
-// global-error renderiza FORA do RootLayout — tokens semânticos do global.css
-// podem não estar disponíveis. Usamos os mesmos valores hexadecimais dos tokens
-// (primary, danger, title, body) inline para manter consistência visual.
 export default function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <html lang="pt-BR">
