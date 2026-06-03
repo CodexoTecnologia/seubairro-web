@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
-// @ts-expect-error -- CSS side-effect import without type declarations
 import 'leaflet/dist/leaflet.css'
 
 type Props = {
