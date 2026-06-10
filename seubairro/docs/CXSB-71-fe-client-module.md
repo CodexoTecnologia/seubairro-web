@@ -24,7 +24,7 @@ Criar o primitive `Avatar` na camada mais baixa do Design System, em `src/design
 
 Props esperadas: `src?: string`, `alt: string` (obrigatório por acessibilidade), `fallback: string` (iniciais quando não há imagem), `size: 'sm' | 'md' | 'lg' | 'xl'`.
 
-Quando `src` estiver presente, renderizar via `next/image` (proibido `<img>` por regra ESLint do projeto). Quando `src` ausente ou falhar, renderizar fallback em formato circular com tokens `var(--color-primary)` (fundo) e `var(--color-on-primary)` (texto), legível em todos os tamanhos.
+Quando `src` estiver presente, renderizar via `next/image` (proibido `<img>` por regra ESLint do projeto). Quando `src` ausente ou falhar, renderizar fallback em formato circular com `var(--color-primary)` (fundo) e `text-white` (texto — o token `--color-on-primary` não existe no projeto; é a mesma convenção do primitive `Button`), legível em todos os tamanhos.
 
 Variantes de tamanho via `class-variance-authority` em arquivo separado, expondo `VariantProps`. O componente em si é fino: usa `forwardRef`, compõe classes via `cn()` e aplica `aria-*` quando relevante.
 
@@ -99,7 +99,7 @@ Métodos:
 
 - `getMe(): Promise<CustomerProfileResponse>` — chama `GET /api/user/profile`, autenticado.
 - `updateMe(payload: UpdateCustomerRequest): Promise<CustomerProfileResponse>` — chama `PATCH /api/user/profile`, autenticado, retornando o DTO atualizado.
-- `uploadAvatar(file: File): Promise<{ profilePictureUrl: string }>` — chama `PATCH /api/user/avatar` via `multipart/form-data` com campo `image: File`, autenticado. O verbo é **PATCH** (não POST) — é substituição de recurso existente.
+- `uploadAvatar(file: File): Promise<CustomerProfileResponse>` — chama `PUT /api/user/avatar` via `multipart/form-data` com campo `file: File`, autenticado, retornando o **perfil completo** já com o novo `profilePictureUrl`. O verbo é **PUT** (não PATCH/POST) — alinhado ao endpoint `PUT /user/avatar` entregue no CXSB-116 (`[FromForm] IFormFile file`, retorno `ProfileResponse`); o `ApiClient` já expõe `putForm` para multipart.
 - `deleteAvatar(): Promise<void>` — chama `DELETE /api/user/avatar`, autenticado.
 
 Exportar como classe e como instância singleton (padrão do projeto — ver `AuthInstance.ts` e `CategoryService.ts`). Adicionar export em `src/lib/api/services/index.ts`.

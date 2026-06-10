@@ -3,6 +3,7 @@ const config = {
   port: 61000,
   stories: 'src/**/*.stories.{ts,tsx,mdx}',
   defaultStory: 'design-system-primitives-button--primary',
+  viteConfig: '.ladle/vite.config.ts',
 }
 
 export default config
