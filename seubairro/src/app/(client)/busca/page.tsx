@@ -30,6 +30,7 @@ export default function BuscaPage() {
 
   return (
     <div className="flex flex-col gap-6 w-full">
+      <h1 className="sr-only">Buscar anúncios</h1>
       <div className="sticky top-[var(--nav-height)] z-20 bg-[var(--color-page)] -mx-4 md:-mx-6 px-4 md:px-6 py-3">
         <SearchBar
           autoFocus

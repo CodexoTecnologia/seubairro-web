@@ -56,6 +56,7 @@ export default function ClientDashboard() {
   return (
     <GeolocationGate>
       <div className="flex flex-col gap-6 w-full">
+        <h1 className="sr-only">Início — anúncios perto de você</h1>
         <div className="bg-[var(--color-surface)] border-b border-[var(--color-border-default)] -mx-4 md:-mx-6 px-4 md:px-6 py-4 flex flex-col gap-3 sticky top-[var(--nav-height)] z-20">
           <div role="tablist" aria-label="Tipo de anúncio" className="flex gap-2">
             {TYPES.map((t) => (
