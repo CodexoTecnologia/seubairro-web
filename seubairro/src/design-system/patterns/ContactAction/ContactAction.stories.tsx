@@ -12,6 +12,10 @@ export const WhatsApp: Story = () => (
   />
 )
 
+export const WhatsAppLinkPronto: Story = () => (
+  <ContactAction channel="whatsapp" href="https://wa.me/5511999999999?text=Ol%C3%A1" fullWidth />
+)
+
 export const Phone: Story = () => <ContactAction channel="phone" target="5511999999999" />
 
 export const Email: Story = () => <ContactAction channel="email" target="contato@exemplo.com" />

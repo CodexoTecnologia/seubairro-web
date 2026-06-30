@@ -33,8 +33,10 @@ type Channel = NonNullable<VariantProps<typeof contactActionVariants>['channel']
 type Props = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> &
   Omit<VariantProps<typeof contactActionVariants>, 'channel'> & {
     channel: Channel
-    /** Telefone E.164 (whatsapp/phone), email (email), URL (share). */
-    target: string
+    /** Telefone (whatsapp/phone), email (email) ou URL (share) para montar o href. */
+    target?: string
+    /** Href já pronto (ex.: link de WhatsApp entregue pelo backend). Tem prioridade sobre `target`. */
+    href?: string
     label?: string
     message?: string
   }
@@ -63,20 +65,20 @@ const iconFor: Record<Channel, string> = {
 }
 
 const defaultLabel: Record<Channel, string> = {
-  whatsapp: 'WhatsApp',
+  whatsapp: 'Chamar no WhatsApp',
   phone: 'Ligar',
   email: 'Email',
   share: 'Compartilhar',
 }
 
 export const ContactAction = forwardRef<HTMLAnchorElement, Props>(
-  ({ channel, target, label, message, size, fullWidth, className, ...rest }, ref) => {
-    const href = buildHref(channel, target, message)
+  ({ channel, target, href, label, message, size, fullWidth, className, ...rest }, ref) => {
+    const finalHref = href ?? buildHref(channel, target ?? '', message)
     const external = channel === 'whatsapp' || channel === 'share'
     return (
       <a
         ref={ref}
-        href={href}
+        href={finalHref}
         target={external ? '_blank' : undefined}
         rel={external ? 'noopener noreferrer' : undefined}
         className={cn(contactActionVariants({ channel, size, fullWidth }), className)}
