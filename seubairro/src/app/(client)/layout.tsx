@@ -15,14 +15,13 @@ import { cn } from '@/lib/utils/cn'
 const BOTTOM_NAV = [
   { href: '/dashboard-client', icon: 'ri-home-5-line', label: 'Início' },
   { href: '/busca', icon: 'ri-search-line', label: 'Buscar' },
-  { href: '/favoritos', icon: 'ri-heart-3-line', label: 'Favoritos' },
   { href: '/perfil', icon: 'ri-user-line', label: 'Perfil' },
 ]
 
 function ClientBottomNav() {
   const pathname = usePathname() ?? ''
   return (
-    <ul className="grid grid-cols-4 h-16" role="list">
+    <ul className="grid grid-cols-3 h-16" role="list">
       {BOTTOM_NAV.map((it) => {
         const active = pathname.startsWith(it.href)
         return (
