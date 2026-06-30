@@ -7,6 +7,7 @@ import { useCustomerProfile } from '@/features/client/hooks/useCustomerProfile'
 import { useCustomerAddress } from '@/features/client/hooks/useCustomerAddress'
 import { CustomerProfileForm } from '@/features/client/components/CustomerProfileForm'
 import { CustomerAddressForm } from '@/features/client/components/CustomerAddressForm'
+import { LocationSourceToggle } from '@/features/client/components/LocationSourceToggle'
 import { Avatar } from '@/design-system/primitives/Avatar'
 import { Button } from '@/design-system/primitives/Button'
 import { Input } from '@/design-system/primitives/Input'
@@ -159,6 +160,8 @@ function LocationTab() {
           Defina onde você está para encontrar o melhor do bairro.
         </p>
       </header>
+      <LocationSourceToggle />
+      <div className="h-px bg-[var(--color-border-default)]" />
       {isLoading && <Skeleton variant="rect" height={320} />}
       {error && (
         <p role="alert" className="text-sm text-[var(--color-danger)]">

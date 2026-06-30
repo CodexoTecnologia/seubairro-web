@@ -8,6 +8,7 @@ import Footer from '@/features/shared/components/layout/footer'
 import { AuthGuard } from '@/features/shared/components'
 import { useAuthContext } from '@/features/auth/context/AuthContext'
 import { ROLE_ENTREPENEUR } from '@/lib/api/helper/RoleHelper'
+import { LocationProvider } from '@/features/client/context/LocationContext'
 import { PageShell, DashboardShell } from '@/design-system/layout'
 import { cn } from '@/lib/utils/cn'
 
@@ -60,7 +61,9 @@ function ClientLayoutInner({ children }: { children: ReactNode }) {
 
   return (
     <PageShell context={context} navbar={<AppNavbar />} footer={<Footer />}>
-      <DashboardShell bottomNav={<ClientBottomNav />}>{children}</DashboardShell>
+      <DashboardShell bottomNav={<ClientBottomNav />}>
+        <LocationProvider>{children}</LocationProvider>
+      </DashboardShell>
     </PageShell>
   )
 }

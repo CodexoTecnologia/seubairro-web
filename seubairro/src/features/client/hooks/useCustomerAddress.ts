@@ -3,11 +3,13 @@
 import { useCallback, useEffect, useState } from 'react'
 import { CustomerProfileService } from '@/lib/api/services/CustomerProfileService'
 import { CountryCodeEnum } from '@/lib/api/enums/CountryCodeEnum'
+import { useLocationContext } from '../context/LocationContext'
 import type { PrimaryAddressInfo } from '@/lib/api/dtos/Response/index'
 import type { UpdateAddressRequest } from '@/lib/api/dtos/Request/index'
 import type { CustomerAddressFormValues } from '../schemas/customer-address.schema'
 
 export function useCustomerAddress() {
+  const { setProfileCoords } = useLocationContext()
   const [address, setAddress] = useState<PrimaryAddressInfo | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -42,9 +44,12 @@ export function useCustomerAddress() {
     }
     const updated = await CustomerProfileService.updateAddress(payload)
     setAddress(updated)
-    // TODO (Onda B): quando houver LocationContext, propagar updated.latitude/longitude.
+    // Propaga a coordenada geocodificada para a fonte de localização ativa.
+    if (updated.latitude != null && updated.longitude != null) {
+      setProfileCoords({ lat: updated.latitude, lng: updated.longitude })
+    }
     return updated
-  }, [])
+  }, [setProfileCoords])
 
   return { address, isLoading, error, save }
 }
