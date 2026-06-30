@@ -5,27 +5,27 @@ import type { UpdateNicheRequest } from '../dtos/Request/business/UpdateNicheReq
 
 class NicheServiceImpl {
     async getAll(): Promise<NicheResponse[]> {
-        return apiClient.get<NicheResponse[]>('/api/niches', { requiresAuth: false });
+        return apiClient.get<NicheResponse[]>('/api/Niches', { requiresAuth: false });
     }
 
     async getById(id: string): Promise<NicheResponse> {
-        return apiClient.get<NicheResponse>(`/api/niches/${id}`, { requiresAuth: false });
+        return apiClient.get<NicheResponse>(`/api/Niches/${id}`, { requiresAuth: false });
     }
 
     async create(data: CreateNicheRequest): Promise<NicheResponse> {
-        return apiClient.post<NicheResponse, CreateNicheRequest>('/api/niches', data, {
+        return apiClient.post<NicheResponse, CreateNicheRequest>('/api/Niches', data, {
             requiresAuth: true,
         });
     }
 
     async update(id: string, data: UpdateNicheRequest): Promise<NicheResponse> {
-        return apiClient.put<NicheResponse, UpdateNicheRequest>(`/api/niches/${id}`, data, {
+        return apiClient.put<NicheResponse, UpdateNicheRequest>(`/api/Niches/${id}`, data, {
             requiresAuth: true,
         });
     }
 
     async delete(id: string): Promise<void> {
-        return apiClient.delete<void>(`/api/niches/${id}`, { requiresAuth: true });
+        return apiClient.delete<void>(`/api/Niches/${id}`, { requiresAuth: true });
     }
 }
 

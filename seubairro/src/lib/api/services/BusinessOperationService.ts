@@ -39,7 +39,7 @@ class BusinessOperationServiceImpl {
         operationId: string,
         data: UpdateBusinessOperationRequest
     ): Promise<BusinessOperationResponse> {
-        return apiClient.put<BusinessOperationResponse, UpdateBusinessOperationRequest>(
+        return apiClient.patch<BusinessOperationResponse, UpdateBusinessOperationRequest>(
             `/api/business/${businessId}/operations/${operationId}`,
             data,
             { requiresAuth: true }
@@ -57,7 +57,7 @@ class BusinessOperationServiceImpl {
         businessId: string,
         data: BulkReplaceBusinessOperationsRequest
     ): Promise<BusinessOperationResponse[]> {
-        return apiClient.put<BusinessOperationResponse[], BulkReplaceBusinessOperationsRequest>(
+        return apiClient.post<BusinessOperationResponse[], BulkReplaceBusinessOperationsRequest>(
             `/api/business/${businessId}/operations/bulk`,
             data,
             { requiresAuth: true }

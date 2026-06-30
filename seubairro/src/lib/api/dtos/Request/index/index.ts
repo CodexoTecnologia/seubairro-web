@@ -1,5 +1,8 @@
 export type { CreateAddressRequest } from '../client/CreateAddressRequest';
 export type { UpdateAddressRequest } from '../client/UpdateAddressRequest';
+export type { CreateCustomerProfileRequest } from '../client/CreateCustomerProfileRequest';
+export type { UpdateCustomerProfileRequest } from '../client/UpdateCustomerProfileRequest';
+export type { ListingSearchRequest } from '../listing/ListingSearchRequest';
 export type { CreateBusinessRequest } from '../business/CreateBusinessRequest';
 export type { UpdateBusinessRequest } from '../business/UpdateBusinessRequest';
 export type { CreateBusinessAddressRequest } from '../business/CreateBusinessAddressRequest';

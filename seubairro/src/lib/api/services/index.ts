@@ -3,6 +3,8 @@ export { BusinessService } from './BusinessService';
 export { BusinessAddressService } from './BusinessAddressService';
 export { ListingService } from './ListingService';
 export { UserService } from './UserService';
+export { CustomerProfileService } from './CustomerProfileService';
+export { DiscoveryService } from './DiscoveryService';
 export { CategoryService } from './CategoryService';
 export { NicheService } from './NicheService';
 export { BusinessNicheService } from './BusinessNicheService';

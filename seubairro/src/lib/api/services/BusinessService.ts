@@ -48,33 +48,11 @@ class BusinessServiceImpl extends BaseService<
         }
     }
 
-    async getActive(): Promise<BusinessResponse[]> {
-        return apiClient.get<BusinessResponse[]>('/api/Business/active', {
-            requiresAuth: true,
-        });
-    }
-
-    async activate(id: string): Promise<BusinessResponse> {
-        return apiClient.put<BusinessResponse>(`/api/Business/${id}/activate`, undefined, {
-            requiresAuth: true,
-        });
-    }
-
     async uploadLogo(id: string, file: File): Promise<BusinessResponse> {
         const formData = new FormData();
         formData.append('logo', file);
         return apiClient.putForm<BusinessResponse>(
             `/api/Business/${id}/logo`,
-            formData,
-            { requiresAuth: true }
-        );
-    }
-
-    async uploadCover(id: string, file: File): Promise<BusinessResponse> {
-        const formData = new FormData();
-        formData.append('cover', file);
-        return apiClient.putForm<BusinessResponse>(
-            `/api/Business/${id}/cover`,
             formData,
             { requiresAuth: true }
         );

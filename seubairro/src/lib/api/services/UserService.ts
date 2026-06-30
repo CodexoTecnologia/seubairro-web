@@ -3,6 +3,7 @@ import type {
     CreateCustomerRequest,
     CreateEntrepeneurRequest
 } from '../dtos/Request/index/index';
+import type { CustomerProfileResponse } from '../dtos/Response/index/index';
 import { CountryCodeEnum } from '../enums/index/index';
 
 export interface UserResponse {
@@ -22,9 +23,17 @@ export interface LoginResponse {
 
 class UserServiceImpl {
     async getCurrentUser(): Promise<UserResponse> {
-        return apiClient.get<UserResponse>('/api/User', {
+
+        const profile = await apiClient.get<CustomerProfileResponse>('/api/User/profile', {
             requiresAuth: true,
         });
+        return {
+            id: profile.id,
+            name: [profile.firstName, profile.lastName].filter(Boolean).join(' ') || null,
+            email: profile.email,
+            birthDate: profile.birthDate,
+            taxId: profile.taxId,
+        };
     }
 
     async registerCustomer(
