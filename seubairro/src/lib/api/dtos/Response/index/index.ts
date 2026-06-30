@@ -10,6 +10,10 @@ export type {
     PublicListingBusinessInfo,
     PublicListingLocation,
 } from '../listing/PublicListingDetailResponse';
+export type { ListingQuestionResponse } from '../listing/ListingQuestionResponse';
+export type { ListingReviewResponse } from '../listing/ListingReviewResponse';
+export type { OrderResponse } from '../order/OrderResponse';
+export type { OrderItemResponse } from '../order/OrderItemResponse';
 export type { BusinessAddressResponse } from '../business/BusinessAddressResponse';
 export type { CategoryResponse } from '../business/CategoryResponse';
 export type { NicheResponse } from '../business/NicheResponse';

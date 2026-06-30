@@ -203,6 +203,13 @@ export default function ListarAnuncioPage() {
                 <div className="text-sm font-semibold text-[var(--color-primary)] mt-1">{ad.price}</div>
               </div>
               <div className="flex gap-1 shrink-0">
+                <Link
+                  href={`/anuncio/${ad.id}`}
+                  aria-label="Perguntas e avaliações"
+                  className="size-9 rounded-full hover:bg-[var(--color-page)] text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors flex items-center justify-center"
+                >
+                  <i className="ri-question-answer-line" />
+                </Link>
                 <button
                   type="button"
                   aria-label="Editar"

@@ -29,6 +29,7 @@ export function BusinessSidebar() {
       warn: !slug,
     },
     { href: '/listar-anuncio', icon: 'ri-store-2-line', label: 'Meus Anúncios' },
+    { href: '/pedidos', icon: 'ri-shopping-bag-line', label: 'Pedidos' },
     { href: '/horarios', icon: 'ri-time-line', label: 'Horários' },
     { href: '/chat', icon: 'ri-message-3-line', label: 'Mensagens', external: true },
     { href: '/editar-profile', icon: 'ri-settings-3-line', label: 'Configurações' },
