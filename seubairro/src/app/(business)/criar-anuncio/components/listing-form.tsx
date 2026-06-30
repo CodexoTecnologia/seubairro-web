@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { CategoryService } from '@/lib/api/services/CategoryService'
 import { ListingService } from '@/lib/api/services/ListingService'
+import { CategoryTypeEnum } from '@/lib/api/enums/CategoryTypeEnum'
 import type { CreateListingRequest } from '@/lib/api/dtos/Request/index'
 import type { CategoryResponse } from '@/lib/api/dtos/Response/index'
 import { Button } from '@/design-system/primitives/Button'
@@ -50,10 +51,14 @@ export default function ListingForm({ type }: Props) {
     const fetchCategories = async () => {
       setLoadingCategories(true)
       try {
-        const categoryType = type === 'product' ? 1 : 2
+        // Produto casa com categorias Produtos|Ambos; serviço com Servicos|Ambos.
+        const allowedTypes =
+          type === 'product'
+            ? [CategoryTypeEnum.Produtos, CategoryTypeEnum.Ambos]
+            : [CategoryTypeEnum.Servicos, CategoryTypeEnum.Ambos]
         const raw = await CategoryService.getAll()
         const data = normalize<CategoryResponse>(raw)
-        const filtered = data.filter((c) => c?.isActive && c?.categoryType === categoryType)
+        const filtered = data.filter((c) => c?.isActive && allowedTypes.includes(c.categoryType))
         setCategories(filtered)
         setFormData((prev) =>
           prev.listingCategoryId && !filtered.some((f) => f.id === prev.listingCategoryId)

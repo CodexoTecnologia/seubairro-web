@@ -1,6 +1,7 @@
 import { apiClient } from '../Client/apiClientInstance';
 import { BaseService } from './BaseService';
 import type { CreateListingRequest, UpdateListingRequest } from '../dtos/Request/index';
+import type { PagedResult } from '../dtos/Response/index';
 
 function slugify(input: string): string {
     return input
@@ -55,25 +56,23 @@ class ListingServiceImpl extends BaseService<
         images?: File[] | null,
         coverIndex?: number
     ): Promise<ListingResponse> {
-        const formData = new FormData();
-        formData.append('ListingCategoryId', data.listingCategoryId);
-        formData.append('Title', data.title ?? '');
-        formData.append('Slug', data.slug ?? slugify(data.title ?? ''));
-        formData.append('StockQuantity', String(data.stockQuantity));
-        formData.append('Description', data.description ?? '');
-        formData.append('Price', String(data.price));
-        formData.append('CurrencyCode', data.currencyCode ?? 'BRL');
+        // v3: criação é JSON (CreateListingRequest); imagens vão em endpoint separado.
+        const body: CreateListingRequest = {
+            ...data,
+            slug: data.slug ?? slugify(data.title ?? ''),
+            currencyCode: data.currencyCode ?? 'BRL',
+        };
+        const created = await apiClient.post<ListingResponse, CreateListingRequest>(
+            '/api/Listing',
+            body,
+            { requiresAuth: true }
+        );
 
         if (images && images.length > 0) {
-            images.forEach(file => formData.append('images', file));
-            if (typeof coverIndex === 'number') {
-                formData.append('coverIndex', String(coverIndex));
-            }
+            await this.addImages(created.id, images, coverIndex);
         }
 
-        return apiClient.postForm<ListingResponse>('/api/Listing', formData, {
-            requiresAuth: true,
-        });
+        return created;
     }
 
     async addImages(
@@ -114,9 +113,13 @@ class ListingServiceImpl extends BaseService<
     }
 
     async getByBusiness(businessId: string): Promise<ListingResponse[]> {
-        return apiClient.get<ListingResponse[]>(`/api/Listing/business/${businessId}`, {
-            requiresAuth: true,
-        });
+        // v3: endpoint paginado (PagedResultOfListingResponse). Retornamos os items
+        // da primeira página com pageSize amplo — paginação real fica para depois.
+        const result = await apiClient.get<PagedResult<ListingResponse>>(
+            `/api/Listing/business/${businessId}`,
+            { params: { PageSize: 100 }, requiresAuth: true }
+        );
+        return result.items;
     }
 
     async activate(id: string): Promise<ListingResponse> {
