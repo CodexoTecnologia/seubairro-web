@@ -90,15 +90,21 @@ export function ListingFilters({ filters, onChange }: Props) {
         )}
       </section>
 
-      <section className="flex flex-col gap-2">
+      <section className="flex flex-col gap-3">
         <Slider
           label="Raio de Distância"
           min={0}
           max={DISTANCE_OPTIONS.length - 1}
           step={1}
           value={distanceIndex}
-          valueFormatter={(i) => `${DISTANCE_OPTIONS[i]} km`}
+          disabled={filters.searchAll}
+          valueFormatter={(i) => (filters.searchAll ? 'Todos' : `${DISTANCE_OPTIONS[i]} km`)}
           onChange={(i) => onChange({ ...filters, maxDistanceKm: DISTANCE_OPTIONS[i] })}
+        />
+        <Switch
+          label="Buscar todos, sem limite de distância"
+          checked={filters.searchAll}
+          onChange={(v) => onChange({ ...filters, searchAll: v })}
         />
       </section>
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import Link from 'next/link'
 import { useUserLocation } from '@/features/client/hooks/useUserLocation'
 import { Button } from '@/design-system/primitives/Button'
@@ -10,29 +10,76 @@ import { EmptyState } from '@/design-system/patterns/EmptyState'
 /**
  * Portão da RN02: sem coordenada de origem o feed não é gerado.
  * Bloqueia o conteúdo e orienta o usuário em vez de mostrar tela vazia.
+ *
+ * Ordem de preferência: se o usuário já tem endereço salvo, usamos automaticamente
+ * — geocodificando no cliente quando o backend não fornece coordenadas. O GPS fica
+ * disponível como troca explícita na aba Localização do perfil.
  */
 export function GeolocationGate({ children }: { children: ReactNode }) {
-  const { coords, status, requestGps, applyProfileFallback, hasProfileAddress } = useUserLocation()
+  const {
+    coords,
+    status,
+    requestGps,
+    applyProfileFallback,
+    hasProfileAddress,
+    isLocating,
+    isProfileLoading,
+    error,
+  } = useUserLocation()
+  const autoTriedRef = useRef(false)
 
-  // GPS negado/indisponível mas há endereço salvo → fallback automático e silencioso.
+  // Uma única tentativa automática de usar o endereço salvo (evita repetir a
+  // geocodificação se ela falhar e as deps não mudarem).
   useEffect(() => {
-    if (coords === null && (status === 'denied' || status === 'unavailable') && hasProfileAddress) {
-      applyProfileFallback()
+    if (
+      coords === null &&
+      status !== 'pending' &&
+      !isLocating &&
+      hasProfileAddress &&
+      !autoTriedRef.current
+    ) {
+      autoTriedRef.current = true
+      void applyProfileFallback()
     }
-  }, [coords, status, hasProfileAddress, applyProfileFallback])
+  }, [coords, status, isLocating, hasProfileAddress, applyProfileFallback])
 
   if (coords !== null) return <>{children}</>
 
-  if ((status === 'denied' || status === 'unavailable') && !hasProfileAddress) {
+  if (isLocating || isProfileLoading) {
+    return (
+      <div className="flex justify-center py-10">
+        <Card padding="lg" className="max-w-md w-full flex flex-col items-center text-center gap-3">
+          <i className="ri-loader-4-line text-3xl text-[var(--color-primary)] animate-spin" aria-hidden />
+          <p className="text-sm text-[var(--color-muted)]">Localizando seu endereço…</p>
+        </Card>
+      </div>
+    )
+  }
+
+  const gpsFailed = status === 'denied' || status === 'unavailable'
+  const geocodeFailed = Boolean(error)
+
+  if (gpsFailed || geocodeFailed) {
     return (
       <EmptyState
         icon={<i className="ri-map-pin-off-line" />}
-        title="Precisamos da sua localização"
-        description="Permita o acesso ao GPS ou cadastre um endereço para ver o que está perto de você."
+        title={geocodeFailed ? 'Não conseguimos localizar seu endereço' : 'Precisamos da sua localização'}
+        description={
+          geocodeFailed
+            ? 'Não encontramos as coordenadas do seu endereço salvo. Revise o endereço no perfil ou permita o acesso ao GPS.'
+            : 'Permita o acesso ao GPS ou cadastre um endereço para ver o que está perto de você.'
+        }
         action={
-          <Link href="/perfil">
-            <Button leftIcon={<i className="ri-map-pin-add-line" />}>Cadastrar endereço</Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button onClick={requestGps} leftIcon={<i className="ri-gps-line" />}>
+              Tentar GPS novamente
+            </Button>
+            <Link href="/perfil">
+              <Button variant="outline" leftIcon={<i className="ri-map-pin-add-line" />}>
+                {hasProfileAddress ? 'Revisar endereço' : 'Cadastrar endereço'}
+              </Button>
+            </Link>
+          </div>
         }
       />
     )
@@ -57,7 +104,12 @@ export function GeolocationGate({ children }: { children: ReactNode }) {
           >
             Permitir localização
           </Button>
-          <Button fullWidth variant="outline" disabled={!hasProfileAddress} onClick={applyProfileFallback}>
+          <Button
+            fullWidth
+            variant="outline"
+            disabled={!hasProfileAddress}
+            onClick={() => void applyProfileFallback()}
+          >
             Usar endereço cadastrado
           </Button>
         </div>

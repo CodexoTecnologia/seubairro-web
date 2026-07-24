@@ -1,4 +1,4 @@
-'use client'
+import Link from 'next/link'
 
 type Card = {
   icon: string
@@ -6,6 +6,7 @@ type Card = {
   badge?: string
   items: string[]
   variant: 'client' | 'business'
+  cta: { href: string; label: string }
 }
 
 const CARDS: Card[] = [
@@ -18,6 +19,7 @@ const CARDS: Card[] = [
       'Descubra promoções exclusivas da vizinhança.',
       'Valorize o que é nosso e economize tempo de deslocamento.',
     ],
+    cta: { href: '/cadastro?perfil=vizinho', label: 'Quero explorar meu bairro' },
   },
   {
     icon: 'ri-store-3-line',
@@ -29,12 +31,13 @@ const CARDS: Card[] = [
       'Ferramenta simples: cadastre-se e apareça no mapa.',
       'Sem taxas de adesão abusivas. Feito para o pequeno crescer.',
     ],
+    cta: { href: '/cadastro?perfil=negocio', label: 'Quero cadastrar meu negócio' },
   },
 ]
 
 export default function ForWho() {
   return (
-    <section id="para-quem" className="py-16 md:py-24 bg-[var(--color-surface)]">
+    <section id="para-quem" className="py-16 md:py-24 bg-[var(--color-surface)] scroll-mt-20">
       <div className="max-w-[1200px] mx-auto px-4">
         <header className="text-center max-w-2xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-title)]">
@@ -69,6 +72,13 @@ export default function ForWho() {
                   </li>
                 ))}
               </ul>
+              <Link
+                href={c.cta.href}
+                className="mt-auto inline-flex items-center justify-center gap-2 h-11 px-5 rounded-full bg-[var(--color-primary)] text-white text-sm font-semibold hover:opacity-90 active:opacity-80 transition-opacity self-start"
+              >
+                {c.cta.label}
+                <i className="ri-arrow-right-line" aria-hidden />
+              </Link>
             </article>
           ))}
         </div>

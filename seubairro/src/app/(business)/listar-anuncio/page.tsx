@@ -10,7 +10,9 @@ import { BusinessService } from '@/lib/api/services/BusinessService'
 import { Button } from '@/design-system/primitives/Button'
 import { Skeleton } from '@/design-system/primitives/Skeleton'
 import { EmptyState } from '@/design-system/patterns/EmptyState'
-import { cn } from '@/lib/utils/cn'
+import { Modal } from '@/design-system/patterns/Modal'
+import { PageHeader } from '@/design-system/patterns/PageHeader'
+import { StatusBadge } from '@/design-system/patterns/StatusBadge'
 
 type Ad = {
   id: string
@@ -66,7 +68,8 @@ export default function ListarAnuncioPage() {
           isActive: boolean
           listingCategoryId?: string
           categoryId?: string
-          imageUrl?: string | null
+          // Contrato v1: a capa vem em `coverImageUrl`.
+          coverImageUrl?: string | null
         }>(adsRaw)
         setAds(
           raw.map((l) => {
@@ -78,7 +81,7 @@ export default function ListarAnuncioPage() {
               status: l.isActive ? 'active' : 'inactive',
               categoryId: cid,
               categoryName: catMap[cid] ?? 'Geral',
-              imageUrl: l.imageUrl ?? null,
+              imageUrl: l.coverImageUrl ?? null,
             }
           }),
         )
@@ -93,14 +96,8 @@ export default function ListarAnuncioPage() {
     }
   }, [user])
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Tem certeza que deseja excluir este anúncio?')) return
-    try {
-      await ListingService.delete(id)
-      setAds((prev) => prev.filter((ad) => ad.id !== id))
-    } catch {
-      alert('Erro ao excluir o anúncio')
-    }
+  const removeAd = (id: string) => {
+    setAds((prev) => prev.filter((ad) => ad.id !== id))
   }
 
   const filtered = ads.filter((ad) => {
@@ -112,15 +109,15 @@ export default function ListarAnuncioPage() {
 
   return (
     <div className="flex flex-col gap-6 max-w-6xl mx-auto w-full">
-      <header className="flex items-start justify-between gap-4 flex-wrap">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-[var(--color-title)]">Seus Anúncios</h1>
-          <p className="text-[var(--color-muted)] mt-1">Gerencie seus produtos e serviços ativos.</p>
-        </div>
-        <Link href="/criar-anuncio">
-          <Button leftIcon={<i className="ri-add-line" />}>Novo Anúncio</Button>
-        </Link>
-      </header>
+      <PageHeader
+        title="Seus Anúncios"
+        description="Gerencie seus produtos e serviços ativos."
+        actions={
+          <Link href="/criar-anuncio">
+            <Button leftIcon={<i className="ri-add-line" />}>Novo Anúncio</Button>
+          </Link>
+        }
+      />
 
       <div className="flex flex-col md:flex-row gap-3">
         <div className="relative flex-1">
@@ -189,47 +186,96 @@ export default function ListarAnuncioPage() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <h3 className="font-semibold text-[var(--color-title)] truncate">{ad.title}</h3>
-                  <span
-                    className={cn(
-                      'text-xs px-2 py-0.5 rounded-full font-medium',
-                      ad.status === 'active'
-                        ? 'bg-[var(--color-success-bg)] text-[var(--color-success)]'
-                        : 'bg-[var(--color-page)] text-[var(--color-muted)]',
-                    )}
-                  >
+                  <StatusBadge tone={ad.status === 'active' ? 'success' : 'neutral'}>
                     {ad.status === 'active' ? 'Ativo' : 'Inativo'}
-                  </span>
+                  </StatusBadge>
                 </div>
-                <div className="text-sm font-semibold text-[var(--color-primary)] mt-1">{ad.price}</div>
+                <div data-numeric className="text-sm font-semibold text-[var(--color-primary)] mt-1">
+                  {ad.price}
+                </div>
               </div>
               <div className="flex gap-1 shrink-0">
+                {/* size-11 = 44px: alvo de toque mínimo recomendado */}
                 <Link
                   href={`/anuncio/${ad.id}`}
-                  aria-label="Perguntas e avaliações"
-                  className="size-9 rounded-full hover:bg-[var(--color-page)] text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors flex items-center justify-center"
+                  aria-label={`Perguntas e avaliações de ${ad.title}`}
+                  className="size-11 rounded-full hover:bg-[var(--color-page)] text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors flex items-center justify-center"
                 >
                   <i className="ri-question-answer-line" />
                 </Link>
-                <button
-                  type="button"
-                  aria-label="Editar"
-                  className="size-9 rounded-full hover:bg-[var(--color-page)] text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors flex items-center justify-center"
+                <Link
+                  href={`/anuncio/${ad.id}/editar`}
+                  aria-label={`Editar ${ad.title}`}
+                  className="size-11 rounded-full hover:bg-[var(--color-page)] text-[var(--color-muted)] hover:text-[var(--color-primary)] transition-colors flex items-center justify-center"
                 >
                   <i className="ri-pencil-line" />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Excluir"
-                  onClick={() => handleDelete(ad.id)}
-                  className="size-9 rounded-full hover:bg-[var(--color-danger-bg)] text-[var(--color-muted)] hover:text-[var(--color-danger)] transition-colors flex items-center justify-center"
-                >
-                  <i className="ri-delete-bin-line" />
-                </button>
+                </Link>
+                <DeleteAdAction ad={ad} onDeleted={removeAd} />
               </div>
             </article>
           ))}
         </div>
       )}
     </div>
+  )
+}
+
+/** Exclusão com confirmação em Modal do DS — sem `confirm()`/`alert()` nativos. */
+function DeleteAdAction({ ad, onDeleted }: { ad: Ad; onDeleted: (id: string) => void }) {
+  const [open, setOpen] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const handleConfirm = async () => {
+    setIsDeleting(true)
+    setError(null)
+    try {
+      await ListingService.delete(ad.id)
+      setOpen(false)
+      onDeleted(ad.id)
+    } catch {
+      setError('Não foi possível excluir o anúncio. Tente novamente.')
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  return (
+    <Modal
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next)
+        if (!next) setError(null)
+      }}
+      trigger={
+        <button
+          type="button"
+          aria-label={`Excluir ${ad.title}`}
+          className="size-11 rounded-full hover:bg-[var(--color-danger-bg)] text-[var(--color-muted)] hover:text-[var(--color-danger)] transition-colors flex items-center justify-center"
+        >
+          <i className="ri-delete-bin-line" />
+        </button>
+      }
+      title={`Excluir "${ad.title}"?`}
+      description="O anúncio sai do seu perfil público na hora. Esta ação não pode ser desfeita."
+      footer={
+        <>
+          <Modal.Close asChild>
+            <Button variant="ghost" size="sm">
+              Voltar
+            </Button>
+          </Modal.Close>
+          <Button variant="danger" size="sm" isLoading={isDeleting} onClick={handleConfirm}>
+            Excluir anúncio
+          </Button>
+        </>
+      }
+    >
+      {error && (
+        <p role="alert" className="text-sm text-[var(--color-danger-fg)]">
+          {error}
+        </p>
+      )}
+    </Modal>
   )
 }

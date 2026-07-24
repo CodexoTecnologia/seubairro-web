@@ -2,6 +2,22 @@
 @import "remixicon/fonts/remixicon.css";
 
 @theme {
+  /* Tipografia — família única (Plus Jakarta Sans, carregada em app/layout.tsx).
+     A hierarquia vem do peso e do tamanho, nunca de trocar de família. */
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Escala de títulos. `--text-*` gera as utilities `text-*` do Tailwind v4;
+     o par [tamanho, line-height] mantém o ritmo vertical previsível. */
+  --text-page-title: 1.5rem;
+  --text-page-title--line-height: 2rem;
+  --text-page-title--font-weight: 700;
+  --text-page-title--letter-spacing: -0.02em;
+
+  --text-section-title: 1.125rem;
+  --text-section-title--line-height: 1.75rem;
+  --text-section-title--font-weight: 600;
+  --text-section-title--letter-spacing: -0.01em;
+
   --color-primary: #2563EB;
   --color-primary-hover: #1D4ED8;
   --color-accent: #0D9488;
@@ -14,17 +30,31 @@
 
   --color-title: #0F172A;
   --color-body: #475569;
-  --color-muted: #94A3B8;
+  /* #94A3B8 dava 2.45:1 sobre a página — reprovado no mínimo AA (4.5:1) para
+     texto pequeno, que é justamente o uso deste token. Este tom passa nos três
+     fundos (surface, page do cliente e page do business). */
+  --color-muted: #5F6E85;
   --color-border-default: #E2E8F0;
 
+  /* Pares semânticos. `--color-*` é o tom sólido (preenchimento de botão,
+     ponto de status, ícone); `--color-*-fg` é o tom de TEXTO sobre o
+     `--color-*-bg` correspondente — o sólido sobre o tint fica entre 2:1 e
+     4.4:1 e reprova para texto pequeno. */
   --color-success: #059669;
   --color-success-bg: #ECFDF5;
+  --color-success-fg: #047857;
   --color-danger: #DC2626;
   --color-danger-bg: #FEF2F2;
+  --color-danger-fg: #B91C1C;
   --color-warning: #F59E0B;
   --color-warning-bg: #FFFBEB;
+  --color-warning-fg: #B45309;
   --color-info: #0EA5E9;
   --color-info-bg: #F0F9FF;
+  --color-info-fg: #0369A1;
+
+  /* Cores de marca de terceiros (canais de contato) */
+  --color-whatsapp: #25D366;
 
   --radius-card: 0.75rem;
   --radius-pill: 9999px;
@@ -69,11 +99,22 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--color-page);
   color: var(--color-body);
+  font-family: var(--font-sans);
   min-height: 100vh;
   line-height: 1.5;
+}
+
+/* Números tabulares em preços, totais e horários: evita o "pulo" de largura
+   entre dígitos em listas e contadores que atualizam. */
+:where(time, [data-numeric]) {
+  font-variant-numeric: tabular-nums;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -85,4 +126,16 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Slide-over (Drawer) — animação apenas de entrada. O fechamento é imediato
+   (sem animação de saída) para não depender do `animationend` do Radix Presence,
+   que pode travar o painel montado se a animação não completar. */
+@keyframes drawer-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes drawer-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
 }

@@ -12,7 +12,7 @@ const contactActionVariants = cva(
   {
     variants: {
       channel: {
-        whatsapp: 'bg-[#25D366] text-white hover:opacity-90 focus-visible:ring-[#25D366]',
+        whatsapp: 'bg-[var(--color-whatsapp)] text-white hover:opacity-90 focus-visible:ring-[var(--color-whatsapp)]',
         phone: 'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] focus-visible:ring-[var(--color-primary)]',
         email: 'bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] focus-visible:ring-[var(--color-accent)]',
         share: 'bg-transparent border border-[var(--color-border-default)] text-[var(--color-body)] hover:bg-[var(--color-input)] focus-visible:ring-[var(--color-primary)]',

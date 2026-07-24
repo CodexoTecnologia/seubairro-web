@@ -6,6 +6,8 @@ export interface UpdateBusinessRequest {
     logoUrl: string | null;
     coverImageUrl: string | null;
     publicPhone: string | null;
+    phoneCountryCode?: string | null;
+    phoneNumber?: string | null;
     instagramUrl: string | null;
 }
 

@@ -8,8 +8,16 @@ import { cn } from '@/lib/utils/cn'
  * Aparece na aba Localização do perfil.
  */
 export function LocationSourceToggle() {
-  const { source, status, requestGps, applyProfileFallback, hasProfileAddress, profileAddress } =
-    useUserLocation()
+  const {
+    source,
+    status,
+    requestGps,
+    applyProfileFallback,
+    hasProfileAddress,
+    profileAddress,
+    isLocating,
+    error,
+  } = useUserLocation()
 
   const options = [
     {
@@ -18,13 +26,15 @@ export function LocationSourceToggle() {
       icon: 'ri-gps-line',
       onSelect: requestGps,
       disabled: false,
+      loading: false,
     },
     {
       key: 'profile' as const,
       label: 'Usar endereço cadastrado',
       icon: 'ri-home-4-line',
-      onSelect: applyProfileFallback,
-      disabled: !hasProfileAddress,
+      onSelect: () => void applyProfileFallback(),
+      disabled: !hasProfileAddress || isLocating,
+      loading: isLocating,
     },
   ]
 
@@ -50,7 +60,10 @@ export function LocationSourceToggle() {
                 opt.disabled && 'opacity-50 cursor-not-allowed',
               )}
             >
-              <i className={cn(opt.icon, 'text-lg')} aria-hidden />
+              <i
+                className={cn(opt.loading ? 'ri-loader-4-line animate-spin' : opt.icon, 'text-lg')}
+                aria-hidden
+              />
               <span className="flex-1">{opt.label}</span>
               {checked && <i className="ri-check-line" aria-hidden />}
             </button>
@@ -62,6 +75,12 @@ export function LocationSourceToggle() {
         <p role="alert" className="text-xs text-[var(--color-danger)]">
           Permissão de localização negada. Habilite o acesso à localização nas configurações do navegador
           para usar o GPS.
+        </p>
+      )}
+
+      {error && (
+        <p role="alert" className="text-xs text-[var(--color-danger)]">
+          {error.message}
         </p>
       )}
 

@@ -3,49 +3,86 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useAuthContext } from '@/features/auth/context/AuthContext'
-import { ROLE_CUSTOMER, ROLE_ENTREPENEUR, DASHBOARD_BY_ROLE } from '@/lib/api/helper/RoleHelper'
+import { ROLE_CUSTOMER, type Workspace } from '@/lib/api/helper/RoleHelper'
+import { useBusinessSetup } from '@/features/business/hooks'
+import { Avatar } from '@/design-system/primitives/Avatar'
 import { Input } from '@/design-system/primitives/Input'
+import { DropdownMenu } from '@/design-system/patterns'
+import { WorkspaceSwitcher } from '@/features/shared/components/WorkspaceSwitcher'
 
-const BUSINESS_PATHS = [
-  '/dashboard-business',
-  '/criar-anuncio',
-  '/listar-anuncio',
-  '/editar-profile',
-  '/chat',
-]
+export type NavbarContext = 'client' | 'business' | 'public'
 
-export default function Navbar() {
-  const pathname = usePathname() ?? ''
-  const { roles, user } = useAuthContext()
+type Props = {
+  /** Workspace da rota, informado pelo layout do route group. */
+  context?: NavbarContext
+  /**
+   * Conteúdo específico do workspace, injetado pelo layout (chip de
+   * localização no cliente, CTA de criar anúncio no business). A navbar não
+   * insere esses elementos por conta própria para manter desacoplamento.
+   */
+  slot?: React.ReactNode
+}
+
+const LOGO_HREF: Record<NavbarContext, string> = {
+  client: '/dashboard-client',
+  business: '/dashboard-business',
+  public: '/',
+}
+
+export default function Navbar({ context = 'public', slot }: Props) {
+  const router = useRouter()
+  const { user, roles, logout } = useAuthContext()
+  const { business } = useBusinessSetup()
   const [search, setSearch] = useState('')
 
-  const onBusinessPath = BUSINESS_PATHS.some((p) =>
-    pathname.toLowerCase().startsWith(p.toLowerCase()),
-  )
-  const hasBusinessRole = roles.includes(ROLE_ENTREPENEUR)
-  const hasCustomerRole = roles.includes(ROLE_CUSTOMER)
-  const isBusiness = hasBusinessRole && (onBusinessPath || !hasCustomerRole)
+  const isBusiness = context === 'business'
+  const activeWorkspace: Workspace | undefined =
+    context === 'public' ? undefined : (context satisfies Workspace)
 
-  const logoHref =
-    roles.length > 1
-      ? isBusiness
-        ? DASHBOARD_BY_ROLE[ROLE_ENTREPENEUR]
-        : DASHBOARD_BY_ROLE[ROLE_CUSTOMER]
-      : hasBusinessRole
-        ? DASHBOARD_BY_ROLE[ROLE_ENTREPENEUR]
-        : hasCustomerRole
-          ? DASHBOARD_BY_ROLE[ROLE_CUSTOMER]
-          : DASHBOARD_BY_ROLE[ROLE_CUSTOMER]
+  const profileHref =
+    context === 'business'
+      ? '/minha-empresa'
+      : context === 'client'
+        ? '/perfil'
+        : roles.includes(ROLE_CUSTOMER) || roles.length === 0
+          ? '/perfil'
+          : '/minha-empresa'
+
+  const onSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const query = search.trim()
+    router.push(query ? `/busca?query=${encodeURIComponent(query)}` : '/busca')
+  }
+
+  const onLogout = async () => {
+    await logout()
+    router.push('/')
+  }
+
+  // No contexto business, exibe o nome e logo da Empresa. No cliente/público, exibe o do Usuário.
+  const displayName = isBusiness
+    ? business?.businessName || business?.legalName || 'Minha Empresa'
+    : user?.name
+  const displayAvatar = isBusiness
+    ? business?.logoUrl || undefined
+    : user?.profilePictureUrl
+  const displaySubtitle = isBusiness
+    ? business?.legalName || user?.email
+    : user?.email
+
+  const initials = isBusiness && !business?.businessName && !business?.legalName
+    ? 'E'
+    : (displayName ?? '?').charAt(0).toUpperCase()
 
   return (
     <nav
       data-context={isBusiness ? 'business' : 'client'}
       className="sticky top-0 z-30 w-full h-[var(--nav-height)] bg-[var(--color-surface)] border-b border-[var(--color-border-default)]"
     >
-      <div className="h-full max-w-[1200px] mx-auto px-4 flex items-center gap-4">
-        <Link href={logoHref} className="flex items-center gap-2 shrink-0">
+      <div className="h-full w-full px-4 md:px-8 flex items-center justify-between gap-4">
+        <Link href={LOGO_HREF[context]} className="flex items-center gap-2 shrink-0">
           <Image src="/assets/logo-seubairro.svg" alt="SeuBairro" width={36} height={36} priority />
           <span className="font-bold text-[var(--color-title)] hidden sm:inline">
             Seu<span className="text-[var(--color-primary)]">Bairro</span>
@@ -55,17 +92,10 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {!isBusiness && (
-          <form
-            role="search"
-            className="hidden md:flex flex-1 max-w-[500px]"
-            onSubmit={(e) => {
-              e.preventDefault()
-              // TODO: rotear para /busca?q=...
-            }}
-          >
+        {!isBusiness && context !== 'client' && (
+          <form role="search" className="hidden md:flex flex-1 max-w-[500px]" onSubmit={onSearchSubmit}>
             <Input
-              label="Buscar produtos ou serviços"
+              label=""
               placeholder="Buscar produtos ou serviços..."
               type="search"
               size="sm"
@@ -80,34 +110,68 @@ export default function Navbar() {
         )}
 
         <div className="ml-auto flex items-center gap-2">
-          <button
-            type="button"
-            className="relative size-11 flex items-center justify-center rounded-full text-[var(--color-body)] hover:bg-[var(--color-page)] hover:text-[var(--color-primary)] active:bg-[var(--color-border-default)] transition-colors"
-            aria-label="Notificações"
-          >
-            <i className="ri-notification-3-line text-xl" aria-hidden />
-            {false && (
-              <span
-                aria-hidden
-                className="absolute top-1.5 right-2 size-2 rounded-full bg-[var(--color-danger)] ring-2 ring-[var(--color-surface)]"
-              />
-            )}
-          </button>
-          {user && (
+          {!isBusiness && (
             <Link
-              href="/perfil"
-              className="flex items-center gap-2 py-1 pl-1 pr-3 rounded-full bg-[var(--color-page)] hover:bg-[var(--color-border-default)] active:bg-[var(--color-border-default)] transition-colors min-h-11"
-              aria-current={pathname.startsWith('/perfil') ? 'page' : undefined}
+              href="/busca"
+              aria-label="Buscar produtos ou serviços"
+              className="md:hidden size-11 rounded-full flex items-center justify-center text-[var(--color-body)] hover:bg-[var(--color-page)] transition-colors"
             >
-              <span className="size-8 flex items-center justify-center rounded-full bg-[var(--color-primary)] text-white text-sm font-bold">
-                {(user.name ?? '?').charAt(0).toUpperCase()}
-              </span>
-              {user.name && (
-                <span className="hidden sm:inline text-sm font-medium text-[var(--color-title)]">
-                  {user.name}
-                </span>
-              )}
+              <i className="ri-search-line text-xl" aria-hidden />
             </Link>
+          )}
+          {slot}
+          {user && (
+            <DropdownMenu
+              trigger={
+                <button
+                  type="button"
+                  className="flex items-center gap-2 py-1 pl-1 pr-3 rounded-full bg-[var(--color-page)] hover:bg-[var(--color-border-default)] active:bg-[var(--color-border-default)] transition-colors min-h-11 cursor-pointer"
+                  aria-label="Menu da conta"
+                >
+                  <Avatar
+                    src={displayAvatar ?? undefined}
+                    alt={displayName ?? 'Avatar'}
+                    fallback={initials}
+                    size="sm"
+                  />
+                  {displayName && (
+                    <span className="hidden sm:inline text-sm font-semibold text-[var(--color-title)]">
+                      {displayName}
+                    </span>
+                  )}
+                  <i className="ri-arrow-down-s-line text-[var(--color-muted)]" aria-hidden />
+                </button>
+              }
+            >
+              <DropdownMenu.Label>
+                <span className="flex flex-col gap-0.5 min-w-0 p-1">
+                  <span className="text-sm font-bold text-[var(--color-title)] uppercase tracking-wide truncate">
+                    {displayName ?? 'Sua conta'}
+                  </span>
+                  {displaySubtitle && (
+                    <span className="text-[11px] font-medium text-[var(--color-muted)] uppercase tracking-wider truncate">
+                      {displaySubtitle}
+                    </span>
+                  )}
+                </span>
+              </DropdownMenu.Label>
+              <DropdownMenu.Separator />
+              <DropdownMenu.Item asChild>
+                <Link href={profileHref} className="flex items-center gap-3 w-full">
+                  <i className="ri-user-settings-line text-lg text-[var(--color-primary)]" aria-hidden />
+                  <span className="flex-1 font-medium">{isBusiness ? 'Minha empresa' : 'Meu perfil'}</span>
+                </Link>
+              </DropdownMenu.Item>
+              <WorkspaceSwitcher activeWorkspace={activeWorkspace} />
+              <DropdownMenu.Separator />
+              <DropdownMenu.Item
+                intent="danger"
+                icon={<i className="ri-logout-box-r-line text-lg" />}
+                onSelect={onLogout}
+              >
+                <span className="font-semibold">Sair</span>
+              </DropdownMenu.Item>
+            </DropdownMenu>
           )}
         </div>
       </div>

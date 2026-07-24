@@ -36,7 +36,8 @@ export function FilterChips({ items, selected, onChange, multi, ariaLabel, class
             aria-pressed={isSelected}
             onClick={() => toggle(item.value)}
             className={cn(
-              'inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-sm font-medium transition-colors',
+              // h-10 (40px): compromisso entre densidade e alvo de toque confortável.
+              'inline-flex items-center gap-1.5 h-10 px-3 rounded-full text-sm font-medium transition-colors',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]',
               isSelected
                 ? 'bg-[var(--color-primary)] text-white'

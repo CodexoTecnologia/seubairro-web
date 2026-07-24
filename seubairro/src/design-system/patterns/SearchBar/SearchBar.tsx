@@ -51,7 +51,7 @@ export function SearchBar({
         aria-label={placeholder}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="w-full h-11 pl-10 pr-10 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border-default)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+        className="w-full h-10 pl-10 pr-10 rounded-full bg-[var(--color-input)] border border-[var(--color-border-default)] text-sm transition-all focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:bg-[var(--color-surface)] focus:border-transparent"
       />
       {value && (
         <button

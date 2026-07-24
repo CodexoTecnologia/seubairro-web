@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import SplitText from '@/design-system/effects/SplitText'
 import AuthVisualPanel from '@/features/auth/components/AuthVisualPanel'
 import BackButton from '@/design-system/effects/BackButton'
@@ -11,8 +12,15 @@ import { BusinessForm } from './components/business.form'
 
 type Mode = 'selection' | 'client' | 'business'
 
+const MODE_BY_PERFIL: Record<string, Mode> = {
+  vizinho: 'client',
+  negocio: 'business',
+}
+
 export default function Cadastro() {
-  const [mode, setMode] = useState<Mode>('selection')
+  const searchParams = useSearchParams()
+  const perfil = searchParams.get('perfil')
+  const [mode, setMode] = useState<Mode>(MODE_BY_PERFIL[perfil ?? ''] ?? 'selection')
 
   const pageTitle =
     mode === 'client' ? 'Cadastro de Vizinho' : mode === 'business' ? 'Cadastro de Negócio' : 'Crie sua conta'
@@ -20,7 +28,7 @@ export default function Cadastro() {
     mode === 'client'
       ? 'Preencha seus dados para acessar.'
       : mode === 'business'
-        ? 'Vamos criar sua vitrine digital.'
+        ? 'Crie sua conta. O negócio você cadastra logo em seguida.'
         : 'Escolha como você deseja usar a plataforma.'
 
   const visualMode = mode === 'business' ? 'business' : 'client'

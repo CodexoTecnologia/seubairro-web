@@ -16,7 +16,9 @@ function toRequest(filters: ListingSearchFilters, coords: Coords, page: number):
     listingCategoryId: filters.listingCategoryId,
     nicheIds: filters.nicheIds.length ? filters.nicheIds : undefined,
     query: filters.query,
-    maxDistanceKm: filters.maxDistanceKm,
+    // "Buscar todos" ignora o raio: envia SearchAll e omite MaxDistanceKm.
+    maxDistanceKm: filters.searchAll ? undefined : filters.maxDistanceKm,
+    searchAll: filters.searchAll || undefined,
     openNow: filters.openNow || undefined,
     page,
     pageSize: PAGE_SIZE,

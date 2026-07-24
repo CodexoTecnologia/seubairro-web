@@ -39,7 +39,9 @@ export const useBusinessOpenStatus = (
         setStatus('ready')
       } catch (err) {
         if (cancelled) return
-        console.error('[useBusinessOpenStatus] failed:', err)
+        // Falha tratada (status vira 'error' na UI); warn evita poluir o
+        // overlay de dev a cada ciclo de polling.
+        console.warn('[useBusinessOpenStatus] failed:', err)
         setStatus('error')
       }
     }

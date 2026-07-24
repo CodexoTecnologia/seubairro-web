@@ -13,6 +13,7 @@ import { Button } from '@/design-system/primitives/Button'
 import { Input } from '@/design-system/primitives/Input'
 import { Card } from '@/design-system/primitives/Card'
 import { Skeleton } from '@/design-system/primitives/Skeleton'
+import { PageHeader } from '@/design-system/patterns/PageHeader'
 import { cn } from '@/lib/utils/cn'
 
 type Tab = 'personal' | 'location' | 'security'
@@ -40,7 +41,13 @@ export default function ClientProfile() {
   const email = profile?.email ?? ''
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 max-w-6xl mx-auto w-full">
+    <div className="flex flex-col gap-6 max-w-6xl mx-auto w-full">
+      <PageHeader
+        title="Meu Perfil"
+        description="Seus dados, endereço e segurança da conta."
+      />
+
+      <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
       <aside className="flex flex-col gap-4">
         <Card variant="default" padding="md" className="flex flex-col items-center text-center gap-2">
           <Avatar
@@ -100,6 +107,7 @@ export default function ClientProfile() {
         {activeTab === 'location' && <LocationTab />}
         {activeTab === 'security' && <SecurityTab email={email} />}
       </main>
+      </div>
     </div>
   )
 }
@@ -134,7 +142,7 @@ function PersonalTab({
   return (
     <Card padding="lg" className="flex flex-col gap-5">
       <header>
-        <h1 className="text-xl font-bold text-[var(--color-title)]">Dados Pessoais</h1>
+        <h2 className="text-section-title text-[var(--color-title)]">Dados Pessoais</h2>
         <p className="text-sm text-[var(--color-muted)]">Atualize seu nome, telefone e foto de perfil.</p>
       </header>
       {isLoading && <Skeleton variant="rect" height={280} />}
@@ -155,7 +163,7 @@ function LocationTab() {
   return (
     <Card padding="lg" className="flex flex-col gap-5">
       <header>
-        <h1 className="text-xl font-bold text-[var(--color-title)]">Meu Endereço</h1>
+        <h2 className="text-section-title text-[var(--color-title)]">Meu Endereço</h2>
         <p className="text-sm text-[var(--color-muted)]">
           Defina onde você está para encontrar o melhor do bairro.
         </p>
@@ -208,7 +216,7 @@ function SecurityTab({ email }: { email: string }) {
   return (
     <Card padding="lg" className="flex flex-col gap-5">
       <header>
-        <h1 className="text-xl font-bold text-[var(--color-title)]">Segurança</h1>
+        <h2 className="text-section-title text-[var(--color-title)]">Segurança</h2>
         <p className="text-sm text-[var(--color-muted)]">Proteja sua conta e altere sua senha.</p>
       </header>
       <form className="flex flex-col gap-4" onSubmit={onSubmit} noValidate>

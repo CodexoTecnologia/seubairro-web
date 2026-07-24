@@ -57,6 +57,7 @@ export function CustomerProfileForm({ profile, onSubmit, onUploadAvatar }: Props
     const file = e.target.files?.[0]
     if (!file) return
     setAvatarError(null)
+    setServerMsg(null)
     const parsed = customerAvatarSchema.safeParse(file)
     if (!parsed.success) {
       setAvatarError(parsed.error.issues[0]?.message ?? 'Arquivo inválido')
@@ -67,6 +68,7 @@ export function CustomerProfileForm({ profile, onSubmit, onUploadAvatar }: Props
     setUploading(true)
     try {
       await onUploadAvatar(file)
+      setServerMsg({ kind: 'success', text: 'Foto de perfil atualizada com sucesso!' })
     } catch (err) {
       setAvatarError(err instanceof Error ? err.message : 'Erro ao enviar a foto.')
     } finally {

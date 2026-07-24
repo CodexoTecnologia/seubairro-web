@@ -8,27 +8,31 @@ import { UserService } from '@/lib/api/services/UserService'
 import { authService } from '@/lib/api/services/(Auth)/AuthInstance'
 import type { CreateEntrepeneurRequest } from '@/lib/api/dtos/Request/business/CreateEntrepeneurRequest'
 import { CountryCodeEnum } from '@/lib/api/enums/CountryCodeEnum'
-import {
-  BusinessSignupSchema,
-  type BusinessSignupInput,
-} from '@/features/auth/schemas'
+import { resolveApiErrorMessage } from '@/lib/api/helper/resolveApiError'
+import { RoleHelper } from '@/lib/api/helper/RoleHelper'
+import { BusinessSignupSchema, type BusinessSignupInput } from '@/features/auth/schemas'
 import { Input } from '@/design-system/primitives/Input'
-import { Select } from '@/design-system/primitives/Select'
 import { Button } from '@/design-system/primitives/Button'
 import { cn } from '@/lib/utils/cn'
 
-type Step = 1 | 2 | 3
+type Step = 1 | 2
 
 const STEP_FIELDS: Record<Step, (keyof BusinessSignupInput)[]> = {
-  1: ['fullName', 'email', 'birthDate', 'cpf', 'password'],
-  2: ['businessName', 'cnpj', 'description', 'category', 'whatsapp'],
-  3: ['postalCode', 'street', 'number', 'neighborhood', 'city', 'stateProvince'],
+  1: ['fullName', 'email', 'birthDate', 'cpf', 'password', 'phoneCountryCode', 'phoneNumber'],
+  2: ['postalCode', 'street', 'number', 'neighborhood', 'city', 'stateProvince'],
 }
 
 const STEP_LABELS: Record<Step, string> = {
   1: '1. Dados Pessoais',
-  2: '2. Seu Negócio',
-  3: '3. Endereço',
+  2: '2. Endereço',
+}
+
+const ERROR_MESSAGES: Record<string, string> = {
+  AddressRequired: 'Informe seu endereço pessoal.',
+  EmailAlreadyInUse: 'Este e-mail já está em uso.',
+  InvalidPhoneFormat: 'Telefone fora do padrão (8 a 15 dígitos).',
+  InvalidTaxId: 'CPF inválido.',
+  InvalidEmailFormat: 'E-mail inválido.',
 }
 
 const onlyDigits = (s: string) => s.replace(/\D/g, '')
@@ -48,31 +52,38 @@ export const BusinessForm: React.FC = () => {
       birthDate: '',
       cpf: '',
       password: '',
-      businessName: '',
-      cnpj: '',
-      description: '',
-      category: '',
-      whatsapp: '',
+      phoneCountryCode: '55',
+      phoneNumber: '',
       postalCode: '',
       street: '',
       number: '',
+      complement: '',
       neighborhood: '',
       city: '',
       stateProvince: '',
     },
   })
 
-  const { register, handleSubmit, trigger, formState: { errors, isSubmitting } } = form
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    formState: { errors, isSubmitting },
+  } = form
 
   const goNext = async () => {
     const ok = await trigger(STEP_FIELDS[step])
     if (!ok) return
-    setStep((prev) => (prev === 3 ? 3 : ((prev + 1) as Step)))
+    setStep((prev) => (prev === 2 ? 2 : ((prev + 1) as Step)))
   }
 
   const goBack = () => setStep((prev) => (prev === 1 ? 1 : ((prev - 1) as Step)))
 
   const onSubmit = handleSubmit(async (data) => {
+    if (step < 2) {
+      void goNext()
+      return
+    }
     setServerError('')
     const nameParts = data.fullName.trim().split(' ')
     const firstName = nameParts[0]
@@ -85,36 +96,29 @@ export const BusinessForm: React.FC = () => {
       password: data.password,
       birthDate: data.birthDate,
       taxId: onlyDigits(data.cpf),
-      business: {
-        businessName: data.businessName,
-        legalName: data.businessName,
-        taxId: onlyDigits(data.cnpj),
-        description: data.description,
-        logoUrl: null,
-        coverImageUrl: null,
-        publicPhone: onlyDigits(data.whatsapp),
-        instagramUrl: null,
-      },
-      businessAddress: {
-        postalCode: onlyDigits(data.postalCode),
+      phoneCountryCode: data.phoneCountryCode ? onlyDigits(data.phoneCountryCode) : null,
+      phoneNumber: data.phoneNumber ? onlyDigits(data.phoneNumber) : null,
+      address: {
         street: data.street,
         number: data.number,
+        complement: data.complement?.trim() || null,
         neighborhood: data.neighborhood,
         city: data.city,
         stateProvince: data.stateProvince,
+        postalCode: onlyDigits(data.postalCode),
         countryCode: CountryCodeEnum.Brasil,
       },
     }
 
     try {
       await UserService.registerEntrepeneur(request)
-      // TODO: vincular `data.category` via BusinessNicheService após o cadastro
-      // (o endpoint /Auth/entrepeneur ainda não aceita categoria no payload).
       await authService.login({ email: data.email, password: data.password })
-      router.push('/choose-profile')
+      // O negócio é criado na etapa autenticada: o gate do dashboard leva o
+      // empreendedor direto para o formulário de criação da empresa.
+      router.push(RoleHelper.getRedirectPath())
     } catch (err) {
       setServerError(
-        err instanceof Error ? err.message : 'Erro ao criar conta. Verifique os dados.',
+        resolveApiErrorMessage(err, ERROR_MESSAGES, 'Erro ao criar conta. Verifique os dados.'),
       )
     }
   })
@@ -126,7 +130,7 @@ export const BusinessForm: React.FC = () => {
         aria-label="Etapas do cadastro"
         className="flex items-center gap-2 text-xs text-[var(--color-muted)]"
       >
-        {([1, 2, 3] as Step[]).map((s, i) => (
+        {([1, 2] as Step[]).map((s, i) => (
           <li key={s} className="flex items-center gap-2 flex-1">
             <span
               aria-current={step === s ? 'step' : undefined}
@@ -141,7 +145,7 @@ export const BusinessForm: React.FC = () => {
             >
               {STEP_LABELS[s]}
             </span>
-            {i < 2 && <span aria-hidden className="flex-1 h-px bg-[var(--color-border-default)]" />}
+            {i < 1 && <span aria-hidden className="flex-1 h-px bg-[var(--color-border-default)]" />}
           </li>
         ))}
       </ol>
@@ -174,6 +178,26 @@ export const BusinessForm: React.FC = () => {
             error={errors.cpf?.message}
             {...register('cpf')}
           />
+          <div className="grid grid-cols-[88px_1fr] gap-3">
+            <Input
+              label="DDI"
+              inputMode="numeric"
+              placeholder="55"
+              maxLength={3}
+              error={errors.phoneCountryCode?.message}
+              {...register('phoneCountryCode')}
+            />
+            <Input
+              label="Telefone (opcional)"
+              type="tel"
+              inputMode="numeric"
+              placeholder="11999999999"
+              autoComplete="tel"
+              leftIcon={<i className="ri-phone-line" aria-hidden />}
+              error={errors.phoneNumber?.message}
+              {...register('phoneNumber')}
+            />
+          </div>
           <Input
             label="Data de Nascimento"
             type="date"
@@ -213,87 +237,10 @@ export const BusinessForm: React.FC = () => {
 
       {step === 2 && (
         <>
-          <Input
-            label="Nome do Negócio"
-            placeholder="Ex: Mercado do João"
-            leftIcon={<i className="ri-store-2-line" aria-hidden />}
-            error={errors.businessName?.message}
-            {...register('businessName')}
-          />
-          <Input
-            label="CNPJ"
-            inputMode="numeric"
-            placeholder="00.000.000/0000-00"
-            autoComplete="off"
-            leftIcon={<i className="ri-bank-card-line" aria-hidden />}
-            error={errors.cnpj?.message}
-            {...register('cnpj')}
-          />
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="bz-description" className="text-sm font-medium text-[var(--color-title)]">
-              Descrição do negócio
-            </label>
-            <textarea
-              id="bz-description"
-              rows={3}
-              maxLength={500}
-              placeholder="Conte em poucas palavras o que seu negócio oferece."
-              aria-invalid={errors.description ? 'true' : undefined}
-              aria-describedby={errors.description ? 'bz-description-error' : undefined}
-              className={cn(
-                'block w-full rounded-lg border bg-[var(--color-input)] text-[var(--color-title)] px-3 py-2',
-                'placeholder:text-[var(--color-muted)] text-base md:text-sm transition-colors',
-                'focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent',
-                errors.description
-                  ? 'border-[var(--color-danger)] focus:ring-[var(--color-danger)]'
-                  : 'border-[var(--color-border-default)]',
-              )}
-              {...register('description')}
-            />
-            {errors.description && (
-              <span id="bz-description-error" className="text-xs text-[var(--color-danger)]">
-                {errors.description.message}
-              </span>
-            )}
-          </div>
-          <Select
-            label="Categoria principal"
-            leftIcon={<i className="ri-layout-grid-line" aria-hidden />}
-            error={errors.category?.message}
-            {...register('category')}
-          >
-            <option value="">Selecione uma categoria</option>
-            <option value="alimentacao">Alimentação</option>
-            <option value="servicos">Serviços</option>
-            <option value="varejo">Varejo</option>
-          </Select>
-          <Input
-            label="WhatsApp"
-            type="tel"
-            placeholder="(41) 99999-9999"
-            autoComplete="tel"
-            leftIcon={<i className="ri-whatsapp-line" aria-hidden />}
-            error={errors.whatsapp?.message}
-            {...register('whatsapp')}
-          />
-
-          <div className="grid grid-cols-2 gap-3">
-            <Button type="button" variant="outline" onClick={goBack}>
-              Voltar
-            </Button>
-            <Button
-              type="button"
-              onClick={goNext}
-              rightIcon={<i className="ri-arrow-right-line" aria-hidden />}
-            >
-              Continuar
-            </Button>
-          </div>
-        </>
-      )}
-
-      {step === 3 && (
-        <>
+          <p className="text-xs text-[var(--color-muted)]">
+            Informe seu <strong>endereço pessoal</strong>. O endereço da sua loja você cadastra
+            depois, junto com o negócio.
+          </p>
           <Input
             label="CEP"
             inputMode="numeric"
@@ -330,6 +277,12 @@ export const BusinessForm: React.FC = () => {
               />
             </div>
           </div>
+          <Input
+            label="Complemento (opcional)"
+            placeholder="Apto 12, bloco B…"
+            error={errors.complement?.message}
+            {...register('complement')}
+          />
           <div className="grid grid-cols-[1fr_auto] gap-3">
             <Input
               label="Cidade"

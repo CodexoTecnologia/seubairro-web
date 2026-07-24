@@ -8,6 +8,8 @@ export const listingSearchSchema = z.object({
   maxDistanceKm: z
     .union([z.literal(1), z.literal(2), z.literal(5), z.literal(10), z.literal(20)])
     .default(5),
+  /** Busca todos os anúncios, ignorando o raio de distância (RN: back recebe SearchAll). */
+  searchAll: z.boolean().default(false),
   openNow: z.boolean().default(false),
   view: z.enum(['list', 'grid']).default('list'),
 })
@@ -29,6 +31,8 @@ export function parseSearchParams(params: URLSearchParams): ListingSearchFilters
   if (query) raw.query = query
   const maxDistanceKm = params.get('maxDistanceKm')
   if (maxDistanceKm) raw.maxDistanceKm = Number(maxDistanceKm)
+  const searchAll = params.get('searchAll')
+  if (searchAll) raw.searchAll = searchAll === 'true'
   const openNow = params.get('openNow')
   if (openNow) raw.openNow = openNow === 'true'
   const view = params.get('view')
@@ -46,6 +50,7 @@ export function serializeFilters(filters: ListingSearchFilters): URLSearchParams
   if (filters.nicheIds.length > 0) params.set('nicheIds', filters.nicheIds.join(','))
   if (filters.query) params.set('query', filters.query)
   if (filters.maxDistanceKm !== 5) params.set('maxDistanceKm', String(filters.maxDistanceKm))
+  if (filters.searchAll) params.set('searchAll', 'true')
   if (filters.openNow) params.set('openNow', 'true')
   if (filters.view !== 'list') params.set('view', filters.view)
   return params

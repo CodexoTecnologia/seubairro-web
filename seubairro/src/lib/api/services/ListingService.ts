@@ -17,7 +17,8 @@ function slugify(input: string): string {
 
 export interface ListingImage {
     id: string;
-    url: string;
+    url?: string;
+    imageUrl?: string;
     isCover: boolean;
 }
 
@@ -30,7 +31,9 @@ export interface ListingResponse {
     description: string | null;
     price: number;
     currencyCode: string | null;
-    imageUrl: string | null;
+    /** Contrato v1: a capa vem em `coverImageUrl` — não existe `imageUrl` aqui. */
+    coverImageUrl: string | null;
+    images?: ListingImage[];
     isActive: boolean;
     businessId?: string | null;
     businessSlug?: string | null;
@@ -59,8 +62,8 @@ class ListingServiceImpl extends BaseService<
         // v3: criação é JSON (CreateListingRequest); imagens vão em endpoint separado.
         const body: CreateListingRequest = {
             ...data,
-            slug: data.slug ?? slugify(data.title ?? ''),
-            currencyCode: data.currencyCode ?? 'BRL',
+            slug: data.slug?.trim() || slugify(data.title ?? ''),
+            currencyCode: data.currencyCode?.trim() || 'BRL',
         };
         const created = await apiClient.post<ListingResponse, CreateListingRequest>(
             '/api/Listing',
@@ -73,6 +76,25 @@ class ListingServiceImpl extends BaseService<
         }
 
         return created;
+    }
+
+    /**
+     * O contrato do PUT é idêntico ao do POST — inclui `slug` e `currencyCode`.
+     * O `update` herdado do BaseService enviaria o payload cru e o servidor
+     * responde 400. Aqui a normalização espelha a do `create`.
+     *
+     * `slug` é preservado quando o chamador informa o atual: renomear o anúncio
+     * não deve trocar a URL pública. Sem ele, deriva do título.
+     */
+    async update(id: string, data: UpdateListingRequest): Promise<ListingResponse> {
+        // `||` e não `??`: o servidor trata string vazia como campo ausente
+        // ("The Slug field is required"), então '' precisa cair no fallback.
+        const body: UpdateListingRequest = {
+            ...data,
+            slug: data.slug?.trim() || slugify(data.title ?? ''),
+            currencyCode: data.currencyCode?.trim() || 'BRL',
+        };
+        return super.update(id, body);
     }
 
     async addImages(
@@ -90,12 +112,6 @@ class ListingServiceImpl extends BaseService<
             formData,
             { requiresAuth: true }
         );
-    }
-
-    async getImages(listingId: string): Promise<ListingImage[]> {
-        return apiClient.get<ListingImage[]>(`/api/Listing/${listingId}/images`, {
-            requiresAuth: true,
-        });
     }
 
     async setCoverImage(imageId: string): Promise<ListingImage> {
@@ -132,13 +148,6 @@ class ListingServiceImpl extends BaseService<
     async deactivate(id: string): Promise<ListingResponse> {
         return apiClient.patch<ListingResponse>('/api/Listing/deactive', undefined, {
             params: { id },
-            requiresAuth: true,
-        });
-    }
-
-    async getNearby(maxDistanceKm: number = 50): Promise<ListingResponse[]> {
-        return apiClient.get<ListingResponse[]>('/api/Listing/nearby', {
-            params: { maxDistanceKm },
             requiresAuth: true,
         });
     }

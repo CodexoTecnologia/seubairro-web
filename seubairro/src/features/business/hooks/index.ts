@@ -1,4 +1,5 @@
 export * from './usePublicProfileLink'
+export * from './useBusinessSetup'
 export * from './useBusinessOpenStatus'
 export * from './useBusinessOrders'
 export * from './useListingQuestions'

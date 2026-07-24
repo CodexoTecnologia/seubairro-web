@@ -17,6 +17,7 @@ function buildListingSearchQuery(filters: ListingSearchRequest): string {
     append('Longitude', filters.longitude);
     append('ListingCategoryId', filters.listingCategoryId);
     append('MaxDistanceKm', filters.maxDistanceKm);
+    append('SearchAll', filters.searchAll);
     append('OpenNow', filters.openNow);
     append('Query', filters.query);
     append('Page', filters.page);

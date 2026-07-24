@@ -1,5 +1,3 @@
-'use client'
-
 const ITEMS = [
   { icon: 'ri-building-4-line', title: 'Identidade Local', desc: 'Focado na sua região' },
   { icon: 'ri-group-line', title: 'Sem Intermediários', desc: 'Conexão direta' },

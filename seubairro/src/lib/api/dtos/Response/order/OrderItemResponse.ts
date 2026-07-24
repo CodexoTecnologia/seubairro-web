@@ -4,4 +4,7 @@ export interface OrderItemResponse {
     quantity: number;
     unitPrice: number;
     subTotal: number;
+    // Snapshots do anúncio — imunes a edição/exclusão posterior do anúncio.
+    listingTitle: string;
+    listingImageUrl: string | null;
 }

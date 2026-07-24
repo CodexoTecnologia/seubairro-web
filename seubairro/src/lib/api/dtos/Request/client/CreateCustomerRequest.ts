@@ -7,5 +7,8 @@ export interface CreateCustomerRequest {
     password: string | null;
     birthDate: string;
     taxId: string | null;
-    address?: CreateAddressRequest;
+    phoneCountryCode?: string | null;
+    phoneNumber?: string | null;
+    /** Endereço pessoal — obrigatório (sem ele: `AddressRequired`). */
+    address: CreateAddressRequest;
 }

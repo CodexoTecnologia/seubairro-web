@@ -5,7 +5,6 @@ export interface BusinessAddressResponse {
     businessId: string;
     street: string | null;
     number: string | null;
-    complement: string | null;
     neighborhood: string | null;
     city: string | null;
     stateProvince: string | null;

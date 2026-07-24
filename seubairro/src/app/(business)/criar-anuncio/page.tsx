@@ -1,22 +1,19 @@
 'use client'
 
 import { useState } from 'react'
-import ListingForm from './components/listing-form'
+import { ListingForm } from '@/features/business/components'
+import { PageHeader } from '@/design-system/patterns/PageHeader'
 import { cn } from '@/lib/utils/cn'
 
 export default function CriarAnuncioPage() {
   const [adType, setAdType] = useState<'product' | 'service'>('product')
 
   return (
-    <div className="flex flex-col gap-6 max-w-3xl mx-auto w-full">
-      <header>
-        <h1 className="text-2xl md:text-3xl font-bold text-[var(--color-title)]">
-          Criar anúncio
-        </h1>
-        <p className="text-[var(--color-muted)] mt-1">
-          Escolha o tipo e preencha os dados do seu novo anúncio.
-        </p>
-      </header>
+    <div className="flex flex-col gap-6 max-w-[1400px] mx-auto w-full px-4 md:px-8 py-6">
+      <PageHeader
+        title="Criar anúncio"
+        description="Escolha o tipo e preencha os dados do seu novo anúncio."
+      />
 
       <div className="grid grid-cols-2 gap-3">
         <button

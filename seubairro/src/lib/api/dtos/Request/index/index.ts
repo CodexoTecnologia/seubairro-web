@@ -25,3 +25,11 @@ export type {
     BulkReplaceBusinessOperationItem,
 } from '../business/BulkReplaceBusinessOperationsRequest';
 export type { UpdateClosedStatusRequest } from '../business/UpdateClosedStatusRequest';
+export type { CreateOrderRequest, CreateOrderItemRequest } from '../order/CreateOrderRequest';
+export type { ChangeOrderStatusRequest } from '../order/ChangeOrderStatusRequest';
+export type { CreateConversationRequest, SendMessageRequest } from '../chat/ChatRequests';
+export type { CreatePaymentRequest } from '../payment/CreatePaymentRequest';
+export type {
+    CreateBuyerReviewRequest,
+    UpdateBuyerReviewRequest,
+} from '../review/BuyerReviewRequests';

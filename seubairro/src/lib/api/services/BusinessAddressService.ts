@@ -26,19 +26,11 @@ class BusinessAddressServiceImpl {
 
     async update(
         businessId: string,
-        addressId: string,
         data: UpdateBusinessAddressRequest
     ): Promise<BusinessAddressResponse> {
         return apiClient.put<BusinessAddressResponse, UpdateBusinessAddressRequest>(
-            `/api/business/${businessId}/address/${addressId}`,
+            `/api/business/${businessId}/address`,
             data,
-            { requiresAuth: true }
-        );
-    }
-
-    async remove(businessId: string, addressId: string): Promise<void> {
-        return apiClient.delete<void>(
-            `/api/business/${businessId}/address/${addressId}`,
             { requiresAuth: true }
         );
     }

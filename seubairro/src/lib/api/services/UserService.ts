@@ -10,6 +10,7 @@ export interface UserResponse {
     id: string;
     name: string | null;
     email: string | null;
+    profilePictureUrl?: string | null;
     birthDate?: string;
     taxId?: string | null;
     createdAt?: string;
@@ -31,6 +32,7 @@ class UserServiceImpl {
             id: profile.id,
             name: [profile.firstName, profile.lastName].filter(Boolean).join(' ') || null,
             email: profile.email,
+            profilePictureUrl: profile.profilePictureUrl ?? null,
             birthDate: profile.birthDate,
             taxId: profile.taxId,
         };

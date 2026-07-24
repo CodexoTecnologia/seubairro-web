@@ -1,10 +1,13 @@
-import { z } from 'zod'
+import {
+  AccountSignupSchema,
+  type AccountSignupInput,
+  ACCOUNT_SIGNUP_STEP_FIELDS,
+} from './account-signup.schema'
 
-export const ClientSignupSchema = z.object({
-  fullName: z.string().min(2, 'Informe seu nome completo'),
-  email: z.string().min(1, 'Informe seu email').email('Email inválido'),
-  birthDate: z.string().min(1, 'Informe sua data de nascimento'),
-  password: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres'),
-})
-
-export type ClientSignupInput = z.infer<typeof ClientSignupSchema>
+/**
+ * Cadastro do cliente (Opção B): dados pessoais, telefone (opcional) e endereço
+ * pessoal obrigatório — mesmo payload do empreendedor.
+ */
+export const ClientSignupSchema = AccountSignupSchema
+export type ClientSignupInput = AccountSignupInput
+export const CLIENT_SIGNUP_STEP_FIELDS = ACCOUNT_SIGNUP_STEP_FIELDS

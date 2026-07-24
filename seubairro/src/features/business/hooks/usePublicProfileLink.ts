@@ -54,7 +54,7 @@ export const usePublicProfileLink = (): Result => {
   return {
     slug,
     businessId,
-    href: slug ? `/negocio/${slug}` : '/editar-profile',
+    href: slug ? `/negocio/${slug}` : '/minha-empresa',
     status,
     isReady: status === 'ready',
   }

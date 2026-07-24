@@ -1,6 +1,13 @@
 import { JwtHelper } from './JwtHelper';
 import { authService } from '../services/(Auth)/AuthInstance';
 
+/*
+ * Workspace é o espaço visual/funcional em que o usuário atua no momento
+ * (route group + tema). A escolha é sempre momentânea: nada é persistido —
+ * o usuário multi-role decide a cada login e troca livremente pelo menu.
+ */
+export type Workspace = 'client' | 'business';
+
 export const ROLE_CUSTOMER = 'Customer';
 export const ROLE_ENTREPENEUR = 'Entrepeneur';
 
@@ -9,6 +16,16 @@ export type AppRole = typeof ROLE_CUSTOMER | typeof ROLE_ENTREPENEUR;
 export const DASHBOARD_BY_ROLE: Record<AppRole, string> = {
     [ROLE_CUSTOMER]: '/dashboard-client',
     [ROLE_ENTREPENEUR]: '/dashboard-business',
+};
+
+export const ROLE_BY_WORKSPACE: Record<Workspace, AppRole> = {
+    client: ROLE_CUSTOMER,
+    business: ROLE_ENTREPENEUR,
+};
+
+export const WORKSPACE_BY_ROLE: Record<AppRole, Workspace> = {
+    [ROLE_CUSTOMER]: 'client',
+    [ROLE_ENTREPENEUR]: 'business',
 };
 
 function normalize(role: string): AppRole | null {
@@ -43,6 +60,8 @@ export class RoleHelper {
         const roles = this.getRoles(token);
         if (roles.length === 0) return DASHBOARD_BY_ROLE[ROLE_CUSTOMER];
         if (roles.length === 1) return DASHBOARD_BY_ROLE[roles[0]];
+
+        // Multi-role: a escolha é feita a cada login — nada é persistido.
         return '/choose-profile';
     }
 }

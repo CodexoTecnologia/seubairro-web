@@ -98,18 +98,34 @@ export class ApiClient {
                 success: false,
                 error: {
                     code: (raw.code as string) || 'InternalServerError',
-                    message: (raw.message as string) || 'Erro desconhecido',
+                    message: (raw.message as string) || `Erro HTTP ${status}`,
                     details: Array.isArray(raw.details) ? (raw.details as string[]) : null,
                     statusCode: status,
                 },
             };
         }
 
+        if (data && typeof data === 'object') {
+            const obj = data as Record<string, unknown>;
+            const msg = (obj.message || obj.title || obj.detail) as string;
+            if (msg) {
+                return {
+                    success: false,
+                    error: {
+                        code: (obj.code || `HTTP_${status}`) as string,
+                        message: msg,
+                        details: null,
+                        statusCode: status,
+                    },
+                };
+            }
+        }
+
         return {
             success: false,
             error: {
                 code: 'InternalServerError',
-                message: typeof data === 'string' && data ? data : 'Erro desconhecido',
+                message: typeof data === 'string' && data ? data : `Erro HTTP ${status}`,
                 details: null,
                 statusCode: status,
             },
@@ -189,7 +205,9 @@ export class ApiClient {
                 throw new TimeoutError();
             }
             if (error instanceof TypeError) {
-                console.error('ApiClient NetworkError:', error);
+                // O erro é relançado como NetworkError para o caller tratar;
+                // warn evita reporte duplicado no overlay de dev.
+                console.warn('ApiClient NetworkError:', error);
                 throw new NetworkError();
             }
             throw error;

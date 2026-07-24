@@ -10,7 +10,7 @@ import { Button } from '@/design-system/primitives/Button'
 import { Skeleton } from '@/design-system/primitives/Skeleton'
 import { EmptyState } from '@/design-system/patterns/EmptyState'
 import { ErrorState } from '@/design-system/patterns/ErrorState'
-import { cn } from '@/lib/utils/cn'
+import { StatusBadge } from '@/design-system/patterns/StatusBadge'
 import type { ListingQuestionResponse } from '@/lib/api/dtos/Response/index'
 
 function formatCurrency(value: number, currency = 'BRL') {
@@ -156,17 +156,10 @@ export default function AnuncioGestaoPage() {
       {listing && (
         <Card padding="lg" className="flex flex-col gap-2">
           <div className="flex items-start justify-between gap-3">
-            <h1 className="text-2xl font-bold text-[var(--color-title)]">{listing.title}</h1>
-            <span
-              className={cn(
-                'text-xs px-2 py-1 rounded-full font-semibold shrink-0',
-                listing.isActive
-                  ? 'bg-[var(--color-success-bg)] text-[var(--color-success)]'
-                  : 'bg-[var(--color-page)] text-[var(--color-muted)]',
-              )}
-            >
+            <h1 className="text-page-title text-[var(--color-title)] text-balance">{listing.title}</h1>
+            <StatusBadge tone={listing.isActive ? 'success' : 'neutral'}>
               {listing.isActive ? 'Ativo' : 'Inativo'}
-            </span>
+            </StatusBadge>
           </div>
           <strong className="text-lg text-[var(--color-primary)]">
             {formatCurrency(listing.price, listing.currencyCode ?? 'BRL')}
@@ -174,6 +167,13 @@ export default function AnuncioGestaoPage() {
           {listing.description && (
             <p className="text-sm text-[var(--color-muted)]">{listing.description}</p>
           )}
+          <div className="flex justify-end pt-2">
+            <Link href={`/anuncio/${listing.id}/editar`}>
+              <Button variant="outline" size="sm" leftIcon={<i className="ri-pencil-line" />}>
+                Editar anúncio
+              </Button>
+            </Link>
+          </div>
         </Card>
       )}
 

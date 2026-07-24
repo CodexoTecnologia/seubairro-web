@@ -1,5 +1,6 @@
 export interface ListingImageInfo {
-    url: string;
+    url?: string;
+    imageUrl?: string;
     isCover: boolean;
 }
 
