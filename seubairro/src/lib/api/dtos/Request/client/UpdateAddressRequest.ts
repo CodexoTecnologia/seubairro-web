@@ -1,0 +1,12 @@
+import { CountryCodeEnum } from '../../../enums/index/index';
+export interface UpdateAddressRequest {
+    street: string | null;
+    number: string | null;
+    complement?: string | null;
+    neighborhood: string | null;
+    city: string | null;
+    stateProvince: string | null;
+    postalCode: string | null;
+    countryCode: CountryCodeEnum;
+}
+
