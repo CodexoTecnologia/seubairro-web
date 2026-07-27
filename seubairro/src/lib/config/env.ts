@@ -32,13 +32,8 @@ const envSchema = z.object({
     NEXT_PUBLIC_EXTERNAL_API_TIMEOUT_MS: z.coerce.number().int().positive().default(8_000),
 });
 
-/** String vazia (comum em painel de deploy) conta como ausente e cai no default. */
 const emptyAsUndefined = (value: string | undefined) => (value?.trim() ? value : undefined);
 
-/**
- * Cada chave precisa ser lida literalmente: o bundler do Next substitui o texto
- * `process.env.NEXT_PUBLIC_X` no build, então acesso dinâmico devolve undefined.
- */
 const rawEnv = {
     NEXT_PUBLIC_APP_ENV: emptyAsUndefined(process.env.NEXT_PUBLIC_APP_ENV),
     NEXT_PUBLIC_API_BASE_URL: emptyAsUndefined(process.env.NEXT_PUBLIC_API_BASE_URL),
@@ -58,7 +53,8 @@ if (!parsed.success) {
 
     throw new Error(
         `Configuração de ambiente inválida:\n${details}\n\n` +
-            'Ajuste .env.development / .env.production ou defina a variável no painel de deploy.'
+            'Cadastre a variável no painel do deploy (Vercel → Settings → Environment Variables) ' +
+            'e refaça o build. Localmente, use .env.development.'
     );
 }
 
