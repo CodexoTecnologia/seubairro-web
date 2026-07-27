@@ -12,9 +12,6 @@ import {
   type Workspace,
 } from '@/lib/api/helper/RoleHelper'
 
-/**
- * Deriva os workspaces disponíveis das roles do usuário e centraliza a troca e adição de perfil.
- */
 export function useWorkspace() {
   const { roles, refreshUser } = useAuthContext()
   const router = useRouter()
@@ -36,14 +33,14 @@ export function useWorkspace() {
       await authService.addCustomer()
       await refreshUser()
       router.push('/dashboard-client')
-    } catch (err) {
-      console.error('[useWorkspace] Erro ao ativar perfil de cliente:', err)
+    } catch {
+      // Perfil pode já existir: tenta renovar o token para pegar a nova role.
       try {
         await authService.refreshToken()
         await refreshUser()
         router.push('/dashboard-client')
-      } catch (refreshErr) {
-        console.error('[useWorkspace] Erro ao renovar token:', refreshErr)
+      } catch {
+        // Sem renovação o usuário permanece no perfil atual.
       }
     }
   }, [refreshUser, router])
@@ -53,14 +50,14 @@ export function useWorkspace() {
       await authService.addEntrepreneur()
       await refreshUser()
       router.push('/minha-empresa')
-    } catch (err) {
-      console.error('[useWorkspace] Erro ao ativar perfil de empreendedor:', err)
+    } catch {
+      // Perfil pode já existir: tenta renovar o token para pegar a nova role.
       try {
         await authService.refreshToken()
         await refreshUser()
         router.push('/minha-empresa')
-      } catch (refreshErr) {
-        console.error('[useWorkspace] Erro ao renovar token:', refreshErr)
+      } catch {
+        // Sem renovação o usuário permanece no perfil atual.
       }
     }
   }, [refreshUser, router])

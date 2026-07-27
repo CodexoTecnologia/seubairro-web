@@ -62,7 +62,6 @@ export default function MeusPedidosClientePage() {
   const [error, setError] = useState<string | null>(null)
   const [filterTab, setFilterTab] = useState<FilterTab>('all')
 
-  // Modais
   const [selectedPaymentOrder, setSelectedPaymentOrder] = useState<OrderResponse | null>(null)
   const [reviewOrder, setReviewOrder] = useState<OrderResponse | null>(null)
   const [chatLoadingId, setChatLoadingId] = useState<number | null>(null)
@@ -73,8 +72,7 @@ export default function MeusPedidosClientePage() {
     try {
       const res = await OrderService.getMine({ pageSize: 50 })
       setOrders(res.items ?? [])
-    } catch (err) {
-      console.error('[MeusPedidosClientePage] Erro ao carregar pedidos:', err)
+    } catch {
       setError('Não foi possível carregar suas Ordens de Serviço.')
     } finally {
       setIsLoading(false)
@@ -92,15 +90,13 @@ export default function MeusPedidosClientePage() {
         businessId: order.sellerBusinessId,
       })
       router.push(`/mensagens?conversationId=${conv.id}`)
-    } catch (err) {
-      console.error('[MeusPedidosClientePage] Erro ao abrir chat:', err)
+    } catch {
       router.push('/mensagens')
     } finally {
       setChatLoadingId(null)
     }
   }
 
-  // Filtragem dos pedidos conforme a aba
   const filteredOrders = orders.filter((order) => {
     if (filterTab === 'pending') {
       return (

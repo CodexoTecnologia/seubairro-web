@@ -51,7 +51,6 @@ export function CreateServiceReviewModal({
       onSuccess()
       onClose()
     } catch (err) {
-      console.error('[CreateServiceReviewModal] Erro ao criar avaliação:', err)
       setError(
         resolveApiErrorMessage(
           err,

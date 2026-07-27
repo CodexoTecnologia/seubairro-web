@@ -16,8 +16,10 @@
  * automaticamente pelo navegador). Adequado para o volume de uma tela de perfil.
  */
 
-const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search';
-const REQUEST_TIMEOUT_MS = 8000;
+import { config } from '@/lib/config';
+
+const NOMINATIM_URL = config.externalApis.nominatim.searchUrl;
+const REQUEST_TIMEOUT_MS = config.externalApis.timeoutMs;
 
 /** Ponto geográfico simples (mesmo formato de `Coords` do LocationContext). */
 export interface GeoPoint {

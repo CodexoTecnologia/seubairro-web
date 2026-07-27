@@ -1,3 +1,4 @@
+import { config } from '@/lib/config';
 import type { CepAddress } from '../dtos/Response/index';
 
 /**
@@ -7,8 +8,8 @@ import type { CepAddress } from '../dtos/Response/index';
  * nenhum componente/hook fale HTTP diretamente.
  */
 
-const VIACEP_BASE_URL = 'https://viacep.com.br/ws';
-const REQUEST_TIMEOUT_MS = 8000;
+const VIACEP_BASE_URL = config.externalApis.viaCep.baseUrl;
+const REQUEST_TIMEOUT_MS = config.externalApis.timeoutMs;
 
 /** Resposta crua do ViaCEP (apenas os campos que consumimos). */
 interface ViaCepResponse {

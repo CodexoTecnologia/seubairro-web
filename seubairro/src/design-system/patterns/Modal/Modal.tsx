@@ -12,23 +12,6 @@ import { cn } from '@/lib/utils/cn'
  *  - tecla ESC + click no overlay
  *  - role=dialog + aria-modal + aria-labelledby/describedby
  *  - portal
- *
- * Você só estiliza com Tailwind / tokens.
- *
- * Uso típico:
- *   <Modal
- *     trigger={<Button>Abrir</Button>}
- *     title="Confirmar exclusão"
- *     description="Esta ação não pode ser desfeita."
- *     footer={
- *       <>
- *         <Modal.Close asChild><Button variant="outline">Cancelar</Button></Modal.Close>
- *         <Button variant="danger" onClick={...}>Excluir</Button>
- *       </>
- *     }
- *   >
- *     <p>Tem certeza?</p>
- *   </Modal>
  */
 type Props = {
   trigger: ReactNode

@@ -91,7 +91,6 @@ export function ListingForm({ type, listing, onSaved }: Props) {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
 
-  // Gerenciamento de Múltiplas Fotos
   const [imageItems, setImageItems] = useState<ImageItem[]>(() => {
     if (listing?.images && listing.images.length > 0) {
       return listing.images.map((img) => ({
@@ -123,7 +122,6 @@ export function ListingForm({ type, listing, onSaved }: Props) {
     stepEnteredAt.current = Date.now()
   }, [activeStep])
 
-  // Sincroniza lista de imagens existentes vindas do objeto listing
   useEffect(() => {
     if (!listing) return
     if (listing.images && listing.images.length > 0) {
@@ -359,7 +357,6 @@ export function ListingForm({ type, listing, onSaved }: Props) {
   const prevStep = currentIndex > 0 ? LISTING_STEP_ORDER[currentIndex - 1] : null
   const nextStep = currentIndex < LISTING_STEP_ORDER.length - 1 ? LISTING_STEP_ORDER[currentIndex + 1] : null
 
-  // Flags de conclusão das etapas
   const stepDoneMap: Record<ListingStepId, boolean> = {
     dados: Boolean(formData.listingCategoryId && formData.title.trim()),
     preco: Boolean(formData.price.trim() && !Number.isNaN(parsedPrice) && parsedPrice >= 0),

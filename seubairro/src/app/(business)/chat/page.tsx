@@ -52,7 +52,6 @@ export default function ChatPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // 1. Carrega lista de conversas
   const loadConversations = useCallback(async () => {
     setLoadingConversations(true)
     setError(null)
@@ -61,12 +60,10 @@ export default function ChatPage() {
       const items = Array.isArray(result?.items) ? result.items : []
       setConversations(items)
 
-      // Seleciona a primeira conversa se nenhuma estiver ativa
       if (items.length > 0) {
         setActiveConversation((prev) => prev || items[0])
       }
-    } catch (err) {
-      console.error('[ChatPage] Erro ao carregar conversas:', err)
+    } catch {
       setError('Não foi possível carregar suas conversas no momento.')
     } finally {
       setLoadingConversations(false)
@@ -83,7 +80,6 @@ export default function ChatPage() {
     void loadConversations()
   }, [authLoading, isAuthenticated, loadConversations])
 
-  // 2. Carrega mensagens da conversa selecionada
   const loadMessages = useCallback(async (conversationId: string) => {
     setLoadingMessages(true)
     try {
@@ -92,15 +88,13 @@ export default function ChatPage() {
       // API devolve em ordem decrescente, invertemos para ordem cronológica de chat
       setMessages([...items].reverse())
 
-      // Marca conversa como lida na API
       await ChatService.markAsRead(conversationId).catch(() => {})
 
-      // Atualiza contagem local de não lidas
       setConversations((prev) =>
         prev.map((c) => (c.id === conversationId ? { ...c, unreadCount: 0 } : c)),
       )
-    } catch (err) {
-      console.error('[ChatPage] Erro ao carregar mensagens:', err)
+    } catch {
+      // Falha ao carregar: a conversa permanece com as mensagens já exibidas.
     } finally {
       setLoadingMessages(false)
       setTimeout(scrollToBottom, 100)
@@ -122,7 +116,6 @@ export default function ChatPage() {
     return () => window.removeEventListener('focus', handleFocus)
   }, [activeConversation?.id, loadMessages])
 
-  // 3. Envia nova mensagem
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!messageInput.trim() || !activeConversation || sending) return
@@ -135,7 +128,6 @@ export default function ChatPage() {
       const newMsg = await ChatService.sendMessage(activeConversation.id, text)
       setMessages((prev) => [...prev, newMsg])
 
-      // Atualiza a prévia na lista de conversas
       setConversations((prev) =>
         prev.map((c) =>
           c.id === activeConversation.id
@@ -145,16 +137,13 @@ export default function ChatPage() {
       )
 
       setTimeout(scrollToBottom, 50)
-    } catch (err) {
-      console.error('[ChatPage] Erro ao enviar mensagem:', err)
-      // Restaura o texto em caso de erro
+    } catch {
       setMessageInput(text)
     } finally {
       setSending(false)
     }
   }
 
-  // Filtra conversas por busca e não lidas
   const filteredConversations = conversations.filter((c) => {
     const matchesSearch =
       c.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) ||

@@ -122,7 +122,6 @@ export function ListingFeed({
           ))}
         </div>
       ) : isEmpty ? (
-        /* Empty State rico e interativo */
         <div className="flex flex-col items-center justify-center p-8 md:p-12 text-center rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-default)] shadow-2xs gap-4 max-w-lg mx-auto my-6">
           <div className="size-16 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center text-3xl shrink-0">
             <i className="ri-search-eye-line" />

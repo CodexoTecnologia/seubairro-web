@@ -10,7 +10,6 @@ const NAV_ITEMS = [
   { href: '/mensagens', icon: 'ri-message-3-line', label: 'Mensagens' },
 ]
 
-/** Navegação lateral do workspace cliente (desktop). */
 export function ClientSidebar() {
   const pathname = usePathname() ?? ''
 
@@ -49,7 +48,6 @@ export function ClientSidebar() {
   )
 }
 
-/** Card informativo dos futuros Planos para o Cliente. */
 function ClientPlanCard() {
   return (
     <div className="p-3.5 rounded-xl bg-gradient-to-br from-[var(--color-primary)]/10 via-[var(--color-surface)] to-[var(--color-page)] border border-[var(--color-primary)]/25 flex flex-col gap-2 shadow-2xs">

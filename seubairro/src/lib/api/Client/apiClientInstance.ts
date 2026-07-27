@@ -1,8 +1,9 @@
+import { config } from '@/lib/config';
 import { ApiClient } from './ApiClient';
 
 export const apiClient = new ApiClient({
-    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://localhost:7112',
-    timeout: 30000,
+    baseUrl: config.api.baseUrl,
+    timeout: config.api.timeoutMs,
     defaultHeaders: { 'Content-Type': 'application/json' },
     acceptLanguage: 'pt-BR',
     onUnauthorized: async () => {

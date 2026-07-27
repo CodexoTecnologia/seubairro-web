@@ -11,7 +11,6 @@ const NAV_ITEMS = [
   { href: '/minha-empresa', icon: 'ri-building-line', label: 'Empresa' },
 ]
 
-/** Navegação inferior do workspace business (mobile). */
 export function BusinessBottomNav() {
   const pathname = usePathname() ?? ''
 

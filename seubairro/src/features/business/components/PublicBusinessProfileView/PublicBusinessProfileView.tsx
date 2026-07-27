@@ -49,8 +49,8 @@ export default function PublicBusinessProfileView({ slug, business, listings }: 
       .then((data) => {
         if (!cancelled) setStatus(data)
       })
-      .catch((err) => {
-        console.error('[PublicBusinessProfileView] status fetch failed:', err)
+      .catch(() => {
+        // Sem status do backend a UI cai no fallback client-side de horário.
       })
     return () => {
       cancelled = true
@@ -72,8 +72,7 @@ export default function PublicBusinessProfileView({ slug, business, listings }: 
         const hasCompleted = items.some((o) => o.sellerBusinessId === business.id)
         setHasCompletedOrder(hasCompleted)
       })
-      .catch((err) => {
-        console.error('[PublicBusinessProfileView] Erro ao verificar ordens de serviço:', err)
+      .catch(() => {
         if (!cancelled) setHasCompletedOrder(false)
       })
 
@@ -88,8 +87,8 @@ export default function PublicBusinessProfileView({ slug, business, listings }: 
     try {
       await ChatService.startConversation({ businessId: business.id })
       router.push('/mensagens')
-    } catch (err) {
-      console.error('[PublicBusinessProfileView] erro ao iniciar chat:', err)
+    } catch {
+      // Falha ao abrir conversa: o botão volta ao estado normal no finally.
     } finally {
       setStartingChat(false)
     }

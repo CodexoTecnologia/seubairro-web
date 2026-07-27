@@ -27,7 +27,6 @@ export interface PaginationParams {
     page?: number;
     limit?: number;
     search?: string;
-    // Add other common pagination params as needed
 }
 
 export interface PaginatedResponse<T> extends ApiSuccessResponse<T[]> {
@@ -39,5 +38,4 @@ export interface PaginatedResponse<T> extends ApiSuccessResponse<T[]> {
     };
 }
 
-// Alias for ApiErrorDetail if needed, or a separate type
 export type ApiError = ApiErrorDetail;

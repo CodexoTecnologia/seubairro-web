@@ -72,7 +72,6 @@ export default function ClientMensagensPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // 1. Carrega conversas do cliente
   const loadConversations = useCallback(async () => {
     setLoadingConversations(true)
     setError(null)
@@ -90,8 +89,7 @@ export default function ClientMensagensPage() {
           return prev || items[0]
         })
       }
-    } catch (err) {
-      console.error('[ClientMensagensPage] Erro ao carregar conversas:', err)
+    } catch {
       setError('Não foi possível carregar suas conversas no momento.')
     } finally {
       setLoadingConversations(false)
@@ -108,7 +106,6 @@ export default function ClientMensagensPage() {
     void loadConversations()
   }, [authLoading, isAuthenticated, loadConversations])
 
-  // 2. Busca ordem inicial do param de URL ou da conversa ativa
   const loadOrder = useCallback(async (orderIdStr?: string | null) => {
     if (!orderIdStr) {
       setActiveOrder(null)
@@ -117,8 +114,7 @@ export default function ClientMensagensPage() {
     try {
       const ord = await OrderService.getById(Number(orderIdStr))
       setActiveOrder(ord)
-    } catch (err) {
-      console.warn('[ClientMensagensPage] Não foi possível carregar ordem:', err)
+    } catch {
       setActiveOrder(null)
     }
   }, [])
@@ -129,7 +125,6 @@ export default function ClientMensagensPage() {
     }
   }, [initialOrderId, loadOrder])
 
-  // 3. Carrega mensagens da conversa selecionada
   const loadMessages = useCallback(async (conversationId: string) => {
     setLoadingMessages(true)
     try {
@@ -142,8 +137,8 @@ export default function ClientMensagensPage() {
       setConversations((prev) =>
         prev.map((c) => (c.id === conversationId ? { ...c, unreadCount: 0 } : c)),
       )
-    } catch (err) {
-      console.error('[ClientMensagensPage] Erro ao carregar mensagens:', err)
+    } catch {
+      // Falha ao carregar: a conversa permanece com as mensagens já exibidas.
     } finally {
       setLoadingMessages(false)
       setTimeout(scrollToBottom, 100)
@@ -165,7 +160,6 @@ export default function ClientMensagensPage() {
     return () => window.removeEventListener('focus', handleFocus)
   }, [activeConversation?.id, loadMessages])
 
-  // 4. Envia mensagem
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!messageInput.trim() || !activeConversation || sending) return
@@ -187,8 +181,7 @@ export default function ClientMensagensPage() {
       )
 
       setTimeout(scrollToBottom, 50)
-    } catch (err) {
-      console.error('[ClientMensagensPage] Erro ao enviar mensagem:', err)
+    } catch {
       setMessageInput(text)
     } finally {
       setSending(false)

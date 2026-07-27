@@ -63,8 +63,7 @@ export function useBusinessSetup(): Result {
         setNiches(overview?.niches ?? [])
         setOperations(overview?.operations ?? [])
         setError(null)
-      } catch (err) {
-        console.error('[useBusinessSetup] Erro:', err)
+      } catch {
         if (!cancelled) setError('Falha ao carregar os dados da empresa.')
       } finally {
         if (!cancelled) setLoading(false)

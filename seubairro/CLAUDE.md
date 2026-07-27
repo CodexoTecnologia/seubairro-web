@@ -81,7 +81,11 @@ Server por padrão. `'use client'` apenas quando há estado, efeitos, contexto c
 
 ## Environment
 
-`.env.local` na raiz com as variáveis do backend (URL da API, etc.). O dev server roda com `NODE_OPTIONS=--use-system-ca` para reaproveitar certificados do sistema (necessário em ambientes Windows corporativos). Imagens externas são permitidas via `remotePatterns: [{ protocol: 'https', hostname: '**' }]` em `next.config.ts`.
+Configuração centralizada em `src/lib/config/env.ts`, no mesmo modelo do `appsettings.json` do backend: um schema Zod define contrato, defaults e validação, e expõe o objeto tipado `config` (`config.api.baseUrl`, `config.site.url`, `config.externalApis.*`). **Nenhum outro arquivo lê `process.env`** — sempre `import { config } from '@/lib/config'` (regra de lint `no-restricted-properties`). Variável faltando ou inválida quebra o `dev`/`build` com a lista do que está errado.
+
+Arquivos por ambiente: `.env.development` e `.env.production`, versionados, equivalentes a `appsettings.<Env>.json`. Variável definida no ambiente de deploy (Vercel/Docker/CI) vence sobre os arquivos. Atenção: `NEXT_PUBLIC_*` é embutido no bundle durante o build — mudar a URL da API exige novo build, e nada secreto pode entrar nesses arquivos.
+
+O dev server roda com `NODE_OPTIONS=--use-system-ca` para reaproveitar certificados do sistema (necessário em ambientes Windows corporativos). Imagens externas são permitidas via `remotePatterns: [{ protocol: 'https', hostname: '**' }]` em `next.config.ts`.
 
 ---
 

@@ -11,8 +11,9 @@ import {
   Contact,
   MarketingFooter,
 } from '@/features/marketing/components'
+import { config } from '@/lib/config'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+const SITE_URL = config.site.url
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
