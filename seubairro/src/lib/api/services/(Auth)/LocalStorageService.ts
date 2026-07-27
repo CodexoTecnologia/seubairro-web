@@ -13,14 +13,13 @@ export class LocalStorageService implements ITokenService {
 
     save(token: string): void {
         if (typeof window === 'undefined') {
-            console.warn('localStorage não disponível no servidor');
             return;
         }
 
         try {
             localStorage.setItem(this.storageKey, token);
-        } catch (error) {
-            console.error('Erro ao salvar no localStorage:', error);
+        } catch {
+            // localStorage indisponível (modo privado/quota): o token segue em memória no ApiClient.
         }
     }
 
@@ -31,8 +30,7 @@ export class LocalStorageService implements ITokenService {
 
         try {
             return localStorage.getItem(this.storageKey);
-        } catch (error) {
-            console.error('Erro ao recuperar do localStorage:', error);
+        } catch {
             return null;
         }
     }
@@ -44,8 +42,8 @@ export class LocalStorageService implements ITokenService {
 
         try {
             localStorage.removeItem(this.storageKey);
-        } catch (error) {
-            console.error('Erro ao remover do localStorage:', error);
+        } catch {
+            // localStorage indisponível: nada a limpar.
         }
     }
 }

@@ -15,7 +15,6 @@ export class JwtHelper {
             const parts = token.split('.');
 
             if (parts.length !== 3) {
-                console.error('Token JWT inválido: formato incorreto');
                 return null;
             }
 
@@ -23,8 +22,7 @@ export class JwtHelper {
             const decoded = this.base64UrlDecode(payload);
 
             return JSON.parse(decoded) as JwtPayload;
-        } catch (error) {
-            console.error('Erro ao decodificar token JWT:', error);
+        } catch {
             return null;
         }
     }

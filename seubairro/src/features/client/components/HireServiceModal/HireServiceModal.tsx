@@ -43,7 +43,6 @@ export function HireServiceModal({ isOpen, listing, onClose, onOrderCreated }: P
     setError(null)
 
     try {
-      // 1. Cria a Ordem de Serviço sem pedir dados desnecessários
       const createdOrder = await OrderService.create({
         shippingAddressSnapshot: 'A combinar no chat',
         items: [
@@ -56,12 +55,10 @@ export function HireServiceModal({ isOpen, listing, onClose, onOrderCreated }: P
 
       if (onOrderCreated) onOrderCreated(createdOrder)
 
-      // 2. Abre a conversa no Chat
       const conv = await ChatService.startConversation({
         businessId: listing.business.businessId,
       })
 
-      // 3. Envia a mensagem com a ordem para o chat
       try {
         await ChatService.sendMessage(
           conv.id,
@@ -72,10 +69,8 @@ export function HireServiceModal({ isOpen, listing, onClose, onOrderCreated }: P
       }
 
       onClose()
-      // 4. Redireciona para o chat com a ordem selecionada
       router.push(`/mensagens?conversationId=${conv.id}&orderId=${createdOrder.id}`)
     } catch (err) {
-      console.error('[HireServiceModal] Erro ao criar ordem de serviço:', err)
       setError(
         resolveApiErrorMessage(
           err,

@@ -63,6 +63,24 @@ const eslintConfig = defineConfig([
   {
     rules: {
       "@next/next/no-img-element": "error",
+      // Nada de log em produção: o bundle é público e vaza payload/erro do backend.
+      "no-console": "error",
+      "no-restricted-properties": [
+        "error",
+        {
+          object: "process",
+          property: "env",
+          message:
+            "Leia configuração via `import { config } from '@/lib/config'` — só src/lib/config/env.ts acessa process.env.",
+        },
+      ],
+    },
+  },
+
+  {
+    files: ["src/lib/config/env.ts"],
+    rules: {
+      "no-restricted-properties": "off",
     },
   },
 ]);

@@ -50,7 +50,6 @@ export default function ClientDashboard() {
     router.replace(qs ? `/dashboard-client?${qs}` : '/dashboard-client')
   }
 
-  // Debounce de busca por texto
   useEffect(() => {
     const handle = setTimeout(() => {
       if ((filters.query ?? '') !== textQuery.trim()) {

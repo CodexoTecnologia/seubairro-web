@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google'
 import './global.css'
 import ClickSpark from '@/design-system/effects/click-spark'
 import { AuthProvider } from '@/features/auth/context/AuthContext'
+import { config } from '@/lib/config'
 
 /**
  * Família única para títulos e corpo: o peso (não a família) constrói a
@@ -15,7 +16,7 @@ const jakarta = Plus_Jakarta_Sans({
     variable: '--font-jakarta',
 })
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+const SITE_URL = config.site.url
 
 export const metadata: Metadata = {
     metadataBase: new URL(SITE_URL),

@@ -37,7 +37,6 @@ export function useListingSearch(filters: ListingSearchFilters, coords: Coords |
   const lat = coords?.lat ?? null
   const lng = coords?.lng ?? null
 
-  // Reset + primeira página quando filtros ou coords mudam.
   useEffect(() => {
     let cancelled = false
     const run = async () => {

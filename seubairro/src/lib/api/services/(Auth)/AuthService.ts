@@ -15,11 +15,6 @@ interface ITokenService {
 import { JwtHelper } from '../../helper/JwtHelper';
 import { apiClient } from '../../Client/apiClientInstance';
 
-/*
- * Service de autenticação que implementa a lógica de JWT e utiliza o padrão Bridge para o armazenamento.
- * Abstração: Lógica de Autenticação (JWT, validação, chamadas API)
- * Implementação (Bridge): ITokenService (LocalStorage, Cookies, Memory)
- */
 export class AuthService implements IAuthService {
     private tokenService: ITokenService;
 
@@ -47,8 +42,6 @@ export class AuthService implements IAuthService {
 
             if (token && JwtHelper.isValidFormat(token)) {
                 this.setToken(token);
-            } else {
-                console.error('[AuthService.login] Token ausente ou inválido na resposta.');
             }
 
             return response;
@@ -83,95 +76,80 @@ export class AuthService implements IAuthService {
     }
 
     async addCustomer(): Promise<string | null> {
+        let response: any;
         try {
-            let response: any;
-            try {
-                response = await apiClient.post<{ token: string; expiration: string }>(
-                    '/api/user/roles/add-customer',
-                    undefined,
-                    { requiresAuth: true }
-                );
-            } catch (err: any) {
-                if (err?.error?.statusCode === 404 || err?.error?.statusCode === 405 || err?.statusCode === 404 || err?.statusCode === 405) {
-                    response = await apiClient.post<{ token: string; expiration: string }>(
-                        '/api/User/roles/add-customer',
-                        undefined,
-                        { requiresAuth: true }
-                    );
-                } else {
-                    throw err;
-                }
-            }
-
-            const r = response as unknown as { token?: string };
-            const token = typeof response === 'string' ? response : r?.token ?? null;
-
-            if (token && JwtHelper.isValidFormat(token)) {
-                this.setToken(token);
-                return token;
-            }
-            return null;
-        } catch (error) {
-            console.error('[AuthService.addCustomer] Erro ao ativar perfil de cliente:', error);
-            throw error;
-        }
-    }
-
-    async refreshToken(): Promise<string | null> {
-        try {
-            const response = await apiClient.post<{ token: string; expiration: string }>(
-                '/api/auth/refresh-token',
+            response = await apiClient.post<{ token: string; expiration: string }>(
+                '/api/user/roles/add-customer',
                 undefined,
                 { requiresAuth: true }
             );
-
-            const r = response as unknown as { token?: string };
-            const token = typeof response === 'string' ? response : r?.token ?? null;
-
-            if (token && JwtHelper.isValidFormat(token)) {
-                this.setToken(token);
-                return token;
-            }
-            return null;
-        } catch (error) {
-            console.error('[AuthService.refreshToken] Erro ao renovar token:', error);
-            throw error;
-        }
-    }
-
-    async addEntrepreneur(): Promise<string | null> {
-        try {
-            let response: any;
-            try {
+        } catch (err: any) {
+            if (err?.error?.statusCode === 404 || err?.error?.statusCode === 405 || err?.statusCode === 404 || err?.statusCode === 405) {
                 response = await apiClient.post<{ token: string; expiration: string }>(
-                    '/api/user/roles/add-entrepreneur',
+                    '/api/User/roles/add-customer',
                     undefined,
                     { requiresAuth: true }
                 );
-            } catch (err: any) {
-                if (err?.error?.statusCode === 404 || err?.error?.statusCode === 405 || err?.statusCode === 404 || err?.statusCode === 405) {
-                    response = await apiClient.post<{ token: string; expiration: string }>(
-                        '/api/User/roles/add-entrepreneur',
-                        undefined,
-                        { requiresAuth: true }
-                    );
-                } else {
-                    throw err;
-                }
+            } else {
+                throw err;
             }
-
-            const r = response as unknown as { token?: string };
-            const token = typeof response === 'string' ? response : r?.token ?? null;
-
-            if (token && JwtHelper.isValidFormat(token)) {
-                this.setToken(token);
-                return token;
-            }
-            return null;
-        } catch (error) {
-            console.error('[AuthService.addEntrepreneur] Erro ao ativar perfil de empreendedor:', error);
-            throw error;
         }
+
+        const r = response as unknown as { token?: string };
+        const token = typeof response === 'string' ? response : r?.token ?? null;
+
+        if (token && JwtHelper.isValidFormat(token)) {
+            this.setToken(token);
+            return token;
+        }
+        return null;
+    }
+
+    async refreshToken(): Promise<string | null> {
+        const response = await apiClient.post<{ token: string; expiration: string }>(
+            '/api/auth/refresh-token',
+            undefined,
+            { requiresAuth: true }
+        );
+
+        const r = response as unknown as { token?: string };
+        const token = typeof response === 'string' ? response : r?.token ?? null;
+
+        if (token && JwtHelper.isValidFormat(token)) {
+            this.setToken(token);
+            return token;
+        }
+        return null;
+    }
+
+    async addEntrepreneur(): Promise<string | null> {
+        let response: any;
+        try {
+            response = await apiClient.post<{ token: string; expiration: string }>(
+                '/api/user/roles/add-entrepreneur',
+                undefined,
+                { requiresAuth: true }
+            );
+        } catch (err: any) {
+            if (err?.error?.statusCode === 404 || err?.error?.statusCode === 405 || err?.statusCode === 404 || err?.statusCode === 405) {
+                response = await apiClient.post<{ token: string; expiration: string }>(
+                    '/api/User/roles/add-entrepreneur',
+                    undefined,
+                    { requiresAuth: true }
+                );
+            } else {
+                throw err;
+            }
+        }
+
+        const r = response as unknown as { token?: string };
+        const token = typeof response === 'string' ? response : r?.token ?? null;
+
+        if (token && JwtHelper.isValidFormat(token)) {
+            this.setToken(token);
+            return token;
+        }
+        return null;
     }
 
     isAuthenticated(): boolean {

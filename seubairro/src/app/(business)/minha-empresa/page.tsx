@@ -66,8 +66,7 @@ export default function MinhaEmpresaPage() {
         setOperations(overview?.operations ?? [])
         setNichesCount((overview?.niches ?? []).length)
         setOperationsCount((overview?.operations ?? []).length)
-      } catch (err) {
-        console.error('[minha-empresa] Erro:', err)
+      } catch {
         if (!cancelled) setError('Falha ao carregar os dados da empresa.')
       } finally {
         if (!cancelled) setLoading(false)
@@ -78,7 +77,6 @@ export default function MinhaEmpresaPage() {
     }
   }, [user?.id, isAuthenticated, authLoading])
 
-  // Sincroniza a aba ativa com o hash da URL (ex.: #endereco)
   useEffect(() => {
     if (loading) return
     const rawHash = window.location.hash.replace('#', '') as StepId

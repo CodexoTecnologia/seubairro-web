@@ -36,7 +36,6 @@ export function OrderPaymentModal({ isOpen, order, onClose, onPaymentSuccess }: 
   const [paidSuccess, setPaidSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Card form values
   const [cardNumber, setCardNumber] = useState('')
   const [cardHolder, setCardHolder] = useState('')
   const [cardExp, setCardExp] = useState('')
@@ -57,10 +56,8 @@ export function OrderPaymentModal({ isOpen, order, onClose, onPaymentSuccess }: 
     setError(null)
 
     try {
-      // 1. Gera cobrança via PaymentService
       await PaymentService.create(order.id, method)
 
-      // 2. Conclui e finaliza o pedido (OrderStatusEnum.Completed)
       try {
         await OrderService.updateStatus(order.id, OrderStatusEnum.Completed)
       } catch {
@@ -70,7 +67,6 @@ export function OrderPaymentModal({ isOpen, order, onClose, onPaymentSuccess }: 
       setPaidSuccess(true)
       if (onPaymentSuccess) onPaymentSuccess()
     } catch (err) {
-      console.error('[OrderPaymentModal] Erro ao processar pagamento:', err)
       setError(
         resolveApiErrorMessage(
           err,

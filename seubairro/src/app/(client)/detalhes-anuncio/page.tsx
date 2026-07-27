@@ -54,14 +54,13 @@ export default function AnuncioDetalhesPage() {
         if (cancelled) return
         setListing(data)
 
-        // Busca dados completos da empresa para o preview na lateral
         if (data?.business?.businessSlug) {
           PublicBusinessService.getBySlug(data.business.businessSlug)
             .then((bData) => {
               if (!cancelled) setBusinessData(bData)
             })
-            .catch((err) => {
-              console.warn('[AnuncioDetalhesPage] Não foi possível carregar o perfil completo do negócio:', err)
+            .catch(() => {
+              // Perfil completo é complementar: a página funciona sem ele.
             })
         }
       } catch (err) {
@@ -88,8 +87,7 @@ export default function AnuncioDetalhesPage() {
         businessId: listing.business.businessId,
       })
       router.push(`/mensagens?conversationId=${conv.id}`)
-    } catch (err) {
-      console.error('[AnuncioDetalhesPage] Erro ao iniciar chat:', err)
+    } catch {
       router.push('/mensagens')
     } finally {
       setIsChatStarting(false)

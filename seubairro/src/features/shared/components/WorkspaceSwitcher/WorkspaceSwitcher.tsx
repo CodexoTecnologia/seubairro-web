@@ -21,7 +21,6 @@ export function WorkspaceSwitcher({ activeWorkspace }: Props) {
   const { roles } = useAuthContext()
   const { canSwitch, availableWorkspaces, switchWorkspace, activateCustomerRole, activateEntrepreneurRole } = useWorkspace()
 
-  // Se o usuário possui ambos os perfis (multi-role)
   if (canSwitch) {
     const targets = availableWorkspaces.filter((workspace) => workspace !== activeWorkspace)
     if (targets.length === 0) return null
@@ -47,7 +46,6 @@ export function WorkspaceSwitcher({ activeWorkspace }: Props) {
     )
   }
 
-  // Se o usuário possui apenas 1 perfil: exibe CTA para cadastrar/ativar o perfil faltante
   const isCustomerOnly = roles.includes(ROLE_CUSTOMER) && !roles.includes(ROLE_ENTREPENEUR)
   const isEntrepreneurOnly = roles.includes(ROLE_ENTREPENEUR) && !roles.includes(ROLE_CUSTOMER)
 

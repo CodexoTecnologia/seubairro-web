@@ -14,10 +14,6 @@ type Result = {
 
 const DEFAULT_POLL_MS = 60_000
 
-/**
- * Consulta o status "aberto agora" para o negócio autenticado.
- * Remover para refletir abertura/fechamento sem refresh manual.
- */
 export const useBusinessOpenStatus = (
   businessId: string | null | undefined,
   pollIntervalMs: number = DEFAULT_POLL_MS,
@@ -37,11 +33,8 @@ export const useBusinessOpenStatus = (
         if (cancelled) return
         setData(result)
         setStatus('ready')
-      } catch (err) {
+      } catch {
         if (cancelled) return
-        // Falha tratada (status vira 'error' na UI); warn evita poluir o
-        // overlay de dev a cada ciclo de polling.
-        console.warn('[useBusinessOpenStatus] failed:', err)
         setStatus('error')
       }
     }

@@ -85,8 +85,8 @@ export default function ListarAnuncioPage() {
             }
           }),
         )
-      } catch (err) {
-        console.error('Erro ao carregar anúncios:', err)
+      } catch {
+        // Sem dados a página cai no estado vazio da listagem.
       } finally {
         if (!cancelled) setIsLoading(false)
       }

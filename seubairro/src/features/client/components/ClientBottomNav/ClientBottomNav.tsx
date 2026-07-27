@@ -10,7 +10,6 @@ const NAV_ITEMS = [
   { href: '/mensagens', icon: 'ri-message-3-line', label: 'Mensagens' },
 ]
 
-/** Navegação inferior do workspace cliente (mobile). */
 export function ClientBottomNav() {
   const pathname = usePathname() ?? ''
 

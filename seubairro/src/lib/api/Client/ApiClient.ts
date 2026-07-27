@@ -205,9 +205,6 @@ export class ApiClient {
                 throw new TimeoutError();
             }
             if (error instanceof TypeError) {
-                // O erro é relançado como NetworkError para o caller tratar;
-                // warn evita reporte duplicado no overlay de dev.
-                console.warn('ApiClient NetworkError:', error);
                 throw new NetworkError();
             }
             throw error;

@@ -14,7 +14,6 @@ const OPTIONS = [
   { key: 'mapa', icon: 'ri-map-2-line', label: 'Mapa' },
 ] as const
 
-/** Alternador Lista/Mapa do feed de anúncios. */
 export function ListingViewToggle({ value, onChange }: Props) {
   return (
     <div

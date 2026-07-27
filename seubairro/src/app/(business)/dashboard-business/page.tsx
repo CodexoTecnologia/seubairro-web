@@ -107,8 +107,8 @@ export default function BusinessDashboard() {
             .slice()
             .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1)),
         )
-      } catch (err) {
-        console.error('Erro ao carregar dashboard:', err)
+      } catch {
+        // Sem dados o dashboard renderiza os cards vazios.
       } finally {
         if (!cancelled) setDataLoading(false)
       }

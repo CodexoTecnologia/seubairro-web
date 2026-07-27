@@ -40,8 +40,7 @@ export function useAuth() {
         isAuthenticated: true,
         roles: RoleHelper.getRoles(),
       })
-    } catch (error) {
-      console.error('[useAuth] Erro ao carregar usuário:', error)
+    } catch {
       authService.logout()
       setState(EMPTY)
     }
@@ -66,8 +65,8 @@ export function useAuth() {
   const logout = async () => {
     try {
       await authService.logout()
-    } catch (error) {
-      console.error('Erro ao fazer logout:', error)
+    } catch {
+      // Falha no logout remoto não impede limpar a sessão local (finally).
     } finally {
       setState(EMPTY)
     }

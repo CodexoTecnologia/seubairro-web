@@ -14,13 +14,6 @@ import { dropdownMenuContent, dropdownMenuItem } from './DropdownMenu.variants'
  *  - navegação por setas, Home/End, Esc (fecha e devolve o foco)
  *  - clique fora fecha
  *  - portal
- *
- * Uso típico:
- *   <DropdownMenu trigger={<button>Conta</button>}>
- *     <DropdownMenu.Item icon={<i className="ri-user-line" />}>Meu perfil</DropdownMenu.Item>
- *     <DropdownMenu.Separator />
- *     <DropdownMenu.Item intent="danger" onSelect={sair}>Sair</DropdownMenu.Item>
- *   </DropdownMenu>
  */
 type RootProps = {
   trigger: ReactNode

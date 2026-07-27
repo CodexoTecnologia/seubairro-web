@@ -69,7 +69,6 @@ export default function CreateBusinessSection({ onCreated }: Props) {
     },
   })
 
-  // Observa os valores em tempo real para a prévia ao vivo
   const watchedValues = watch()
 
   const { lookup, isLoading: cepLoading, error: cepError } = useCepLookup()
@@ -94,7 +93,6 @@ export default function CreateBusinessSection({ onCreated }: Props) {
 
   const postalCodeReg = register('postalCode')
 
-  // Valida os campos da etapa atual antes de avançar
   const handleNextStep = async () => {
     setServerError(null)
     let valid = false
@@ -180,7 +178,6 @@ export default function CreateBusinessSection({ onCreated }: Props) {
     }
   })
 
-  // Formata o endereço da prévia
   const previewAddress = [
     watchedValues.neighborhood,
     watchedValues.city,

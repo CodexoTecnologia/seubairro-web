@@ -29,9 +29,10 @@ yarn-error.log*
 *.env
 .env*
 
-# Keep these environment templates in git:
-# .env.development
-# .env.production
+# Ambientes versionados (só valores públicos, nunca segredo).
+# As negações precisam vir DEPOIS dos padrões acima para ter efeito.
+.env.development
+.env.production
 
 # Vercel
 .vercel

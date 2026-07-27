@@ -41,9 +41,8 @@ export const usePublicProfileLink = (): Result => {
         setBusinessId(business?.id ?? null)
         setStatus('ready')
       })
-      .catch((err) => {
+      .catch(() => {
         if (cancelled) return
-        console.error('[usePublicProfileLink] failed:', err)
         setStatus('error')
       })
     return () => {
